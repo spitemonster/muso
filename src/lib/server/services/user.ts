@@ -20,3 +20,22 @@ export async function createUser(id: string, name: string, email: string, passwo
 		return new Response(String(error))
 	}
 }
+
+type UserQuery = {
+	email?: string;
+	id?: string;
+}
+
+export async function getUser(query: UserQuery) {
+	if (query.email) {
+		const u = await User.findOne({ where: { email: query.email } });
+
+		if (u === null) {
+			return {}
+		}
+
+		const j = u.toJSON();
+
+		return j;
+	}
+}

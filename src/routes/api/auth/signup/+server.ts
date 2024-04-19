@@ -1,4 +1,5 @@
-import { createUser } from '$lib/server/services/user'
+import { getUser, createUser } from '$lib/server/services/user'
+import { fail, redirect } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
 function generateID(length: number = 8): string {
@@ -27,6 +28,14 @@ export const POST: RequestHandler = async ({ request }) => {
 	}
 }
 
-export const GET: RequestHandler = () => {
-	return new Response(String("GOTTEN"));
+export const GET: RequestHandler = async ({ request }) => {
+	const fd = Object.fromEntries(await request.formData());
+	
+	if (!fd.email && !fd.id) {
+		return fail(400, {
+			error: "Route requires user email or ID"
+		})
+	}
+
+	const user = await getUser({ email })
 };
