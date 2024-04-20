@@ -2,6 +2,7 @@
 	<menu class="unstyled">
 		<li><a href="/">Home</a></li>
 		<li><a href="/sign-up">Sign Up</a></li>
+		<li><a href="/login">Log In</a></li>
 	</menu>
 </nav>
 

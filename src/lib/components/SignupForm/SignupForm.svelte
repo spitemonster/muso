@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { EyeOpen, EyeClosed } from '$lib/icons';
 	import { EmailField, NameField, PasswordField } from '$lib/components/form-fields';
+	import { enhance } from '$app/forms';
+
 	let form: HTMLFormElement;
 
 	function checkPasswords(e: Event) {
@@ -15,17 +16,13 @@
 	}
 </script>
 
-<form method="POST" action="/api/auth/signup" bind:this={form} on:submit={checkPasswords}>
+<form method="POST" bind:this={form} on:submit={checkPasswords} use:enhance>
 	<NameField />
 	<EmailField />
-	<PasswordField />
+	<PasswordField confirmation={true} />
 	<label>
 		<input type="checkbox" name="isArtist" id="isArtist" />
 		<span>Sign me up for an artist account!</span>
 	</label>
 	<button>Sign Up</button>
 </form>
-
-<style lang="scss">
-	
-</style>
