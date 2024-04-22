@@ -2,7 +2,7 @@ import { redirect, type Actions } from '@sveltejs/kit'
 import { loginUser } from '$lib/server/services/user'
 
 export const actions: Actions = {
-    default: async ({ cookies, request }) => {
+    default: async ({ cookies, request, locals }) => {
         try {
             const fd = Object.fromEntries(await request.formData())
 
@@ -15,11 +15,13 @@ export const actions: Actions = {
                 password: string
             }
 
-            const { err, token } = await loginUser(email, password)
+            const { err, token, sessionUser } = await loginUser(email, password)
 
             if (err) {
                 throw new Error(err)
             }
+
+            locals.user = sessionUser ?? { name: '', email: '' }
 
             cookies.set('auth_token', `${token}`, {
                 httpOnly: true,

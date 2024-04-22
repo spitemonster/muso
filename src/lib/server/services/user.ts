@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt'
 import { User } from '$lib/server/models/user'
 import jwt from 'jsonwebtoken'
 import { JWT_PRIVATE_KEY } from '$env/static/private'
+import type { SessionUserData } from '$lib/store'
 
 type UserQuery = {
     email?: string
@@ -56,7 +57,7 @@ export async function getUser(query: UserQuery) {
 export async function loginUser(
     email: string,
     password: string
-): Promise<{ token?: string; err?: string }> {
+): Promise<{ token?: string; err?: string; sessionUser?: SessionUserData }> {
     try {
         const user = await getUser({ email })
 
@@ -77,9 +78,14 @@ export async function loginUser(
             }
         )
 
-        return { token }
+        const sessionUser = {
+            email: user.email,
+            name: user.name,
+        }
+
+        return { token, sessionUser }
     } catch (error) {
-        return { status: 401, message: error }
+        return { err: error as string }
     }
 }
 
