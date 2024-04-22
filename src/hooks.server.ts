@@ -3,7 +3,6 @@ import { db } from '$lib/server/db'
 import { JWT_PRIVATE_KEY } from '$env/static/private'
 import { getUser } from '$lib/server/services/user'
 import type { Handle } from '@sveltejs/kit'
-import type { SessionUserData } from '$lib/store'
 
 let serverSynced = false
 

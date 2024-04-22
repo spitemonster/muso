@@ -1,9 +1,10 @@
 import { type ServerLoad, type Actions, redirect } from '@sveltejs/kit'
+import { activeUser } from '$lib/store'
 
 export const load: ServerLoad = (event) => {
     const user = event.locals.user ?? {}
 
-    console.log('server side: ', user)
+    activeUser.set(user)
 
     return {
         user,

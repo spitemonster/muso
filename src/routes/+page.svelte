@@ -1,24 +1,29 @@
 <script lang="ts">
+	import { beforeNavigate } from "$app/navigation";
+	import { page } from "$app/stores";
+
 	import type { PageData } from './$types'
 	import { type SessionUserData, activeUser } from "$lib/store";
-	import { onMount } from 'svelte';
+	import { beforeUpdate, onMount } from "svelte";
 	
 	export let data: PageData;
-	const { user } = data;
+	
+	const user = data.user ?? {
+		name: "",
+		email: ""
+	}
 
-	activeUser.set(user as SessionUserData);
-
-	// onMount(() => {
-		
-	// })
+	beforeUpdate(() => {
+		activeUser.set(user as SessionUserData);
+	})
 </script>
 
 <section class="container">
 	<h1>Muso</h1>
-	<p>🖕 bandcamp</p>
-	{#if user.email}
-		{ user.name }
-		{ user.email }
-	{/if}
+	<!-- {#if user.email}
+		<p>Hey, { user.name }!</p>
+	{:else}
+		<p>🖕 bandcamp</p>
+	{/if} -->
 	<!-- <p>{ data.user.name }</p> -->
 </section>
