@@ -1,10 +1,8 @@
 import { type ServerLoad, type Actions, redirect } from '@sveltejs/kit'
 import { activeUser } from '$lib/store'
 
-export const load: ServerLoad = (event) => {
-    const user = event.locals.user ?? {}
-
-    activeUser.set(user)
+export const load: ServerLoad = ({ locals }) => {
+    const user = locals.user ?? undefined
 
     return {
         user,
@@ -17,6 +15,7 @@ export const actions: Actions = {
             path: '/',
         })
 
-        throw redirect(302, '/login')
+        activeUser.set(undefined)
+        redirect(302, '/')
     },
 }

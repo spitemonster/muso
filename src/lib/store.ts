@@ -1,13 +1,4 @@
 import { writable } from 'svelte/store'
+import { type SafeUser } from '$lib/types/user'
 
-export type SessionUserData = {
-    email: string
-    name: string
-}
-
-const u: SessionUserData = {
-    email: '',
-    name: '',
-}
-
-export const activeUser = writable(u)
+export const activeUser = writable<SafeUser | undefined>(undefined)
