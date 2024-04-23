@@ -20,17 +20,19 @@ export const handle: Handle = async ({ event, resolve }) => {
         console.error(err)
     }
 
+    // don't deal with api requests; let the
     if (event.url.pathname.startsWith('/api')) {
         return await resolve(event)
     }
 
     const auth_token = event.cookies.get('auth_token')
 
-    try {
-        if (!auth_token) {
-            throw 'No auth token in request.'
-        }
+    if (!auth_token) {
+        event.locals.user = undefined
+        return await resolve(event)
+    }
 
+    try {
         const auth_result: User = jwt.verify(
             auth_token,
             JWT_PRIVATE_KEY
@@ -47,9 +49,9 @@ export const handle: Handle = async ({ event, resolve }) => {
         }
 
         event.locals.user = user
-    } catch (error) {
+    } catch (err) {
+        console.error(err)
         event.locals.user = undefined
-        console.error(error)
     }
 
     return await resolve(event)
