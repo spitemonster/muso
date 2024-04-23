@@ -1,6 +1,6 @@
 import type { Actions } from '@sveltejs/kit'
 import { redirect } from '@sveltejs/kit'
-import { getUser, createUser } from '$lib/server/services/user'
+import { createUser, findUserByEmail } from '$lib/services/user'
 
 export type RegisterResponse = {
     email: string | undefined
@@ -24,16 +24,14 @@ export const actions: Actions = {
                 throw new Error('Email, password, and name required.')
             }
 
-            const { email, password, name, isArtist } = fd as {
+            const { email, password, name, type } = fd as {
                 email: string
                 password: string
                 name: string
-                isArtist: string
+                type: string
             }
 
-            const artist = isArtist == 'on'
-
-            const { id } = await getUser({ email })
+            const { id } = await findUserByEmail(email)
 
             // fail if user already exists
             if (id) {
@@ -45,8 +43,10 @@ export const actions: Actions = {
                 name,
                 email,
                 password,
-                isArtist: artist,
+                type,
             })
+
+            console.log('new user: ', newUser)
 
             // fail if there were issues creating the user
             if (newUser.id == '') {
