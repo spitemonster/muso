@@ -6,7 +6,7 @@ export const artists = pgTable('artists', {
     id: text('id'),
     name: text('name'),
     url: text('url'),
-    adminId: text('adminId'),
+    adminId: text('admin_id'),
     createdAt: timestamp('created_at'),
 })
 

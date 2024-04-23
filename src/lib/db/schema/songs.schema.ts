@@ -8,8 +8,8 @@ export const songs = pgTable('songs', {
     title: text('title'),
     duration: interval('duration', { fields: 'second' }),
     url: text('url'),
-    artistId: text('artistId'),
-    albumId: text('albumId'),
+    artistId: text('artist_id'),
+    albumId: text('album_id'),
     createdAt: timestamp('created_at'),
 })
 

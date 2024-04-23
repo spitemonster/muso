@@ -6,7 +6,8 @@ export const albums = pgTable('albums', {
     id: text('id'),
     title: text('title'),
     duration: interval('duration', { fields: 'second' }),
-    artistId: text('artistId'),
+    artistId: text('artist_id'),
+    coverUrl: text('cover_url'),
     createdAt: timestamp('created_at'),
 })
 

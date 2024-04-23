@@ -22,6 +22,20 @@
       "when": 1713913568329,
       "tag": "0002_many_synch",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1713914695567,
+      "tag": "0003_steady_rocket_racer",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1713914777831,
+      "tag": "0004_past_texas_twister",
+      "breakpoints": true
     }
   ]
 }
