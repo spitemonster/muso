@@ -1,40 +1,51 @@
-import { redirect, type Actions } from '@sveltejs/kit'
 import { loginUser } from '$lib/server/services/user'
+import type { Actions, RequestEvent } from '@sveltejs/kit'
+import { type LoginFormResponse } from '$lib/types/login'
+import { type LoginUserResponse } from '$lib/server/services/user'
+import { fail, redirect } from '@sveltejs/kit'
 
 export const actions: Actions = {
-    default: async ({ cookies, request, locals }) => {
-        try {
-            const fd = Object.fromEntries(await request.formData())
-
-            if (!fd.email || !fd.password) {
-                throw new Error('Login requires both email and password.')
-            }
-
-            const { email, password } = fd as {
-                email: string
-                password: string
-            }
-
-            const { err, token, sessionUser } = await loginUser(email, password)
-
-            if (err) {
-                throw new Error(err)
-            }
-
-            locals.user = sessionUser ?? { name: '', email: '' }
-
-            cookies.set('auth_token', `${token}`, {
-                httpOnly: true,
-                path: '/',
-                secure: true,
-                sameSite: 'strict',
-                maxAge: 60 * 60 * 24,
-            })
-        } catch (err) {
-            console.error(err)
-            return { status: 400, errors: { message: `${err}` } }
+    default: async ({
+        cookies,
+        request,
+    }: RequestEvent): Promise<LoginFormResponse> => {
+        const loginResponse: LoginFormResponse = {
+            email: '',
+            token: '',
+            error: false,
+            message: '',
         }
 
-        throw redirect(302, '/')
+        const fd = Object.fromEntries(await request.formData())
+
+        if (!fd.email || !fd.password) {
+            loginResponse.error = true
+            loginResponse.message = 'Login requires both email and password.'
+            return fail(400, loginResponse)
+        }
+
+        const { email, password } = fd
+        const { user, token, error, message }: LoginUserResponse =
+            await loginUser(email as string, password as string)
+
+        if (error || !user) {
+            loginResponse.error = true
+            loginResponse.message = `There was an error: ${message}`
+            return fail(400, loginResponse)
+        }
+
+        loginResponse.token = token
+        loginResponse.email = user.email
+        loginResponse.message = message
+
+        cookies.set('auth_token', `${token}`, {
+            httpOnly: true,
+            path: '/',
+            secure: true,
+            sameSite: 'strict',
+            maxAge: 60 * 60 * 24,
+        })
+
+        redirect(302, '/')
     },
 }

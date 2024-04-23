@@ -1,10 +1,8 @@
 <script lang="ts">
 	import { beforeNavigate } from "$app/navigation";
-	import { page } from "$app/stores";
-
+	import { type SafeUser } from "$lib/types/user";
 	import type { PageData } from './$types'
-	import { type SessionUserData, activeUser } from "$lib/store";
-	import { beforeUpdate, onMount } from "svelte";
+	import { activeUser } from "$lib/store";
 	
 	export let data: PageData;
 	
@@ -13,17 +11,20 @@
 		email: ""
 	}
 
-	beforeUpdate(() => {
-		activeUser.set(user as SessionUserData);
-	})
+	$:ActiveUser = data?.user as SafeUser
+
+	$:{
+		const u = data?.user as SafeUser
+		activeUser.set(u)
+	}
 </script>
 
 <section class="container">
 	<h1>Muso</h1>
-	<!-- {#if user.email}
-		<p>Hey, { user.name }!</p>
+	{#if ActiveUser?.email }
+		<p>Hey, { ActiveUser.name }!</p>
 	{:else}
 		<p>🖕 bandcamp</p>
-	{/if} -->
+	{/if}
 	<!-- <p>{ data.user.name }</p> -->
 </section>
