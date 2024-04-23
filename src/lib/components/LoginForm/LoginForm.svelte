@@ -18,17 +18,10 @@
 				body: new FormData(e.target as HTMLFormElement)
 			})
 
-			console.log('res: ', res);
-
-			const rj = deserialize(await res.text())
-			console.log("rj: ", rj)
+			const rj = deserialize(await res.text()) as { data?: LoginFormResponse }
 			const loginResponse: LoginFormResponse = rj.data as LoginFormResponse;
 
-			console.log("login response: ", loginResponse);
-
 			if (loginResponse.error) {
-				console.log('shit!')
-				console.log(loginResponse.message)
 				throw new Error(loginResponse.message);
 			}
 

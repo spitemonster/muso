@@ -1,5 +1,5 @@
 import { loginUser } from '$lib/server/services/user'
-import type { Actions, RequestEvent } from '@sveltejs/kit'
+import type { Actions, RequestEvent, ActionFailure } from '@sveltejs/kit'
 import { type LoginFormResponse } from '$lib/types/login'
 import { type LoginUserResponse } from '$lib/server/services/user'
 import { fail, redirect } from '@sveltejs/kit'
@@ -8,7 +8,9 @@ export const actions: Actions = {
     default: async ({
         cookies,
         request,
-    }: RequestEvent): Promise<LoginFormResponse> => {
+    }: RequestEvent): Promise<
+        LoginFormResponse | ActionFailure<LoginFormResponse>
+    > => {
         const loginResponse: LoginFormResponse = {
             email: '',
             token: '',

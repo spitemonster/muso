@@ -11,7 +11,6 @@ export const db = new Sequelize({
 
 try {
 	await db.authenticate()
-	console.log('db authenticated');
 } catch (error) {
 	console.error(error);
 }

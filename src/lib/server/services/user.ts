@@ -100,11 +100,7 @@ export async function loginUser(
     }
 
     try {
-        console.log('email::::::', email)
         const user = await findUserByEmail(email)
-
-        console.log('USER:::: ', user)
-
         if (!user.id || !(await bcrypt.compare(password, user.password))) {
             throw 'The provided email and password do not correspond to an account in our records.'
         }
@@ -133,5 +129,3 @@ export async function loginUser(
 
     return response
 }
-
-// export async function logoutUser(email: string) {}
