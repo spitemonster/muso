@@ -1,18 +1,20 @@
 import jwt from 'jsonwebtoken'
-import { db } from '$lib/server/db'
+import { client, db } from '$lib/db/db'
 import { JWT_PRIVATE_KEY } from '$env/static/private'
-import { findSafeUserByEmail } from '$lib/server/services/user'
+import { findSafeUserByEmail } from '$lib/services/user'
 import type { Handle } from '@sveltejs/kit'
 import type { User, SafeUser } from '$lib/types/user'
+import { migrate } from 'drizzle-orm/node-postgres/migrator'
 
-let serverSynced = false
+let dbSynced = false
 
 export const handle: Handle = async ({ event, resolve }) => {
     // initialize database
     try {
-        if (!serverSynced) {
-            await db.sync({ alter: true })
-            serverSynced = true
+        if (!dbSynced) {
+            await client.connect()
+            await migrate(db, { migrationsFolder: './src/lib/db/drizzle' })
+            dbSynced = true
         }
     } catch (err) {
         console.error(err)

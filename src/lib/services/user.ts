@@ -1,9 +1,12 @@
 import bcrypt from 'bcrypt'
-import { User as UserModel } from '$lib/server/models/user'
+// import { User as UserModel } from '$lib/db/models/user'
 import { type User, type SafeUser } from '$lib/types/user'
 import jwt from 'jsonwebtoken'
 import { JWT_PRIVATE_KEY } from '$env/static/private'
 import { generateID } from './id'
+import { db } from '$lib/db/db'
+import { users } from '$lib/db/schema'
+import { eq } from 'drizzle-orm'
 
 export type UserQuery = {
     email?: string
@@ -21,15 +24,18 @@ export async function createUser(new_user: User): Promise<SafeUser> {
     try {
         const hashedPassword = await bcrypt.hash(new_user.password, 10)
 
-        const user = await UserModel.create({
-            id: generateID(),
-            name: new_user.name,
-            email: new_user.email,
-            password: hashedPassword,
-            isArtist: new_user.isArtist,
-        })
+        const user = await db
+            .insert(users)
+            .values({
+                id: generateID(),
+                name: new_user.name,
+                email: new_user.email,
+                password: hashedPassword,
+                type: new_user.type,
+            })
+            .returning()
 
-        const { id, name, email, isArtist } = await user.toJSON()
+        const { id, name, email, type } = user[0] as SafeUser
 
         if (!id) {
             throw new Error(
@@ -37,37 +43,27 @@ export async function createUser(new_user: User): Promise<SafeUser> {
             )
         }
 
-        return { id, name, email, isArtist }
+        return { id, name, email, type }
     } catch (err) {
         console.error(err)
-        return { id: '', name: '', email: '', isArtist: false }
-    }
-}
-
-export async function getUser(query: UserQuery) {
-    if (query.email) {
-        const u = await UserModel.findOne({ where: { email: query.email } })
-
-        if (!u) {
-            return { id: null }
-        }
-
-        return await u.toJSON()
+        return { id: '', name: '', email: '', type: '' }
     }
 }
 
 export async function findUserByEmail(user_email: string): Promise<User> {
     try {
-        const user = await UserModel.findOne({ where: { email: user_email } })
+        // const user = await UserModel.findOne({ where: { email: user_email } })
+        const user = await db.query.users.findFirst({
+            where: eq(users.email, user_email),
+        })
 
         if (!user) {
             throw new Error('Could not find a user with the given email.')
         }
 
-        return await user.toJSON()
+        return (await user) as User
     } catch (error) {
-        console.error(error)
-        return { id: '', email: '', name: '', isArtist: false, password: '' }
+        return { id: '', email: '', name: '', type: '', password: '' }
     }
 }
 
@@ -75,16 +71,15 @@ export async function findSafeUserByEmail(
     user_email: string
 ): Promise<SafeUser> {
     try {
-        const { id, email, name, isArtist } = await findUserByEmail(user_email)
+        const { id, email, name, type } = await findUserByEmail(user_email)
 
         if (id == '') {
             throw new Error('Could not find user with given email.')
         }
 
-        return { id, email, name, isArtist }
+        return { id, email, name, type }
     } catch (error) {
-        console.error(error)
-        return { id: '', email: '', name: '', isArtist: false }
+        return { id: '', email: '', name: '', type: '' }
     }
 }
 

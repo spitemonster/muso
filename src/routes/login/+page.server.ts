@@ -1,7 +1,7 @@
-import { loginUser } from '$lib/server/services/user'
+import { loginUser } from '$lib/services/user'
 import type { Actions, RequestEvent, ActionFailure } from '@sveltejs/kit'
 import { type LoginFormResponse } from '$lib/types/login'
-import { type LoginUserResponse } from '$lib/server/services/user'
+import { type LoginUserResponse } from '$lib/services/user'
 import { fail, redirect } from '@sveltejs/kit'
 
 export const actions: Actions = {
