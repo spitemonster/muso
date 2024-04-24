@@ -46,8 +46,6 @@ export const actions: Actions = {
                 type,
             })
 
-            console.log('new user: ', newUser)
-
             // fail if there were issues creating the user
             if (newUser.id == '') {
                 throw new Error(`There was an issue creating your account.`)

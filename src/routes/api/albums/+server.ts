@@ -9,6 +9,5 @@ export const GET: RequestHandler = async () => {
         },
     })
 
-    console.log(albums)
     return json(albums)
 }
