@@ -48,6 +48,7 @@
     "type": "module",
     "dependencies": {
         "@fontsource/ibm-plex-mono": "^5.0.12",
+        "aws-sdk": "^2.1605.0",
         "bcrypt": "^5.1.1",
         "dotenv": "^16.4.5",
         "drizzle-orm": "^0.30.9",
