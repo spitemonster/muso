@@ -46,8 +46,6 @@ export const actions: Actions = {
                 type,
             })
 
-            console.log('new user: ', newUser)
-
             // fail if there were issues creating the user
             if (newUser.id == '') {
                 throw new Error(`There was an issue creating your account.`)
@@ -55,9 +53,9 @@ export const actions: Actions = {
 
             response.message = 'Your account has been successfully created.'
             response.email = email
-        } catch (error) {
+        } catch (err) {
             response.error = true
-            response.message = error as string
+            response.message = err as string
             response.email = undefined
         }
 

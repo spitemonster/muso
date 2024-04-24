@@ -62,7 +62,7 @@ export async function findUserByEmail(user_email: string): Promise<User> {
         }
 
         return (await user) as User
-    } catch (error) {
+    } catch (err) {
         return { id: '', email: '', name: '', type: '', password: '' }
     }
 }
@@ -78,7 +78,7 @@ export async function findSafeUserByEmail(
         }
 
         return { id, email, name, type }
-    } catch (error) {
+    } catch (err) {
         return { id: '', email: '', name: '', type: '' }
     }
 }
@@ -115,11 +115,11 @@ export async function loginUser(
         response.token = token
         response.error = false
         response.message = 'User successfully authenticated.'
-    } catch (error) {
+    } catch (err) {
         response.user = undefined
         response.error = true
-        response.message = error as string
-        console.error('user authentication failed: ', error)
+        response.message = err as string
+        console.error('user authentication failed: ', err)
     }
 
     return response

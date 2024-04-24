@@ -1,9 +1,16 @@
-export function generateID(length: number = 8): string {
-	const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+";
-    let randomString = "";
-    for (let i = 0; i < length; i++) {
-        const randomPosition = Math.floor(Math.random() * charset.length);
-        randomString += charset.charAt(randomPosition);
-    }
-    return randomString;
+import { randomBytes } from 'node:crypto'
+
+export const charset =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+'
+
+export async function generateID(): Promise<string> {
+    return await new Promise((resolve, reject) => {
+        randomBytes(8, (err, buffer) => {
+            if (err) {
+                reject()
+            }
+
+            resolve(buffer.toString('hex'))
+        })
+    })
 }
