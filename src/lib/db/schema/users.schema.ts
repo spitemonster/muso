@@ -8,7 +8,7 @@ export const users = pgTable('users', {
     email: text('email'),
     password: text('password'),
     type: text('type'),
-    artistId: text('id'),
+    artistId: text('artist_id'),
     createdAt: timestamp('created_at'),
     updatedAt: timestamp('updated_at'),
 })

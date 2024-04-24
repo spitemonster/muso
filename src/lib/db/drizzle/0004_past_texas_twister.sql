@@ -1,1 +1,0 @@
-ALTER TABLE "albums" RENAME COLUMN "artist_url" TO "artist_id";

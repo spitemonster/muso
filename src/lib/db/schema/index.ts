@@ -1,4 +1,4 @@
-export { users } from './users.schema'
-export { artists } from './artists.schema'
-export { albums } from './albums.schema'
-export { songs } from './songs.schema'
+export { users, usersRelations } from './users.schema'
+export { artists, artistsRelations } from './artists.schema'
+export { albums, albumsRelations } from './albums.schema'
+export { songs, songsRelations } from './songs.schema'

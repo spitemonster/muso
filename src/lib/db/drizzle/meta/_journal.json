@@ -5,36 +5,8 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1713906454863,
-      "tag": "0000_loud_the_santerians",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1713908852757,
-      "tag": "0001_cloudy_donald_blake",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1713913568329,
-      "tag": "0002_many_synch",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "5",
-      "when": 1713914695567,
-      "tag": "0003_steady_rocket_racer",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "5",
-      "when": 1713914777831,
-      "tag": "0004_past_texas_twister",
+      "when": 1713924616763,
+      "tag": "0000_sad_hydra",
       "breakpoints": true
     }
   ]

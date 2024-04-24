@@ -5,7 +5,7 @@ dotenv.config()
 
 export default {
     driver: 'pg',
-    schema: './src/lib/db/schema/*',
+    schema: './src/lib/db/schema',
     out: './src/lib/db/drizzle',
     verbose: true,
     strict: true,
