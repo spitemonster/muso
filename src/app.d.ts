@@ -8,6 +8,7 @@ declare global {
         // interface Error {}
         interface Locals {
             user: SafeUser | undefined
+            // artists: A
         }
         interface PageData {}
         // interface PageState {}

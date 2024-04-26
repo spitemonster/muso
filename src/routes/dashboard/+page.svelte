@@ -7,5 +7,8 @@
 <div class="container">
 	<h1>Muso Dashboard</h1>
 
-	<ArtistDashboard user={data?.user} />
+	{#if data.artists}
+		<ArtistDashboard artists={data.artists} />
+	{/if}
+	
 </div>

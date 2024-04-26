@@ -1,7 +1,5 @@
 <script lang="ts">
 	import type { PageData } from './$types'
-	import { activeUser } from "$lib/store";
-	
 	export let data: PageData;
 </script>
 
