@@ -5,19 +5,20 @@ import {
     DB_HOST,
     DB_USER,
     DB_PORT,
-    AWS_ACCESS_KEY,
-    AWS_SECRET_KEY,
+    // AWS_ACCESS_KEY,
+    // AWS_SECRET_KEY,
 } from '$env/static/private'
 import * as schema from '$lib/db/schema/'
-import aws from 'aws-sdk'
+// import aws from 'aws-sdk'
+// import { S3 } from 'aws-sdk'
 
-aws.config.update({
-    region: 'us-west-2',
-    accessKeyId: AWS_ACCESS_KEY,
-    secretAccessKey: AWS_SECRET_KEY,
-})
+// aws.config.update({
+//     region: 'us-west-2',
+//     accessKeyId: AWS_ACCESS_KEY,
+//     secretAccessKey: AWS_SECRET_KEY,
+// })
 
-export const s3 = new aws.S3()
+// export const s3 = new aws.S3()
 
 export const client = new pg.Client({
     host: DB_HOST,
