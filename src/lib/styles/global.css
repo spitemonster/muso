@@ -1,0 +1,65 @@
+@import '_reset';
+@import '_muso';
+
+:root {
+    --color-black: #071013;
+    --color-white: #e6e1db;
+    --color-orange: #f79824;
+    --color-gray: #6d7b6d;
+    --color-green-dark: #26502a;
+    --color-green-light: #9cb0a4;
+    --color-green-saturated: #56b35f;
+    --color-blue-dark: #373f58;
+    --color-blue-light: #9baebc;
+
+    --font-size-base: $rem;
+    --font-size-large: 1.25rem;
+    --font-size-lead: 1.125rem;
+    --font-size-xs: to_rem(10);
+    --font-size-sm: to_rem(13);
+    --font-size-h6: to_rem(16);
+    --font-size-h5: to_rem(18);
+    --font-size-h4: to_rem(18);
+    --font-size-h3: to_rem(24);
+    --font-size-h2: to_rem(32);
+    --font-size-h1: to_rem(36);
+    --font-size-display-sm: to_rem(40);
+    --font-size-display-md: to_rem(48);
+    --font-size-display-lg: clamp(
+        to_rem(48),
+        1rem + calc(10vw / 3),
+        to_rem(64)
+    );
+
+    font-size: var(--font-size-base);
+}
+
+body {
+    --color-foreground: var(--color-white);
+    --color-background: var(--color-black);
+
+    background: var(--color-background);
+    color: var(--color-foreground);
+
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 400;
+}
+
+h1 {
+    font-size: 2.5em;
+}
+
+h2 {
+    font-size: 1.842em;
+}
+
+h3 {
+    font-size: 1.3572em;
+}

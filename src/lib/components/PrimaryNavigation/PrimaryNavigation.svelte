@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { enhance } from "$app/forms";
-	import { activeUser } from "$lib/store";
 	import type { SafeUser } from "$lib/types/user";
 	export let user: SafeUser | undefined;
 </script>
@@ -20,8 +19,7 @@
 		{/if}
 	</menu>
 </nav>
-
-<style lang="scss">
+<style>
 	nav {
 		border-bottom: 1px solid var(--color-foreground);
 		margin: 0 0 var(--spacer-sm) 0;
@@ -32,9 +30,14 @@
 	menu {
 		display: flex;
 		gap: 1rem;
+		list-style: none;
+		padding: 0;
+		margin: 0;
 
 		li {
 			white-space: nowrap;
+			margin: 0;
+			padding: 0;
 			
 			&:not(:last-child) {
 				margin-right: 1rem;

@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "dev": "vite dev",
-        "build": "vite build",
+        "build": "vite build -d",
         "preview": "vite preview",
         "test": "npm run test:integration && npm run test:unit",
         "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -31,15 +31,22 @@
         "@types/sequelize": "^4.28.20",
         "@typescript-eslint/eslint-plugin": "^7.0.0",
         "@typescript-eslint/parser": "^7.0.0",
+        "autoprefixer": "^10.4.16",
         "drizzle-kit": "^0.20.17",
         "eslint": "^8.56.0",
         "eslint-config-prettier": "^9.1.0",
         "eslint-plugin-svelte": "^2.35.1",
+        "postcss": "^8.4.32",
+        "postcss-csso": "^6.0.1",
+        "postcss-import": "^16.1.0",
+        "postcss-load-config": "^5.0.2",
+        "postcss-preset-env": "^9.5.9",
         "prettier": "^3.1.1",
         "prettier-plugin-svelte": "^3.1.2",
         "sass": "^1.75.0",
         "svelte": "^4.2.7",
         "svelte-check": "^3.6.0",
+        "svelte-preprocess": "^5.1.4",
         "tslib": "^2.4.1",
         "typescript": "^5.0.0",
         "vite": "^5.0.3",
@@ -54,7 +61,6 @@
         "drizzle-orm": "^0.30.9",
         "jsonwebtoken": "^9.0.2",
         "pg": "^8.11.5",
-        "postgres": "^3.4.4",
-        "svelte-preprocess": "^5.1.4"
+        "postgres": "^3.4.4"
     }
 }
