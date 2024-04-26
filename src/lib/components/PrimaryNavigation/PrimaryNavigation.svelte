@@ -3,17 +3,17 @@
 	import { activeUser } from "$lib/store";
 	import type { SafeUser } from "$lib/types/user";
 	export let user: SafeUser | undefined;
-
 </script>
-
-{user?.email}
 
 <nav class="container">
 	<menu class="unstyled">
 		<li><a href="/">Home</a></li>
+		{#if user}
+			<li><a href="/">Dashboard</a></li>
+		{/if}
 		<div class="spacer"></div>
 		{#if user != undefined && user.email != "" }
-			<li><form method="POST" action="?/logout" use:enhance><button class="text">Logout</button></form></li>
+			<li><form method="POST" action="/logout" use:enhance><button class="text">Logout</button></form></li>
 		{:else }
 			<li><a href="/login">Log In</a></li>
 			<li><a href="/sign-up">Sign Up</a></li>
@@ -46,7 +46,6 @@
 		width: 100%;
 		flex-shrink: 1;
 	}
-
 	a {
 		color: var(--foreground);
 		text-decoration: none;
