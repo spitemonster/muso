@@ -6,8 +6,8 @@ import type { Handle } from '@sveltejs/kit'
 import type { User, SafeUser } from '$lib/types/user'
 import { migrate } from 'drizzle-orm/node-postgres/migrator'
 
-import { userData, artistData, albumData, songData } from '$lib/db/seed'
-import { users, artists, albums, songs } from '$lib/db/schema'
+// import { userData, artistData, albumData, songData } from '$lib/db/seed'
+// import { users, artists, albums, songs } from '$lib/db/schema'
 
 let dbSynced = false
 
@@ -17,17 +17,17 @@ export const handle: Handle = async ({ event, resolve }) => {
         if (!dbSynced) {
             await client.connect()
             await migrate(db, { migrationsFolder: './src/lib/db/drizzle' })
-            await db.insert(users).values(userData)
-            await db.insert(artists).values(artistData)
-            await db.insert(albums).values(albumData)
-            await db.insert(songs).values(songData)
+            // await db.insert(users).values(userData)
+            // await db.insert(artists).values(artistData)
+            // await db.insert(albums).values(albumData)
+            // await db.insert(songs).values(songData)
             dbSynced = true
         }
     } catch (err) {
         console.error(err)
     }
 
-    // don't deal with api requests; let the
+    // don't deal with api requests; let the routes do it
     if (event.url.pathname.startsWith('/api')) {
         return await resolve(event)
     }
@@ -54,6 +54,8 @@ export const handle: Handle = async ({ event, resolve }) => {
         if (user.id === '') {
             throw new Error('Token could not be verified')
         }
+
+        console.log('authenticated')
 
         event.locals.user = user
     } catch (err) {

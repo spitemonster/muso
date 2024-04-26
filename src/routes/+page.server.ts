@@ -1,11 +1,10 @@
-import { type ServerLoad, type Actions, redirect } from '@sveltejs/kit'
+import { type Actions, redirect } from '@sveltejs/kit'
 import { activeUser } from '$lib/store'
+import type { PageServerLoad } from './$types'
 
-export const load: ServerLoad = ({ locals }) => {
-    const user = locals.user ?? undefined
-
+export const load: PageServerLoad = async ({ locals }) => {
     return {
-        user,
+        user: locals.user,
     }
 }
 

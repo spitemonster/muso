@@ -27,7 +27,7 @@ export async function createUser(new_user: User): Promise<SafeUser> {
         const user = await db
             .insert(users)
             .values({
-                id: generateID(),
+                id: await generateID(),
                 name: new_user.name,
                 email: new_user.email,
                 password: hashedPassword,

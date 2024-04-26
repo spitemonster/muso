@@ -2,17 +2,17 @@
 	import { enhance } from "$app/forms";
 	import { activeUser } from "$lib/store";
 	import type { SafeUser } from "$lib/types/user";
-	let user: SafeUser | undefined;
+	export let user: SafeUser | undefined;
 
-	activeUser.subscribe((value) => {
-		user = value;
-	})
 </script>
+
+{user?.email}
+
 <nav class="container">
 	<menu class="unstyled">
 		<li><a href="/">Home</a></li>
 		<div class="spacer"></div>
-		{#if user != undefined && Object.keys(user).length > 0 && user.email != "" }
+		{#if user != undefined && user.email != "" }
 			<li><form method="POST" action="?/logout" use:enhance><button class="text">Logout</button></form></li>
 		{:else }
 			<li><a href="/login">Log In</a></li>
