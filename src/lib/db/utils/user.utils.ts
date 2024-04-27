@@ -44,7 +44,11 @@ export async function getUserFromDbByEmail(
     }
 }
 
-export function userToSafeUser(user: User): SafeUser {
+export function userToSafeUser(user: User | null): SafeUser | null {
+    if (!user) {
+        return null
+    }
+
     return {
         id: user.id,
         name: user.name,

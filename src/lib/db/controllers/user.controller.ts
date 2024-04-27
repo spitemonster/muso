@@ -43,59 +43,19 @@ export class UserController {
     }
 
     static async FindUserByEmail(email: string): Promise<User | null> {
-        try {
-            const user = await getUserFromDbByEmail(email)
-
-            if (!user) {
-                throw new Error(`Could not find a user with email ${email}.`)
-            }
-
-            return user
-        } catch (err) {
-            return null
-        }
+        return await getUserFromDbByEmail(email)
     }
 
     static async FindSafeUserByEmail(email: string): Promise<SafeUser | null> {
-        try {
-            const user = await getUserFromDbByEmail(email)
-
-            if (!user) {
-                throw new Error('Could not find user with given email.')
-            }
-
-            return userToSafeUser(user)
-        } catch (err) {
-            return null
-        }
+        return await getUserFromDbByEmail(email)
     }
 
     static async FindUserById(id: string): Promise<User | null> {
-        try {
-            const user = await getUserFromDbById(id)
-
-            if (!user) {
-                throw new Error('Could not find a user with the given email.')
-            }
-
-            return user
-        } catch (err) {
-            return null
-        }
+        return await getUserFromDbById(id)
     }
 
     static async FindSafeUserById(id: string): Promise<SafeUser | null> {
-        try {
-            const user = await getUserFromDbById(id)
-
-            if (!user) {
-                throw new Error(`Could not find a user with id ${id}.`)
-            }
-
-            return userToSafeUser(user)
-        } catch (err) {
-            return null
-        }
+        return userToSafeUser(await getUserFromDbById(id))
     }
 
     static async LoginUser(

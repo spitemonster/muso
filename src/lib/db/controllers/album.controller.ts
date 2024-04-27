@@ -7,34 +7,12 @@ import {
 
 export class AlbumController {
     static async FindAlbumById(id: string): Promise<Album | null> {
-        try {
-            const album = await getAlbumFromDbById(id)
-
-            if (!album) {
-                throw new Error(`No album found with id ${id}.`)
-            }
-
-            return album as Album
-        } catch (err) {
-            console.error(err)
-            return null
-        }
+        return await getAlbumFromDbById(id)
     }
 
     static async FindAlbumsByArtistId(
         artistId: string
     ): Promise<Album[] | null> {
-        try {
-            const albumsByArtist = await getAlbumsFromDbByArtistId(artistId)
-
-            if (!albumsByArtist) {
-                throw new Error(`No album found by artist with id ${artistId}`)
-            }
-
-            return albumsByArtist as Album[]
-        } catch (err) {
-            console.error(err)
-            return null
-        }
+        return await getAlbumsFromDbByArtistId(artistId)
     }
 }

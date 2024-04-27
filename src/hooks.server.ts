@@ -3,11 +3,11 @@ import { client, db } from '$lib/db/db'
 import { JWT_PRIVATE_KEY } from '$env/static/private'
 import { UserController } from '$lib/db/controllers'
 import type { Handle } from '@sveltejs/kit'
-import type { User, SafeUser } from '$lib/types/user'
+import type { User } from '$lib/types/user'
 import { migrate } from 'drizzle-orm/node-postgres/migrator'
 
-import { userData, artistData, albumData, songData } from '$lib/db/seed'
-import { users, artists, albums, songs } from '$lib/db/schema'
+// import { userData, artistData, albumData, songData } from '$lib/db/seed'
+// import { users, artists, albums, songs } from '$lib/db/schema'
 
 let dbSynced = false
 let dbClientConnected = false
@@ -57,15 +57,11 @@ export const handle: Handle = async ({ event, resolve }) => {
             throw new Error('Token could not be verified')
         }
 
-        const user: SafeUser = await UserController.FindSafeUserByEmail(
-            auth_result.email
-        )
+        const user = await UserController.FindSafeUserByEmail(auth_result.email)
 
-        if (user.id === '') {
+        if (!user || user.id === '') {
             throw new Error('Token could not be verified')
         }
-
-        console.log('authenticated')
 
         event.locals.user = user
     } catch (err) {
