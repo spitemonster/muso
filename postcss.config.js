@@ -1,19 +1,16 @@
-const autoprefixer = require('autoprefixer')
-const postcssPresetEnv = require('postcss-preset-env')
-const csso = require('postcss-csso')
+// import postcssFunctions from 'postcss-functions'
+import postcssPresetEnv from 'postcss-preset-env'
 
-const config = {
+export default {
     plugins: [
         postcssPresetEnv({
             features: {
                 'nesting-rules': true,
                 'custom-media-queries': true,
                 'media-query-ranges': true,
+                'nested-calc': true,
+                'logical-properties-and-values': true,
             },
         }),
-        autoprefixer(),
-        csso(),
     ],
 }
-
-module.exports = config

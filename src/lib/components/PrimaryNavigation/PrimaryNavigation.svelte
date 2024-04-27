@@ -19,7 +19,7 @@
 		{/if}
 	</menu>
 </nav>
-<style>
+<style lang="postcss">
 	nav {
 		border-bottom: 1px solid var(--color-foreground);
 		margin: 0 0 var(--spacer-sm) 0;
@@ -34,7 +34,7 @@
 		padding: 0;
 		margin: 0;
 
-		li {
+		& > li {
 			white-space: nowrap;
 			margin: 0;
 			padding: 0;

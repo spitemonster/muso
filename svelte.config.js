@@ -14,6 +14,8 @@ const config = {
                         'nesting-rules': true,
                         'custom-media-queries': true,
                         'media-query-ranges': true,
+                        'nested-calc': true,
+                        'logical-properties-and-values': true,
                     },
                 }),
             ],

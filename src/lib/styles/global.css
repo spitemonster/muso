@@ -12,26 +12,42 @@
     --color-blue-dark: #373f58;
     --color-blue-light: #9baebc;
 
-    --font-size-base: $rem;
+    --font-size-base: 16px;
     --font-size-large: 1.25rem;
     --font-size-lead: 1.125rem;
-    --font-size-xs: to_rem(10);
-    --font-size-sm: to_rem(13);
-    --font-size-h6: to_rem(16);
-    --font-size-h5: to_rem(18);
-    --font-size-h4: to_rem(18);
-    --font-size-h3: to_rem(24);
-    --font-size-h2: to_rem(32);
-    --font-size-h1: to_rem(36);
-    --font-size-display-sm: to_rem(40);
-    --font-size-display-md: to_rem(48);
+    --font-size-xs: calc(var(--font-size-base) * 0.625);
+    --font-size-sm: calc(var(--font-size-base) * 0.8125);
+    --font-size-h5: calc(var(--font-size-base) * 1);
+    --font-size-h4: calc(var(--font-size-base) * 1.125);
+    --font-size-h3: calc(var(--font-size-base) * 1.5);
+    --font-size-h2: calc(var(--font-size-base) * 2);
+    --font-size-h1: calc(var(--font-size-base) * 2.5);
+    --font-size-display-sm: calc(var(--font-size-base) * 2.5);
+    --font-size-display-md: calc(var(--font-size-base) * 3);
     --font-size-display-lg: clamp(
-        to_rem(48),
+        calc(var(--font-size-base) * 3),
         1rem + calc(10vw / 3),
-        to_rem(64)
+        calc(var(--font-size-base) * 4)
+    );
+
+    --spacer-xs: 0.625rem;
+    --spacer-sm: 0.8125rem;
+    --spacer-base: 1rem;
+    --spacer-md: 1.125rem;
+    --spacer-lg: 2.5rem;
+    --spacer-xl: 3rem;
+    --spacer-xxl: 4rem;
+
+    --container-min-padding: 1rem;
+    --container-width: 70rem;
+    --container-max-width: 90rem;
+    --container-inline-padding: max(
+        var(--container-min-padding),
+        calc((100vw - var(--container-width)) / 2)
     );
 
     font-size: var(--font-size-base);
+    min-height: 0vw;
 }
 
 body {
@@ -53,13 +69,48 @@ h3 {
 }
 
 h1 {
-    font-size: 2.5em;
+    font-size: var(--font-size-h1);
 }
 
 h2 {
-    font-size: 1.842em;
+    font-size: var(--font-size-h2);
 }
 
 h3 {
-    font-size: 1.3572em;
+    font-size: var(--font-size-h3);
+}
+
+h4 {
+    font-size: var(--font-size-h4);
+}
+
+h5 {
+    font-size: var(--font-size-h5);
+}
+
+p {
+    font-size: 1rem;
+}
+
+.container {
+    padding-inline: var(--container-inline-padding);
+
+    &--min {
+        padding-inline: max(
+            calc((100vw - var(--container-max-width)) / 2),
+            var(--container-min-padding)
+        );
+    }
+
+    .container {
+        padding-inline: 0;
+    }
+
+    &--left {
+        padding-left: var(--container-inline-padding);
+    }
+
+    &--right {
+        padding-right: var(--container-inline-padding);
+    }
 }
