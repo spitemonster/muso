@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import { client, db } from '$lib/db/db'
 import { JWT_PRIVATE_KEY } from '$env/static/private'
-import { findSafeUserByEmail } from '$lib/services/user'
+import { UserController } from '$lib/db/controllers'
 import type { Handle } from '@sveltejs/kit'
 import type { User, SafeUser } from '$lib/types/user'
 import { migrate } from 'drizzle-orm/node-postgres/migrator'
@@ -52,7 +52,9 @@ export const handle: Handle = async ({ event, resolve }) => {
             throw new Error('Token could not be verified')
         }
 
-        const user: SafeUser = await findSafeUserByEmail(auth_result.email)
+        const user: SafeUser = await UserController.FindSafeUserByEmail(
+            auth_result.email
+        )
 
         if (user.id === '') {
             throw new Error('Token could not be verified')

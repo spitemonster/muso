@@ -1,15 +1,19 @@
 import type { NewUser, SafeUser, User } from '$lib/types'
 import bcrypt from 'bcrypt'
-import { db } from '$lib/db/db'
+import { db } from '$lib/db'
 import { users } from '$lib/db/schema'
 import { generateId } from '$lib/utils'
-import { eq } from 'drizzle-orm'
 import type { LoginUserResponse } from '$lib/types'
 import jwt from 'jsonwebtoken'
 import { JWT_PRIVATE_KEY } from '$env/static/private'
+import {
+    getUserFromDbByEmail,
+    getUserFromDbById,
+    userToSafeUser,
+} from '$lib/db/utils'
 
 export class UserController {
-    static async CreateUser(newUser: NewUser): Promise<SafeUser> {
+    static async CreateUser(newUser: NewUser): Promise<SafeUser | null> {
         try {
             const hashedPassword = await bcrypt.hash(newUser.password, 10)
 
@@ -34,75 +38,63 @@ export class UserController {
 
             return u
         } catch (err) {
-            return { id: '', name: '', email: '', type: '' } as SafeUser
+            return null
         }
     }
 
-    static async FindUserByEmail(email: string): Promise<User> {
+    static async FindUserByEmail(email: string): Promise<User | null> {
         try {
-            const user = await db.query.users.findFirst({
-                where: eq(users.email, email),
-            })
+            const user = await getUserFromDbByEmail(email)
 
             if (!user) {
-                throw new Error('Could not find a user with the given email.')
+                throw new Error(`Could not find a user with email ${email}.`)
             }
 
-            return (await user) as User
+            return user
         } catch (err) {
-            return { id: '', email: '', name: '', type: '', password: '' }
+            return null
         }
     }
 
-    static async FindSafeUserByEmail(email: string): Promise<SafeUser> {
+    static async FindSafeUserByEmail(email: string): Promise<SafeUser | null> {
         try {
-            // this is not a good way to do this, it is just late and I haven't really thought through it.
-            const user = (await UserController.FindUserByEmail(email)) as User
+            const user = await getUserFromDbByEmail(email)
 
-            if (user.id == '') {
+            if (!user) {
                 throw new Error('Could not find user with given email.')
             }
 
-            return {
-                id: user.id,
-                email: user.email,
-                name: user.name,
-                type: user.type,
-            } as SafeUser
+            return userToSafeUser(user)
         } catch (err) {
-            return { id: '', email: '', name: '', type: '' }
+            return null
         }
     }
 
-    static async FindUserByID(id: string): Promise<User> {
+    static async FindUserByID(id: string): Promise<User | null> {
         try {
-            const user = await db.query.users.findFirst({
-                where: eq(users.id, id),
-            })
+            const user = await getUserFromDbById(id)
 
             if (!user) {
                 throw new Error('Could not find a user with the given email.')
             }
 
-            return (await user) as User
+            return user
         } catch (err) {
-            return { id: '', email: '', name: '', type: '', password: '' }
+            return null
         }
     }
 
-    static async FindSafeUserByID(id: string): Promise<SafeUser> {
+    static async FindSafeUserByID(id: string): Promise<SafeUser | null> {
         try {
-            const user = await db.query.users.findFirst({
-                where: eq(users.id, id),
-            })
+            const user = await getUserFromDbById(id)
 
             if (!user) {
-                throw new Error('Could not find a user with the given email.')
+                throw new Error(`Could not find a user with id ${id}.`)
             }
 
-            return (await user) as SafeUser
+            return userToSafeUser(user)
         } catch (err) {
-            return { id: '', email: '', name: '', type: '' }
+            return null
         }
     }
 
@@ -118,8 +110,8 @@ export class UserController {
         }
 
         try {
-            const user = await UserController.FindUserByEmail(email)
-            if (!user.id || !(await bcrypt.compare(password, user.password))) {
+            const user = await getUserFromDbByEmail(email)
+            if (!user || !(await bcrypt.compare(password, user.password))) {
                 throw 'The provided email and password do not correspond to an account in our records.'
             }
 

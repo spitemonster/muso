@@ -1,7 +1,7 @@
-import { loginUser } from '$lib/services/user'
+import { UserController } from '$lib/db/controllers'
 import type { Actions, RequestEvent, ActionFailure } from '@sveltejs/kit'
 import { type LoginFormResponse } from '$lib/types/login'
-import { type LoginUserResponse } from '$lib/services/user'
+import { type LoginUserResponse } from '$lib/types'
 import { fail, redirect } from '@sveltejs/kit'
 
 export const actions: Actions = {
@@ -28,7 +28,7 @@ export const actions: Actions = {
 
         const { email, password } = fd
         const { user, token, error, message }: LoginUserResponse =
-            await loginUser(email as string, password as string)
+            await UserController.LoginUser(email as string, password as string)
 
         if (error || !user) {
             loginResponse.error = true
