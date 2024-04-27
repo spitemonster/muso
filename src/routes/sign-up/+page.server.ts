@@ -1,6 +1,6 @@
 import type { Actions } from '@sveltejs/kit'
 import { redirect } from '@sveltejs/kit'
-import { createUser, findUserByEmail } from '$lib/services/user'
+import { UserController } from '$lib/db/controllers/user.controller'
 
 export type RegisterResponse = {
     email: string | undefined
@@ -31,14 +31,14 @@ export const actions: Actions = {
                 type: string
             }
 
-            const { id } = await findUserByEmail(email)
+            const { id } = await UserController.FindUserByEmail(email)
 
             // fail if user already exists
             if (id) {
                 throw new Error('User with given email already exists')
             }
 
-            const newUser = await createUser({
+            const newUser = await UserController.CreateUser({
                 id: '', // kind of a workaround since I didn't think through using User type as prop
                 name,
                 email,

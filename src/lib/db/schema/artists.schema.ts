@@ -1,5 +1,6 @@
-import { text, timestamp, pgTable } from 'drizzle-orm/pg-core'
 import { relations } from 'drizzle-orm'
+import { text, timestamp, pgTable } from 'drizzle-orm/pg-core'
+
 import { albums, songs, users } from '.'
 
 export const artists = pgTable('artists', {

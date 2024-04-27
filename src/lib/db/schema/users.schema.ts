@@ -1,6 +1,7 @@
-import { text, timestamp, pgTable } from 'drizzle-orm/pg-core'
-import { artists } from './artists.schema'
 import { relations } from 'drizzle-orm'
+import { text, timestamp, pgTable } from 'drizzle-orm/pg-core'
+
+import { artists } from '.'
 
 export const users = pgTable('users', {
     id: text('id'),

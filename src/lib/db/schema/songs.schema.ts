@@ -1,5 +1,5 @@
-import { text, timestamp, pgTable, integer } from 'drizzle-orm/pg-core'
 import { relations } from 'drizzle-orm'
+import { text, timestamp, pgTable, integer } from 'drizzle-orm/pg-core'
 
 import { albums, artists } from '.'
 
