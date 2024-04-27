@@ -2,7 +2,7 @@
 // import { db } from './db'
 import { users, artists, albums, songs } from './schema'
 import { faker } from '@faker-js/faker'
-import { generateID } from '$lib/services/id'
+import { generateId } from '$lib/utils'
 
 const userCount = 10
 const artistCount = 5
@@ -13,7 +13,7 @@ export const userData: (typeof users.$inferInsert)[] = []
 const userIds: string[] = []
 
 for (let i = 0; i < userCount; i++) {
-    const id = await generateID()
+    const id = await generateId()
     if (i < 5) {
         userIds.push(id)
     }
@@ -31,7 +31,7 @@ export const artistData: (typeof artists.$inferInsert)[] = []
 const artistIds: string[] = []
 
 for (let i = 0; i < artistCount; i++) {
-    const id = await generateID()
+    const id = await generateId()
     artistIds.push(id)
 
     artistData.push({
@@ -46,7 +46,7 @@ export const albumData: (typeof albums.$inferInsert)[] = []
 const albumIds: string[] = []
 
 for (let i = 0; i < albumCount; i++) {
-    const id = await generateID()
+    const id = await generateId()
     albumIds.push(id)
 
     albumData.push({
@@ -63,7 +63,7 @@ export const songData: (typeof songs.$inferInsert)[] = []
 const songIds: string[] = []
 
 for (let i = 0; i < songCount; i++) {
-    const id = await generateID()
+    const id = await generateId()
     songIds.push(id)
 
     const album = faker.helpers.arrayElement(albumData)

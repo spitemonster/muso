@@ -6,16 +6,21 @@ import type { Handle } from '@sveltejs/kit'
 import type { User, SafeUser } from '$lib/types/user'
 import { migrate } from 'drizzle-orm/node-postgres/migrator'
 
-// import { userData, artistData, albumData, songData } from '$lib/db/seed'
-// import { users, artists, albums, songs } from '$lib/db/schema'
+import { userData, artistData, albumData, songData } from '$lib/db/seed'
+import { users, artists, albums, songs } from '$lib/db/schema'
 
 let dbSynced = false
+let dbClientConnected = false
 
 export const handle: Handle = async ({ event, resolve }) => {
     // initialize database
     try {
         if (!dbSynced) {
-            await client.connect()
+            if (!dbClientConnected) {
+                await client.connect()
+                dbClientConnected = true
+            }
+
             await migrate(db, { migrationsFolder: './src/lib/db/drizzle' })
 
             // seed db

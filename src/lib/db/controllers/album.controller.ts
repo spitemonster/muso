@@ -6,7 +6,7 @@ import {
 } from '../utils/album.utils'
 
 export class AlbumController {
-    async FindAlbumByID(id: string): Promise<Album | null> {
+    static async FindAlbumById(id: string): Promise<Album | null> {
         try {
             const album = await getAlbumFromDbById(id)
 
@@ -21,7 +21,9 @@ export class AlbumController {
         }
     }
 
-    async FindAlbumsByArtistId(artistId: string): Promise<Album[] | null> {
+    static async FindAlbumsByArtistId(
+        artistId: string
+    ): Promise<Album[] | null> {
         try {
             const albumsByArtist = await getAlbumsFromDbByArtistId(artistId)
 

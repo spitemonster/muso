@@ -1,8 +1,12 @@
 import type { Artist } from '$lib/types'
-import { getArtistFromDbById, getArtistsFromDbByUserId } from '../utils'
+import {
+    getArtistFromDbById,
+    getArtistsFromDbByUserId,
+    getArtistsFromDbByUserEmail,
+} from '$lib/db/utils'
 
 export class ArtistController {
-    async FindArtistById(id: string): Promise<Artist | null> {
+    static async FindArtistById(id: string): Promise<Artist | null> {
         try {
             const user = await getArtistFromDbById(id)
 
@@ -15,13 +19,32 @@ export class ArtistController {
         }
     }
 
-    async FindArtistsByUserId(userId: string): Promise<Artist[] | null> {
+    static async FindArtistsByUserId(userId: string): Promise<Artist[] | null> {
         try {
             const artistsAdminedByUser = await getArtistsFromDbByUserId(userId)
 
             if (!artistsAdminedByUser)
                 throw new Error(
                     `No artists found under account with id ${userId}.`
+                )
+
+            return artistsAdminedByUser
+        } catch (err) {
+            console.error(err)
+            return null
+        }
+    }
+
+    static async FindArtistsByUserEmail(
+        userEmail: string
+    ): Promise<Artist[] | null> {
+        try {
+            const artistsAdminedByUser =
+                await getArtistsFromDbByUserEmail(userEmail)
+
+            if (!artistsAdminedByUser)
+                throw new Error(
+                    `No artists found under account with email ${userEmail}.`
                 )
 
             return artistsAdminedByUser

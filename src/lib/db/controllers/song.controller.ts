@@ -6,7 +6,7 @@ import {
 } from '../utils/song.utils'
 
 export class SongController {
-    async FindSongById(id: string): Promise<Song> {
+    static async FindSongById(id: string): Promise<Song> {
         const song = await getSongFromDbById(id)
 
         if (!song) {
@@ -16,7 +16,7 @@ export class SongController {
         return song
     }
 
-    async FindSongsByArtistId(artistId: string): Promise<Song[]> {
+    static async FindSongsByArtistId(artistId: string): Promise<Song[]> {
         const songs = await getSongsFromDbByArtistId(artistId)
 
         if (!songs || songs.length === 0) {
@@ -26,7 +26,7 @@ export class SongController {
         return songs
     }
 
-    async FindSongsByAlbumId(albumId: string): Promise<Song[] | null> {
+    static async FindSongsByAlbumId(albumId: string): Promise<Song[] | null> {
         try {
             const songs = await getSongsFromDbByAlbumId(albumId)
 

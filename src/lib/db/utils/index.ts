@@ -12,4 +12,8 @@ export {
 
 export { getAlbumFromDbById, getAlbumsFromDbByArtistId } from './album.utils'
 
-export { getArtistFromDbById, getArtistsFromDbByUserId } from './artist.utils'
+export {
+    getArtistFromDbById,
+    getArtistsFromDbByUserId,
+    getArtistsFromDbByUserEmail,
+} from './artist.utils'

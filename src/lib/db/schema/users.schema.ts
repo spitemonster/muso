@@ -4,7 +4,7 @@ import { text, timestamp, pgTable } from 'drizzle-orm/pg-core'
 import { artists } from '.'
 
 export const users = pgTable('users', {
-    id: text('id'),
+    id: text('id').notNull(),
     name: text('name'),
     email: text('email'),
     password: text('password'),

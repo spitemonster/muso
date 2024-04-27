@@ -4,7 +4,7 @@ import { text, timestamp, pgTable, integer } from 'drizzle-orm/pg-core'
 import { songs, artists } from '.'
 
 export const albums = pgTable('albums', {
-    id: text('id'),
+    id: text('id').notNull(),
     title: text('title'),
     duration: integer('duration'),
     artistId: text('artist_id'),
