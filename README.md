@@ -23,7 +23,7 @@ you'll need a postgres server up and running and set up in your .env as shown in
 
 ## seeding
 
-to seed the db uncomment these lines in hooks.server.ts.
+to seed the db uncomment these lines in `hooks.server.ts`.
 
 ```
 // seed db
