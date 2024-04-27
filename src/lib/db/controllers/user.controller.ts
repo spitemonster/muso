@@ -70,7 +70,7 @@ export class UserController {
         }
     }
 
-    static async FindUserByID(id: string): Promise<User | null> {
+    static async FindUserById(id: string): Promise<User | null> {
         try {
             const user = await getUserFromDbById(id)
 
@@ -84,7 +84,7 @@ export class UserController {
         }
     }
 
-    static async FindSafeUserByID(id: string): Promise<SafeUser | null> {
+    static async FindSafeUserById(id: string): Promise<SafeUser | null> {
         try {
             const user = await getUserFromDbById(id)
 
