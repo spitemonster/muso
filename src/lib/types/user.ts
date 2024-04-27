@@ -1,7 +1,3 @@
-// enum UserType {
-//     0 = 'Artist',
-// }
-
 export interface User {
     id: string
     email: string
@@ -9,6 +5,8 @@ export interface User {
     password: string
     type: string
 }
+
+export interface NewUser extends User {}
 
 export interface SafeUser {
     id: string
