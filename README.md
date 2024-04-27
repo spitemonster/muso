@@ -15,6 +15,26 @@ my primary motivator here is that i wish someone _would_ create an independent c
 -   [ ] search, tagging and recommendations for organic discovery
 -   [ ] client-side streaming player
 
+# setup
+
+clone, `npm install`, `npm run dev --start` to open up a vite development server at the default vite port.
+
+you'll need a postgres server up and running and set up in your .env as shown in .env.example, as well as a few other values.
+
+## seeding
+
+to seed the db uncomment these lines in hooks.server.ts.
+
+```
+// seed db
+// await db.insert(users).values(userData)
+// await db.insert(artists).values(artistData)
+// await db.insert(albums).values(albumData)
+// await db.insert(songs).values(songData)
+```
+
+this will generate a bunch of dummy data though at this stage it won't help you much without something to view it and make direct modifications to the table.
+
 # license
 
 whatever the MIT license is; do what you want. if you actually do something with this (unlikely) just let me know, would be interested to see.

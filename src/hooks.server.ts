@@ -17,10 +17,13 @@ export const handle: Handle = async ({ event, resolve }) => {
         if (!dbSynced) {
             await client.connect()
             await migrate(db, { migrationsFolder: './src/lib/db/drizzle' })
+
+            // seed db
             // await db.insert(users).values(userData)
             // await db.insert(artists).values(artistData)
             // await db.insert(albums).values(albumData)
             // await db.insert(songs).values(songData)
+
             dbSynced = true
         }
     } catch (err) {
