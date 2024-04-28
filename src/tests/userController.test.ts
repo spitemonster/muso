@@ -192,6 +192,7 @@ describe('UserController', () => {
 
             expect(res).not.toBe(null)
             expect(res.user).not.toBe(undefined)
+            expect(res.user).not.toBe(null)
             expect(res).toHaveProperty('error')
             expect(res.error).toBe(false)
             expect(res).toHaveProperty('token')
@@ -212,7 +213,7 @@ describe('UserController', () => {
             )
 
             expect(res).not.toBe(null)
-            expect(res.user).toBe(undefined)
+            expect(res.user).toBe(null)
             expect(res).toHaveProperty('error', true)
             expect(res).toHaveProperty('token', '')
             expect(res).toHaveProperty('message')

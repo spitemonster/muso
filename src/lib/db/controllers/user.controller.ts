@@ -79,6 +79,15 @@ export class UserController {
             )
 
             console.log('passwords match: ', passwordsMatch)
+
+            if (!user) {
+                console.log('no user!')
+            }
+
+            if (!passwordsMatch) {
+                console.log('passwords do not match')
+            }
+
             if (!user || !passwordsMatch) {
                 throw 'The provided email and password do not correspond to an account in our records.'
             }
