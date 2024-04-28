@@ -2,6 +2,7 @@ export {
     getUserFromDbById,
     getUserFromDbByEmail,
     userToSafeUser,
+    createUser,
 } from './user.utils'
 
 export {
