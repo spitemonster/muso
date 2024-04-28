@@ -1,6 +1,6 @@
 # muso
 
-a bandcamp clone.
+an open source music distribution platform and streaming player
 
 # history
 
