@@ -177,8 +177,11 @@ describe('UserController', () => {
                 testUser.email,
                 testUser.password
             )
-
-            console.log(`result of login method test given valid data: ${res}`)
+            console.log(`testing good login with user ${testUser}`, testUser)
+            console.log(
+                `result of login method test given valid data: ${res}`,
+                res
+            )
 
             expect(res).not.toBe(null)
             expect(res).toHaveProperty('error', false)
@@ -193,8 +196,10 @@ describe('UserController', () => {
                 'password123'
             )
 
+            console.log(`testing bad login with user ${testUser}`, testUser)
             console.log(
-                `result of login method test given invalid data: ${res}`
+                `result of login method test given invalid data: ${res}`,
+                res
             )
 
             expect(res).not.toBe(null)
