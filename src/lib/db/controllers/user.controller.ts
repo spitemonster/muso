@@ -1,7 +1,5 @@
 import type { NewUser, SafeUser, User } from '$lib/types'
 import bcrypt from 'bcrypt'
-import { db } from '$lib/db'
-import { users } from '$lib/db/schema'
 import { generateId } from '$lib/utils'
 import type { LoginUserResponse } from '$lib/types'
 import jwt from 'jsonwebtoken'
@@ -9,6 +7,7 @@ import { JWT_PRIVATE_KEY } from '$env/static/private'
 import {
     getUserFromDbByEmail,
     getUserFromDbById,
+    createUser,
     userToSafeUser,
 } from '$lib/db/utils'
 
@@ -17,26 +16,23 @@ export class UserController {
         try {
             const hashedPassword = await bcrypt.hash(newUser.password, 10)
 
-            const user = await db
-                .insert(users)
-                .values({
-                    id: await generateId(),
-                    name: newUser.name,
-                    email: newUser.email,
-                    password: hashedPassword,
-                    type: newUser.type,
-                })
-                .returning()
+            const newUserData = {
+                id: await generateId(),
+                name: newUser.name,
+                email: newUser.email,
+                password: hashedPassword,
+                type: newUser.type,
+            }
 
-            const u = user[0] as SafeUser
+            const createdUser = await createUser(newUserData)
 
-            if (!u.id) {
+            if (!createdUser) {
                 throw new Error(
                     'There was an error creating the user with the given email address.'
                 )
             }
 
-            return u
+            return createdUser
         } catch (err) {
             return null
         }
@@ -47,7 +43,7 @@ export class UserController {
     }
 
     static async FindSafeUserByEmail(email: string): Promise<SafeUser | null> {
-        return await getUserFromDbByEmail(email)
+        return userToSafeUser(await getUserFromDbByEmail(email))
     }
 
     static async FindUserById(id: string): Promise<User | null> {
