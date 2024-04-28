@@ -3,7 +3,6 @@ import { UserController } from '$lib/db/controllers'
 
 import type { SafeUser, NewUser, LoginUserResponse } from '$lib/types'
 import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
 
 // override user utils functions as they directly interact with the database
 import userData from './data/users.data.json'
