@@ -59,6 +59,12 @@ vi.mock('$lib/db/utils', async () => {
 
 // we don't really need to worry about this in this context so easier just to overwrite it than create new fake user data
 vi.spyOn(bcrypt, 'compare').mockImplementation((data, hashed) => {
+    console.log(
+        'running fake compare function: ',
+        data,
+        ' compared with ',
+        hashed
+    )
     return data === hashed
 })
 
