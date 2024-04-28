@@ -10,10 +10,14 @@ my primary motivator here is that i wish someone _would_ create an independent c
 
 # roadmap
 
--   [ ] artist accounts
--   [ ] audio uploads and server-side audio conversion
--   [ ] search, tagging and recommendations for organic discovery
--   [ ] client-side streaming player
+like all this, this will change and has changed.
+
+-   [ ] artist account management
+    -   [ ] song upload, server side audio conversion
+    -   [ ] discography management
+    -   [ ] sales/download reporting
+-   [ ] streaming music player
+    -   [ ] search, tagging and recommendations for organic discovery
 
 # setup
 
