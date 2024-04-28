@@ -8,7 +8,7 @@ export type LoginFormResponse = {
 }
 
 export type LoginUserResponse = {
-    user: SafeUser | undefined
+    user: SafeUser | null
     token: string
     error: boolean
     message: string

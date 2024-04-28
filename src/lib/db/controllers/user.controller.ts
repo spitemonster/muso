@@ -59,7 +59,7 @@ export class UserController {
         password: string
     ): Promise<LoginUserResponse> {
         const response: LoginUserResponse = {
-            user: undefined,
+            user: null,
             token: '',
             error: false,
             message: '',
@@ -67,7 +67,19 @@ export class UserController {
 
         try {
             const user = await getUserFromDbByEmail(email)
-            if (!user || !(await bcrypt.compare(password, user.password))) {
+
+            console.log(
+                'found user from database inside login function: ',
+                user
+            )
+
+            const passwordsMatch = await bcrypt.compare(
+                password,
+                user?.password ?? ''
+            )
+
+            console.log('passwords match: ', passwordsMatch)
+            if (!user || !passwordsMatch) {
                 throw 'The provided email and password do not correspond to an account in our records.'
             }
 
@@ -87,7 +99,6 @@ export class UserController {
             response.error = false
             response.message = 'User successfully authenticated.'
         } catch (err) {
-            response.user = undefined
             response.error = true
             response.message = err as string
             console.error('user authentication failed: ', err)
