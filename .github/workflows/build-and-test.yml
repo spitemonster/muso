@@ -8,6 +8,10 @@ on:
 
 env:
     JWT_PRIVATE_KEY: ${{ secrets.JWT_PRIVATE_KEY }}
+    DB_HOST: 'fakehost'
+    DB_PORT: '1234'
+    DB_USER: 'user'
+    DB_DATABASE: 'database'
 
 jobs:
     build:
