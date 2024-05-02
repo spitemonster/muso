@@ -114,3 +114,12 @@ p {
         padding-right: var(--container-inline-padding);
     }
 }
+
+.visually-hidden {
+    position: absolute;
+    top: -999999px;
+    left: -999999px;
+    height: 1px;
+    width: 1px;
+    opacity: 0.001;
+}

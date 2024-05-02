@@ -31,10 +31,10 @@ export const actions: Actions = {
                 type: string
             }
 
-            const { id } = await UserController.FindUserByEmail(email)
+            const user = await UserController.FindUserByEmail(email)
 
             // fail if user already exists
-            if (id) {
+            if (user) {
                 throw new Error('User with given email already exists')
             }
 
@@ -47,7 +47,7 @@ export const actions: Actions = {
             })
 
             // fail if there were issues creating the user
-            if (newUser.id == '') {
+            if (!newUser || newUser.id == '') {
                 throw new Error(`There was an issue creating your account.`)
             }
 
@@ -60,6 +60,5 @@ export const actions: Actions = {
         }
 
         redirect(302, '/login')
-        return response
     },
 }

@@ -35,7 +35,7 @@ export async function getUserFromDbById(id: string): Promise<User | null> {
             where: eq(users.id, id),
         })
 
-        if (!user) throw new Error(`No user found with id: ${id}.`)
+        if (!user) return null
 
         return user as User
     } catch (err) {
@@ -56,7 +56,7 @@ export async function getUserFromDbByEmail(
             where: eq(users.email, email),
         })
 
-        if (!user) throw new Error(`No user found with email: ${email}.`)
+        if (!user) return null
 
         return user as User
     } catch (err) {
