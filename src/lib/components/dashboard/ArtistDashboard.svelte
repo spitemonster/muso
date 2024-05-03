@@ -9,7 +9,7 @@
 	{#if artist.albums && artist.albums.length > 0}
 		{#each artist.albums as album }
 			<figure>
-				<img src={`https://picsum.photos/seed/${ Math.random() * 500 }/400`} height="400" width="400">
+				<img src={`https://picsum.photos/seed/${ Math.random() * 500 }/400`} height="400" width="400" alt="album art">
 				<figcaption>
 					{album.title}
 					<ol>
