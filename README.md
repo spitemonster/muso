@@ -19,11 +19,11 @@ like all this, this will change and has changed.
 -   [x] jwt authentication
 -   [x] postgres database
 -   [x] rest api for artist management\*
--   -   \*no auth in place for api at this point, just putting pieces in place
+    -   \*no auth in place for api at this point, just putting pieces in place
 -   [ ] user account management
--   -   [ ] library of artists/songs/albums
--   -   [ ] likes, follows, tags
--   -   [ ] easily set up artist accounts
+    -   [ ] library of artists/songs/albums
+    -   [ ] likes, follows, tags
+    -   [ ] easily set up artist accounts
 -   [ ] artist account management
     -   [ ] song upload, server side audio conversion
     -   [x] discography management
