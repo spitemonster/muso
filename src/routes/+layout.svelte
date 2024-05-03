@@ -8,7 +8,6 @@
 
 	export let data: PageData;
 </script>
-
 <PrimaryNavigation user={data?.user}></PrimaryNavigation>
 
 <main>

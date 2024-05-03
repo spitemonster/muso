@@ -1,17 +1,20 @@
 <script lang="ts">
-	import ArtistDashboard from '$lib/components/dashboard/ArtistDashboard/ArtistDashboard.svelte'
+	import { ArtistDashboard, UserDashboard } from '$lib/components/'
 	import type { PageData } from './$types'
-	import type { Artist } from '$lib/types'
+	import makeGreeting from '$lib/utils/makeGreeting';
+	import { redirect } from '@sveltejs/kit';
 
 	export let data: PageData;
-	const artists = data.artists as Artist[]
+	const { user, artists } = data;
+
+	if (!user) {
+		redirect(302, '/login');
+	}
+	
+	const greeting = makeGreeting(user?.name);
 </script>
 
 <div class="container">
-	<h1>Muso Dashboard</h1>
-
-	{#if data.artists}
-		<ArtistDashboard artists={artists} />
-	{/if}
-	
+	<h1>{ greeting }</h1>
+	<UserDashboard user={user} artists={artists ?? []} />
 </div>

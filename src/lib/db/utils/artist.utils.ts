@@ -3,6 +3,31 @@ import { artists, users } from '$lib/db/schema'
 import { eq } from 'drizzle-orm'
 import type { Artist } from '$lib/types'
 
+export async function createArtistDbRecord(
+    adminId: string,
+    id: string,
+    name: string,
+    url: string = ''
+): Promise<Artist | null> {
+    const artist = await db
+        .insert(artists)
+        .values({
+            adminId,
+            id,
+            name,
+            url,
+        })
+        .returning()
+
+    const createdArtist = artist[0]
+
+    if (!createdArtist) {
+        return null
+    }
+
+    return createdArtist as Artist
+}
+
 export async function getArtistFromDbById(id: string): Promise<Artist | null> {
     const artist = await db.query.artists.findFirst({
         where: eq(artists.id, id),

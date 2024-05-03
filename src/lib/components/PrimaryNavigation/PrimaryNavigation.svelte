@@ -8,7 +8,7 @@
 	<menu class="unstyled">
 		<li><a href="/">Home</a></li>
 		{#if user}
-			<li><a href="/">Dashboard</a></li>
+			<li><a href="/dashboard">Dashboard</a></li>
 		{/if}
 		<div class="spacer"></div>
 		{#if user != undefined && user.email != "" }

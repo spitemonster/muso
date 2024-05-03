@@ -3,9 +3,26 @@ import {
     getArtistFromDbById,
     getArtistsFromDbByUserId,
     getArtistsFromDbByUserEmail,
+    getUserFromDbById,
 } from '$lib/db/utils'
+import { createArtistDbRecord } from '../utils/artist.utils'
 
 export class ArtistController {
+    static async CreateArtist(
+        adminId: string,
+        id: string,
+        name: string,
+        url: string = ''
+    ): Promise<Artist | null> {
+        const admin = getUserFromDbById(adminId)
+
+        if (!admin) {
+            return null
+        }
+
+        return await createArtistDbRecord(adminId, id, name, url)
+    }
+
     static async FindArtistById(id: string): Promise<Artist | null> {
         return await getArtistFromDbById(id)
     }

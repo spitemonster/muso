@@ -5,5 +5,5 @@ export interface Artist {
     adminId: string
     name: string
     url: string
-    albums: Album[]
+    albums?: Album[]
 }
