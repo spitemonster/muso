@@ -68,25 +68,10 @@ export class UserController {
         try {
             const user = await getUserFromDbByEmail(email)
 
-            console.log(
-                'found user from database inside login function: ',
-                user
-            )
-
             const passwordsMatch = await bcrypt.compare(
                 password,
                 user?.password ?? ''
             )
-
-            console.log('passwords match: ', passwordsMatch)
-
-            if (!user) {
-                console.log('no user!')
-            }
-
-            if (!passwordsMatch) {
-                console.log('passwords do not match')
-            }
 
             if (!user || !passwordsMatch) {
                 throw 'The provided email and password do not correspond to an account in our records.'

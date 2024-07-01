@@ -1,17 +1,4 @@
-html {
-    font-size: 18px;
-}
-
-body {
-    font-family: 'Inter', sans-serif;
-}
-
-h1,
-h2,
-h3 {
-    font-family: 'IBM Plex Mono', monospace;
-    font-weight: 400;
-}
+@import 'muso/_forms';
 
 button {
     border: none;
@@ -29,11 +16,6 @@ button {
         background: transparent;
         color: inherit;
     }
-}
-
-form {
-    display: flex;
-    flex-direction: column;
 }
 
 #password-visibility-toggle {
@@ -74,4 +56,10 @@ label {
     input:not([type='checkbox']):not(:placeholder-shown) + span {
         visibility: hidden;
     }
+}
+
+footer {
+    padding-block: var(--spacer-md);
+    margin-top: var(--spacer-md);
+    border-top: 1px solid var(--color-foreground);
 }

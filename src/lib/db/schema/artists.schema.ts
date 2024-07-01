@@ -1,7 +1,7 @@
 import { relations } from 'drizzle-orm'
 import { text, timestamp, pgTable } from 'drizzle-orm/pg-core'
 
-import { albums, songs, users } from '.'
+import { albums, songs, tags, users, artistTags } from '.'
 
 export const artists = pgTable('artists', {
     id: text('id').notNull(),
@@ -18,4 +18,7 @@ export const artistsRelations = relations(artists, ({ one, many }) => ({
     }),
     songs: many(songs),
     albums: many(albums),
+    artistTags: many(artistTags, {
+        relationName: 'tags',
+    }),
 }))

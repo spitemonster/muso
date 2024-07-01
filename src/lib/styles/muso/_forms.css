@@ -1,0 +1,14 @@
+.ui-form {
+    font-family: 'IBM Plex Sans', sans-serif;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacer-sm);
+
+    button {
+        background: var(--color-foreground);
+        color: var(--color-background);
+        padding: var(--spacer-xs);
+    }
+}

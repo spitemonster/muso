@@ -1,27 +1,27 @@
 @import '_reset';
 @import '_muso';
+@import 'muso/_type';
 
 :root {
     --color-black: #071013;
-    --color-white: #e6e1db;
-    --color-orange: #f79824;
+    --color-white: #fef5ec;
     --color-gray: #6d7b6d;
-    --color-green-dark: #26502a;
-    --color-green-light: #9cb0a4;
-    --color-green-saturated: #56b35f;
-    --color-blue-dark: #373f58;
-    --color-blue-light: #9baebc;
+    --color-blue-light: #7b9ed5;
+    --color-blue-dark: #3b4d97;
+    --color-green-dark: #426a5a;
+    --color-green-light: #75a994;
+    --color-red-dark: #ab030b;
+    --color-red-light: #ff5c64;
 
-    --font-size-base: 16px;
+    --font-size-base: clamp(1rem, 0.417vw + 0.875rem, 1.25rem);
     --font-size-large: 1.25rem;
     --font-size-lead: 1.125rem;
     --font-size-xs: calc(var(--font-size-base) * 0.625);
     --font-size-sm: calc(var(--font-size-base) * 0.8125);
-    --font-size-h5: calc(var(--font-size-base) * 1);
-    --font-size-h4: calc(var(--font-size-base) * 1.125);
-    --font-size-h3: calc(var(--font-size-base) * 1.5);
-    --font-size-h2: calc(var(--font-size-base) * 2);
-    --font-size-h1: calc(var(--font-size-base) * 2.5);
+    --font-size-h4: calc(var(--font-size-base) * 1.2);
+    --font-size-h3: calc(var(--font-size-base) * 1.44);
+    --font-size-h2: calc(var(--font-size-base) * 1.78);
+    --font-size-h1: calc(var(--font-size-base) * 2.074);
     --font-size-display-sm: calc(var(--font-size-base) * 2.5);
     --font-size-display-md: calc(var(--font-size-base) * 3);
     --font-size-display-lg: clamp(
@@ -46,50 +46,34 @@
         calc((100vw - var(--container-width)) / 2)
     );
 
+    --content-width: 80ch;
+
     font-size: var(--font-size-base);
+    line-height: clamp(1.5rem, 0.208vw + 1.438rem, 1.625rem);
     min-height: 0vw;
 }
 
 body {
-    --color-foreground: var(--color-white);
-    --color-background: var(--color-black);
+    --color-foreground: var(--color-black);
+    --color-background: var(--color-white);
+    --color-green: var(--color-green-dark);
+    --color-blue: var(--color-blue-dark);
+    --color-red: var(--color-red-dark);
 
     background: var(--color-background);
     color: var(--color-foreground);
 
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-}
-
-h1,
-h2,
-h3 {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'IBM Plex Sans', sans-serif;
     font-weight: 400;
-}
-
-h1 {
-    font-size: var(--font-size-h1);
-}
-
-h2 {
-    font-size: var(--font-size-h2);
-}
-
-h3 {
-    font-size: var(--font-size-h3);
-}
-
-h4 {
-    font-size: var(--font-size-h4);
-}
-
-h5 {
-    font-size: var(--font-size-h5);
-}
-
-p {
     font-size: 1rem;
+}
+
+body.dark {
+    --color-foreground: var(--color-white);
+    --color-background: var(--color-black);
+    --color-green: var(--color-green-light);
+    --color-blue: var(--color-blue-light);
+    --color-red: var(--color-red-light);
 }
 
 .container {
@@ -113,6 +97,10 @@ p {
     &--right {
         padding-right: var(--container-inline-padding);
     }
+}
+
+.content-width {
+    max-width: var(--content-width);
 }
 
 .visually-hidden {

@@ -7,15 +7,16 @@
 <nav class="container">
 	<menu class="unstyled">
 		<li><a href="/">Home</a></li>
+		<li><a href="/discover">Discover</a></li>
+		<div class="spacer"></div>
 		{#if user}
 			<li><a href="/dashboard">Dashboard</a></li>
 		{/if}
-		<div class="spacer"></div>
 		{#if user != undefined && user.email != "" }
 			<li><form method="POST" action="/logout" use:enhance><button class="text">Logout</button></form></li>
 		{:else }
 			<li><a href="/login">Log In</a></li>
-			<li><a href="/sign-up">Sign Up</a></li>
+			<li><a class="btn" href="/sign-up">Sign Up</a></li>
 		{/if}
 	</menu>
 </nav>
@@ -29,7 +30,7 @@
 
 	menu {
 		display: flex;
-		gap: 1rem;
+		gap: var(--spacer-base);
 		list-style: none;
 		padding: 0;
 		margin: 0;
@@ -38,10 +39,6 @@
 			white-space: nowrap;
 			margin: 0;
 			padding: 0;
-			
-			&:not(:last-child) {
-				margin-right: 1rem;
-			}
 		}
 	}
 
@@ -52,5 +49,11 @@
 	a {
 		color: var(--foreground);
 		text-decoration: none;
+	}
+
+	a.btn {
+		padding: var(--spacer-xs) var(--spacer-sm);
+		background: var(--color-green);
+		color: var(--color-background);
 	}
 </style>

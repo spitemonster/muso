@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ArtistTags from './../forms/ArtistTags.svelte';
 	import type { Artist, Album } from '$lib/types'
 	export let artist: Artist
 	import songLength from '$lib/utils/songLength'
@@ -6,6 +7,7 @@
 </script>
 <section id="artist-dashboard">
 	<h3>{artist.name}</h3>
+	<ArtistTags artist={artist}></ArtistTags>
 	{#if artist.albums && artist.albums.length > 0}
 		{#each artist.albums as album }
 			<figure>

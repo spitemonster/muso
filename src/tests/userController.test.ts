@@ -13,34 +13,24 @@ vi.mock('$lib/db/utils', async () => {
 
     return {
         getUserFromDbByEmail: vi.fn().mockImplementation(async (email) => {
-            console.log(
-                'running fake getUserFromDbByEmail function. email: ',
-                email
-            )
             const user = userData.find((u) => {
                 return u.email === email
             })
-
-            console.log(`returned user given email ${email}`, user)
 
             if (!user) return null
 
             return user
         }),
         getUserFromDbById: vi.fn().mockImplementation(async (id) => {
-            console.log(`running fake getUserFromDbById function. id ${id}`)
             const user = userData.find((u) => {
                 return u.id === id
             })
-
-            console.log(`returned user given id ${id}`, user)
 
             if (!user) return null
 
             return user
         }),
         createUser: vi.fn().mockImplementation(async (newUser) => {
-            console.log('running fake create user function: ', newUser)
             if (newUser.name != '') {
                 return {
                     id: newUser.id,
@@ -58,12 +48,6 @@ vi.mock('$lib/db/utils', async () => {
 
 // we don't really need to worry about this in this context so easier just to overwrite it than create new fake user data
 vi.spyOn(bcrypt, 'compare').mockImplementation((data, hashed) => {
-    console.log(
-        'running fake compare function: ',
-        data,
-        ' compared with ',
-        hashed
-    )
     return data === hashed
 })
 
@@ -183,11 +167,6 @@ describe('UserController', () => {
                 testUser.email,
                 testUser.password
             )
-            console.log(`testing good login with user ${testUser}`, testUser)
-            console.log(
-                `result of login method test given valid data: ${res}`,
-                res
-            )
 
             expect(res).not.toBe(null)
             expect(res.user).not.toBe(undefined)
@@ -203,12 +182,6 @@ describe('UserController', () => {
             const res: LoginUserResponse = await UserController.LoginUser(
                 testUser.email,
                 'password123'
-            )
-
-            console.log(`testing bad login with user ${testUser}`, testUser)
-            console.log(
-                `result of login method test given invalid data: ${res}`,
-                res
             )
 
             expect(res).not.toBe(null)

@@ -4,6 +4,7 @@ import {
     getArtistsFromDbByUserId,
     getArtistsFromDbByUserEmail,
     getUserFromDbById,
+    getArtistsByTagId,
 } from '$lib/db/utils'
 import { createArtistDbRecord } from '../utils/artist.utils'
 
@@ -35,5 +36,9 @@ export class ArtistController {
         userEmail: string
     ): Promise<Artist[] | null> {
         return await getArtistsFromDbByUserEmail(userEmail)
+    }
+
+    static async FindArtistsByTagId(tagId: string): Promise<Artist[] | null> {
+        return await getArtistsByTagId(tagId)
     }
 }

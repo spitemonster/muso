@@ -2,7 +2,7 @@ import { db } from '$lib/db'
 import { albums } from '$lib/db/schema'
 
 import type { Album } from '$lib/types'
-import { eq } from 'drizzle-orm'
+import { eq, sql } from 'drizzle-orm'
 
 export async function getAlbumFromDbById(id: string): Promise<Album | null> {
     try {
@@ -44,4 +44,15 @@ export async function getAlbumsFromDbByArtistId(
         console.error(err)
         return null
     }
+}
+
+export async function getRandomAlbums(count: number): Promise<Album[]> {
+    const query = db
+        .select()
+        .from(albums)
+        .orderBy(sql`RANDOM()`)
+        .limit(count)
+
+    const randAlbums = query.execute()
+    return randAlbums as Album[]
 }

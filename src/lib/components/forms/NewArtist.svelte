@@ -3,7 +3,7 @@
 	export let adminId: string;
 </script>
 
-<form action="/api/artists" method="POST" use:enhance>
+<form class="ui-form" action="/api/artists" method="POST" use:enhance>
 	<input type="hidden" value={adminId} name="adminId" />
 	<label>
 		<input type="text" placeholder=" " name="name" required>
