@@ -11,3 +11,5 @@ export const client = new pg.Client({
 })
 
 export const db = drizzle(client, { schema })
+
+client.connect()

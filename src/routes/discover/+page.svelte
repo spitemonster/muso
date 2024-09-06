@@ -4,7 +4,7 @@ export let data;
 
 import type { Tag } from '$lib/types'
 
-const { artists, albums, tags } = data;
+const { user, tags, artists, albums } = data;
 
 if (!artists) {
 	throw Error();

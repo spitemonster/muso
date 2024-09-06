@@ -3,8 +3,6 @@
 
 	const { tag, artists } = data;
 
-	console.log("ehhh: ", artists);
-
 	if (!tag) {
 		throw Error();
 	}

@@ -1,10 +1,11 @@
-import type { Artist } from '$lib/types'
+import type { Artist, Tag } from '$lib/types'
 import {
     getArtistFromDbById,
     getArtistsFromDbByUserId,
     getArtistsFromDbByUserEmail,
     getUserFromDbById,
     getArtistsByTagId,
+    getArtistTags,
 } from '$lib/db/utils'
 import { createArtistDbRecord } from '../utils/artist.utils'
 
@@ -40,5 +41,9 @@ export class ArtistController {
 
     static async FindArtistsByTagId(tagId: string): Promise<Artist[] | null> {
         return await getArtistsByTagId(tagId)
+    }
+
+    static async GetArtistTags(artistId: string): Promise<Tag[] | null> {
+        return await getArtistTags(artistId)
     }
 }

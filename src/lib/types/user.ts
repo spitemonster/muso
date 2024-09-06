@@ -1,3 +1,5 @@
+import type { Artist, Album, Tag } from '.'
+
 export interface User {
     id: string
     email: string
@@ -13,4 +15,7 @@ export interface SafeUser {
     email: string
     name: string
     type: string
+    artists: Artist[]
+    albums: Album[]
+    tags: Tag[]
 }
