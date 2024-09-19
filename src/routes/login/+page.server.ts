@@ -1,6 +1,6 @@
 import { UserController } from '$lib/db/controllers'
 import type { Actions, RequestEvent, ActionFailure } from '@sveltejs/kit'
-import { type LoginFormResponse } from '$lib/types/login'
+import { type LoginFormResponse } from '$lib/types/login.type'
 import { type LoginUserResponse } from '$lib/types'
 import { fail, redirect } from '@sveltejs/kit'
 

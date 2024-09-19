@@ -1,8 +1,14 @@
 @import 'muso/_forms';
+@import 'muso/components/_control-bar';
 
 button {
     border: none;
     cursor: pointer;
+    transition:
+        background var(--transition-time) var(--transition-timing),
+        color var(--transition-time) var(--transition-timing);
+
+    background: none;
 
     &:not(.text) {
         font-weight: bold;
@@ -59,6 +65,7 @@ label {
 }
 
 footer {
+    position: relative;
     padding-block: var(--spacer-md);
     margin-top: var(--spacer-md);
     border-top: 1px solid var(--color-foreground);

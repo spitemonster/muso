@@ -3,8 +3,14 @@ import type { Song, Artist } from '.'
 export interface Album {
     id: string
     title: string
-    artistId: string
+    duration: number
     coverUrl: string
     songs: Song[]
-    artist: Artist
+    artists: Artist[]
+}
+
+export interface AlbumArtist {
+    id: string
+    albumId: string
+    artistId: string
 }

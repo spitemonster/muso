@@ -1,15 +1,16 @@
 import { db } from '$lib/db'
-import { albums } from '$lib/db/schema'
+import { albums as albumsSchema } from '$lib/db/schema'
 
 import type { Album } from '$lib/types'
-import { eq, sql } from 'drizzle-orm'
+import { eq, count, sql } from 'drizzle-orm'
 
 export async function getAlbumFromDbById(id: string): Promise<Album | null> {
     try {
         const album = await db.query.albums.findFirst({
-            where: eq(albums.id, id),
+            where: eq(albumsSchema.id, id),
             with: {
                 songs: true,
+                artists: true,
             },
         })
 
@@ -27,32 +28,47 @@ export async function getAlbumFromDbById(id: string): Promise<Album | null> {
 export async function getAlbumsFromDbByArtistId(
     artistId: string
 ): Promise<Album[] | null> {
-    try {
-        const albumsByArtist = await db.query.albums.findMany({
-            where: eq(albums.artistId, artistId),
-            with: {
-                songs: true,
-            },
-        })
+    // try {
+    //     const albumsByArtist = await db.query.albums.findMany({
+    //         where: eq(albumsSchema.artistId, artistId),
+    //         with: {
+    //             songs: true,
+    // 			artists: true
+    //         },
+    //     })
 
-        if (!albumsByArtist) {
-            throw new Error(`No albums found by artist with id ${artistId}`)
-        }
+    //     if (!albumsByArtist) {
+    //         throw new Error(`No albums found by artist with id ${artistId}`)
+    //     }
 
-        return albumsByArtist as Album[]
-    } catch (err) {
-        console.error(err)
-        return null
-    }
+    //     return albumsByArtist as Album[]
+    // } catch (err) {
+    //     console.error(err)
+    //     return null
+    // }
+
+    return null
+}
+
+export async function getAlbumTableSize(): Promise<number> {
+    const res = await db.select({ count: count() }).from(albumsSchema)
+    return res[0].count
 }
 
 export async function getRandomAlbums(count: number): Promise<Album[]> {
-    const query = db
-        .select()
-        .from(albums)
-        .orderBy(sql`RANDOM()`)
-        .limit(count)
+    const randAlbums = await db.query.albums.findMany({
+        columns: {
+            id: true,
+            coverUrl: true,
+            title: true,
+        },
+        orderBy: sql`RANDOM()`,
+        limit: count,
+        with: {
+            songs: true,
+            artists: true,
+        },
+    })
 
-    const randAlbums = query.execute()
     return randAlbums as Album[]
 }

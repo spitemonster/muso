@@ -1,23 +1,8 @@
 import jwt from 'jsonwebtoken'
-import { client, db } from '$lib/db/db'
 import { JWT_PRIVATE_KEY } from '$env/static/private'
 import { UserController } from '$lib/db/controllers'
 import type { Handle } from '@sveltejs/kit'
-import type { User } from '$lib/types/user'
-import { migrate } from 'drizzle-orm/node-postgres/migrator'
-
-import {
-    userData,
-    artistData,
-    albumData,
-    songData,
-    tagData,
-    artistTagData,
-} from '$lib/db/seed'
-import { users, artists, albums, songs, tags, artistTags } from '$lib/db/schema'
-
-let dbSynced = false
-let dbClientConnected = false
+import type { User } from '$lib/types/user.type'
 
 export const handle: Handle = async ({ event, resolve }) => {
     // don't deal with api requests; let the routes do it

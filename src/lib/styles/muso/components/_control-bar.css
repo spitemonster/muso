@@ -1,0 +1,28 @@
+#control-bar {
+    position: absolute;
+    bottom: calc(100% + var(--spacer-base));
+    right: var(--spacer-lg);
+
+    display: flex;
+    flex-direction: column;
+
+    a,
+    button,
+    svg,
+    path {
+        color: var(--color-foreground);
+        fill: var(--color-foreground);
+    }
+}
+
+body:not(.dark) {
+    #vis-mode .dark {
+        display: none;
+    }
+}
+
+body.dark {
+    #vis-mode .light {
+        display: none;
+    }
+}

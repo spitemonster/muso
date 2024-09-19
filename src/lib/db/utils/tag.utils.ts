@@ -1,5 +1,5 @@
 import { db } from '$lib/db'
-import { tags, artistTags, artists } from '$lib/db/schema'
+import { tags, artistTags } from '$lib/db/schema'
 import type { Tag, ArtistTag } from '$lib/types'
 import { eq, and, sql } from 'drizzle-orm'
 import { generateId } from '$lib/utils'

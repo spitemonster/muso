@@ -16,7 +16,9 @@
         "studio": "drizzle-kit studio --config drizzle.config.ts",
         "generate": "drizzle-kit generate:pg --config drizzle.config.ts",
         "drizzle:migrate": "drizzle-kit push:pg --config drizzle.config.ts",
-        "drizzle:seed": "tsx ./src/lib/db/seed.ts"
+        "drizzle:seed": "tsx ./src/lib/db/seed",
+        "drizzle:drop": "tsx ./src/lib/db/utils/clearDb.utils.ts",
+        "drizzle:refresh": "npm run drizzle:drop && npm run drizzle:migrate && npm run drizzle:seed"
     },
     "devDependencies": {
         "@faker-js/faker": "^8.4.1",

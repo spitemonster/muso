@@ -1,0 +1,35 @@
+.content-width {
+    max-width: var(--content-width);
+}
+
+.visually-hidden {
+    position: absolute;
+    top: -999999px;
+    left: -999999px;
+    height: 1px;
+    width: 1px;
+    opacity: 0.001;
+}
+
+.container {
+    padding-inline: var(--container-inline-padding);
+
+    &--min {
+        padding-inline: max(
+            calc((100vw - var(--container-max-width)) / 2),
+            var(--container-min-padding)
+        );
+    }
+
+    .container {
+        padding-inline: 0;
+    }
+
+    &--left {
+        padding-left: var(--container-inline-padding);
+    }
+
+    &--right {
+        padding-right: var(--container-inline-padding);
+    }
+}

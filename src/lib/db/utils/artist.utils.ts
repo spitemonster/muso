@@ -1,5 +1,5 @@
 import { db } from '$lib/db'
-import { artists, users, artistTags, tags } from '$lib/db/schema'
+import * as schema from '$lib/db/schema'
 import { eq, sql } from 'drizzle-orm'
 import type { Artist } from '$lib/types'
 
@@ -10,7 +10,7 @@ export async function createArtistDbRecord(
     url: string = ''
 ): Promise<Artist | null> {
     const artist = await db
-        .insert(artists)
+        .insert(schema.artists)
         .values({
             adminId,
             id,
@@ -29,42 +29,36 @@ export async function createArtistDbRecord(
 }
 
 export async function getArtistFromDbById(id: string): Promise<Artist | null> {
-    const artist = (await db.query.artists.findFirst({
-        where: eq(artists.id, id),
+    console.log(`ID: ${id}`)
+    const artist = await db.query.artists.findFirst({
+        where: eq(schema.artists.id, id),
         with: {
-            albums: {
+            artistTags: {
                 with: {
-                    songs: true,
+                    tag: true,
                 },
             },
         },
-    })) as Artist
+    })
 
     if (!artist) {
         return null
     }
 
-    const aTags = await db
-        .select({
-            tags: tags,
-        })
-        .from(artistTags)
-        .leftJoin(tags, eq(tags.id, artistTags.tagId))
-        .where(eq(artistTags.artistId, id))
+    const tags = artist.artistTags?.map((a) => a.tag)
 
-    // Combine the tags with the artist object
-    if (artist) {
-        artist.tags = aTags.map((at) => at.tags)
-    }
+    const a = { ...artist, tags } as Artist
 
-    return artist as Artist
+    delete a.artistTags
+
+    return a
 }
 
 export async function getArtistsFromDbByUserId(
     userId: string
 ): Promise<Artist[] | null> {
     const artistsAdminedByUser = await db.query.artists.findMany({
-        where: eq(artists.adminId, userId),
+        where: eq(artistsSchema.adminId, userId),
         with: {
             albums: {
                 with: {
@@ -105,7 +99,7 @@ export async function getArtistsFromDbByUserEmail(
 export async function getRandomArtists(count: number): Promise<Artist[]> {
     const query = db
         .select()
-        .from(artists)
+        .from(artistsSchema)
         .orderBy(sql`RANDOM()`)
         .limit(count)
 
@@ -116,10 +110,10 @@ export async function getRandomArtists(count: number): Promise<Artist[]> {
 export async function getArtistsByTagId(tagId: string): Promise<Artist[]> {
     const query = db
         .select({
-            artist: artists,
+            artist: artistsSchema,
         })
         .from(artistTags)
-        .leftJoin(artists, eq(artists.id, artistTags.artistId))
+        .leftJoin(artistsSchema, eq(artistsSchema.id, artistTags.artistId))
         .where(eq(artistTags.tagId, tagId))
 
     const result = await query.execute()

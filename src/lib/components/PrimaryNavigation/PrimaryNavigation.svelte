@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from "$app/forms";
-	import type { SafeUser } from "$lib/types/user";
+	import type { SafeUser } from "$lib/types/user.type";
 	export let user: SafeUser | undefined;
 </script>
 

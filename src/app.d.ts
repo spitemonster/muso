@@ -1,6 +1,6 @@
 // See https://kit.svelte.dev/docs/types#app
 
-import type { SafeUser } from '$lib/types/user'
+import type { SafeUser } from '$lib/types/user.type'
 
 // for information about these interfaces
 declare global {

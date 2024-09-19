@@ -3,6 +3,7 @@
 export let data;
 
 import type { Tag } from '$lib/types'
+import AlbumCards from '$lib/components/album-card/AlbumCards.svelte';
 
 const { user, tags, artists, albums } = data;
 
@@ -32,11 +33,8 @@ if (!artists) {
 		{/each}
 	</ul>
 	
-
-	<h3>Some albums to pique your interest:</h3>
-	<ul>
-		{#each albums as album}
-			<li><a href="/album/{album.id}">{album.title}</a></li>
-		{/each}
-	</ul>
+	<div id="albums">
+		<h3>Some albums to pique your interest:</h3>
+		<AlbumCards albums={albums} />
+	</div>
 </section>

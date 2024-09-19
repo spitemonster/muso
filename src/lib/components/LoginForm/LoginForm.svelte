@@ -3,7 +3,7 @@
 	import { enhance } from '$app/forms';
 	import { deserialize } from "$app/forms";
 
-	import { type LoginFormResponse } from '$lib/types/login'
+	import { type LoginFormResponse } from '$lib/types/login.type'
 
 	let formError = false;
 	let formErrorMessage = "";
