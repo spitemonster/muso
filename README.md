@@ -28,23 +28,21 @@ sveltekit stack, postgres database. i don't really believe in tailwind or css li
 
 ## setup
 
-clone, `npm install`, `npm run dev --start` to open up a vite development server at the default vite port.
+clone, `npm install` to get everything installed. you'll need to seed before you get anything useful.
 
-you'll need a postgres server up and running and set up in your .env as shown in .env.example, as well as a few other values.
+### seeding
 
-## seeding
+`package.json` contains 3-4 main scripts for setting up/updating your database.
 
-to seed the db uncomment these lines in `hooks.server.ts` and run the project once.
+`drizzle:refresh` drops all tables in the database, runs the latest migration (after your confirmation) and seeds the database. it does so using the following scripts:
 
-```
-// seed db
-// await db.insert(users).values(userData)
-// await db.insert(artists).values(artistData)
-// await db.insert(albums).values(albumData)
-// await db.insert(songs).values(songData)
-```
+`drizzle:drop` runs `src/lib/db/utils/clearDb.utils.ts`
+`drizzle:migrate` runs drizzle migrations
+`drizzle:seed` runs contents of `src/lib/db/seed`
 
-this will generate a bunch of dummy data though at this stage it won't help you much without something to view it and make direct modifications to the table.
+### running
+
+once the db is seeded, simply run `npm run dev` to get a vite server up and running. endpoints should be immediately functional.
 
 ## license
 
