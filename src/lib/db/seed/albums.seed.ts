@@ -30,6 +30,9 @@ export async function generateAlbumArtistData(
 ): Promise<AlbumArtist[]> {
     const generatedAlbumArtistData: AlbumArtist[] = []
 
+    // for every album
+    // determine if it has one or two artists
+    // create albumArtist data
     albumData.forEach(async (album) => {
         // this should only return 1 about 10% of the time
         const multiArtist: number = Math.random() < 0.1 ? 1 : 0
