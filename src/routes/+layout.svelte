@@ -1,25 +1,13 @@
 <script lang="ts">
-	import PrimaryNavigation from '$lib/components/PrimaryNavigation/PrimaryNavigation.svelte';
-	import ControlBar from '$lib/components/control-bar/ControlBar.svelte';
 	import '$lib/styles/global.css';
 	import '@fontsource/ibm-plex-mono';
 	import '@fontsource/ibm-plex-sans';
 
 	import type { PageData } from './$types';
-	import { onMount } from 'svelte';
-
 	export let data: PageData;
-	
-	// beforeMount(() => {
-	// 	let visMode: string = sessionStorage.getItem('vis-mode') ?? "";
 
-	// 	if (visMode != "") {
-	// 		document.body.classList.add(visMode);
-	// 	} else {
-	// 		document.body.classList.add('light');
-	// 		sessionStorage.setItem('vis-mode', 'light');
-	// 	}
-	// });
+	import PrimaryNavigation from '$lib/components/PrimaryNavigation/PrimaryNavigation.svelte';
+	import ControlBar from '$lib/components/control-bar/ControlBar.svelte';
 </script>
 
 <header>

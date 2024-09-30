@@ -15,7 +15,7 @@
 
 <div id="control-bar">
 	<button on:click="{toggleVisMode}" id="vis-mode">
-		<span class="visually-hidden">Toggle Light/Dark Mode</span>
+		<span class="sr-only">Toggle Light/Dark Mode</span>
 		<span class="light">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"

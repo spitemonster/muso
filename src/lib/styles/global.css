@@ -1,93 +1,36 @@
+@import 'muso/_type';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* @import '_reset'; */
-/* @import '_util'; */
-/* @import '_muso'; */
-/* @import 'muso/_type'; */
-
 :root {
-    --color-black: #071013;
-    --color-white: #fef5ec;
-    --color-gray: #6d7b6d;
-    --color-blue-light: #7b9ed5;
-    --color-blue-dark: #3b4d97;
-    --color-green-dark: #426a5a;
-    --color-green-light: #75a994;
-    --color-red-dark: #ab030b;
-    --color-red-light: #ff5c64;
+    --container-min-padding: 1rem;
+    --container-width: 70rem;
+    --container-max-width: 90rem;
 
-    --font-size-base: clamp(1rem, 0.417vw + 0.875rem, 1.25rem);
-    --font-size-large: 1.25rem;
-    --font-size-lead: 1.125rem;
-    --font-size-xs: calc(var(--font-size-base) * 0.625);
-    --font-size-sm: calc(var(--font-size-base) * 0.8125);
-    --font-size-h4: calc(var(--font-size-base) * 1.2);
-    --font-size-h3: calc(var(--font-size-base) * 1.44);
-    --font-size-h2: calc(var(--font-size-base) * 1.78);
-    --font-size-h1: calc(var(--font-size-base) * 2.074);
-    --font-size-display-sm: calc(var(--font-size-base) * 2.5);
-    --font-size-display-md: calc(var(--font-size-base) * 3);
+    --type-scale: 1.333;
+    --font-size-base: clamp(
+        18px,
+        calc(1.125rem + ((1vw - 4.8px) * 0.75)),
+        24px
+    );
+
+    --font-size-xs: calc(var(--font-size-base) * pow(var(--type-scale), -2));
+    --font-size-sm: calc(var(--font-size-base) * pow(var(--type-scale), -1));
+    --font-size-lg: calc(var(--font-size-base) * pow(var(--type-scale), 1));
+    --font-size-xl: calc(var(--font-size-base) * pow(var(--type-scale), 2));
+    --font-size-2xl: calc(var(--font-size-base) * pow(var(--type-scale), 3));
+    --font-size-3xl: calc(var(--font-size-base) * pow(var(--type-scale), 4));
+    --font-size-display-sm: calc(
+        var(--font-size-base) * pow(var(--type-scale), 5)
+    );
+    --font-size-display-md: calc(
+        var(--font-size-base) * pow(var(--type-scale), 6)
+    );
     --font-size-display-lg: clamp(
         calc(var(--font-size-base) * 3),
         1rem + calc(10vw / 3),
         calc(var(--font-size-base) * 4)
     );
-
-    --spacer-xs: 0.625rem;
-    --spacer-sm: 0.8125rem;
-    --spacer-base: 1rem;
-    --spacer-md: 1.125rem;
-    --spacer-lg: 2.5rem;
-    --spacer-xl: 3rem;
-    --spacer-xxl: 4rem;
-
-    --container-min-padding: 1rem;
-    --container-width: 70rem;
-    --container-max-width: 90rem;
-    --container-inline-padding: max(
-        var(--container-min-padding),
-        calc((100vw - var(--container-width)) / 2)
-    );
-
-    --content-width: 80ch;
-
-    --transition-time: 240ms;
-    --transition-timing: ease;
-
-    font-size: var(--font-size-base);
-    line-height: clamp(1.5rem, 0.208vw + 1.438rem, 1.625rem);
-    min-height: 0vw;
-}
-
-body {
-    --color-foreground: var(--color-black);
-    --color-background: var(--color-white);
-    --color-green: var(--color-green-dark);
-    --color-blue: var(--color-blue-dark);
-    --color-red: var(--color-red-dark);
-
-    transition:
-        background var(--transition-time) var(--transition-timing),
-        color var(--transition-time) var(--transition-timing);
-
-    background: var(--color-background);
-    color: var(--color-foreground);
-
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-weight: 400;
-    font-size: 1rem;
-}
-
-body.dark {
-    --color-foreground: var(--color-white);
-    --color-background: var(--color-black);
-    --color-green: var(--color-green-light);
-    --color-blue: var(--color-blue-light);
-    --color-red: var(--color-red-light);
-}
-
-a {
-    color: var(--color-green);
 }

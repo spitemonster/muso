@@ -3,8 +3,8 @@
 </script>
 
 <section class="container">
-	<div class="content-width">
-		<h1>Muso</h1>
+	<div class="content-width ">
+		<h1 class="text-white text-3xl font-mono">Muso</h1>
 		<p>A <i>truly</i> independent music distribution, streaming and sharing platform.</p>
 		<h2>Muso Radio</h2>
 		<p>A tag-based internet radio service. Pick a few tags, let Muso choose your playlist for you.</p>

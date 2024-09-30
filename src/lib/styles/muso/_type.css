@@ -1,51 +1,54 @@
-h1,
-h2,
-h3,
-h4 {
-    font-family: 'IBM Plex Mono', monospace;
-    font-weight: bolder;
-}
-
-h1 {
-    font-size: var(--font-size-h1);
-}
-
-h2 {
-    font-size: var(--font-size-h2);
-}
-
-h3 {
-    font-size: var(--font-size-h3);
-}
-
-h4 {
-    font-size: var(--font-size-h4);
-}
-
-p {
-    font-size: 1rem;
-}
-
-h1,
-h2,
-h3,
-h4,
-p,
-ul,
-ol {
-    margin: 0;
-
-    & + h1,
-    & + h2,
-    & + h3,
-    & + h4,
-    & + p,
-    & + ul,
-    & + ol {
-        margin-top: var(--spacer-base);
+@layer base {
+    h1,
+    h2,
+    h3,
+    h4 {
+        font-family: 'IBM Plex Mono', monospace;
+        font-weight: bolder;
     }
-}
 
-a {
-    color: var(--color-blue);
+    h1 {
+        font-size: var(--font-size-3xl);
+    }
+
+    h2 {
+        font-size: var(--font-size-2xl);
+    }
+
+    h3 {
+        font-size: var(--font-size-xl);
+    }
+
+    h4 {
+        font-size: var(--font-size-base);
+    }
+
+    p,
+    li {
+        font-size: var(--font-size-base);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    p,
+    ul,
+    ol {
+        margin: 0;
+
+        & + h1,
+        & + h2,
+        & + h3,
+        & + h4,
+        & + p,
+        & + ul,
+        & + ol {
+            margin-top: var(--spacer-base);
+        }
+    }
+
+    a {
+        color: var(--color-blue);
+    }
 }

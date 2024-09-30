@@ -24,7 +24,7 @@
 		bind:this={passwordVisibilityToggle}
 		on:click={togglePasswordVisibility}
 		id="password-visibility-toggle"
-		><span class="visually-hidden">Toggle Password Visibility</span>
+		><span class="sr-only">Toggle Password Visibility</span>
 		{#if passwordType == 'password'}
 			<EyeOpen />
 		{:else}
