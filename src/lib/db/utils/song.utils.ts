@@ -1,39 +1,57 @@
 import { db } from '$lib/db'
-import { songs } from '$lib/db/schema'
+import * as schema from '$lib/db/schema'
 import { eq } from 'drizzle-orm'
-import type { Song } from '$lib/types'
+import type { Song, Artist } from '$lib/types'
 
 export async function getSongFromDbById(id: string): Promise<Song | null> {
-    const song = await db.query.songs.findFirst({
-        where: eq(songs.id, id),
+    const res = await db.query.songs.findFirst({
+        where: eq(schema.songs.id, id),
+        with: {
+            songArtists: {
+                with: {
+                    artist: true,
+                },
+            },
+            album: true,
+        },
     })
 
-    if (!song) {
-        return null
+    if (!res) {
+        throw new Error(`No album found with id ${id}.`)
     }
 
-    return song as Song
+    const artists: Artist[] = res.songArtists.map((a) => a.artist as Artist)
+
+    const song: Song = { ...res, artists } as Song
+
+    delete song.songArtists
+
+    return song
 }
 
 export async function getSongsFromDbByArtistId(
     artistId: string
 ): Promise<Song[] | null> {
-    const songsByArtist = await db.query.songs.findMany({
-        where: eq(songs.artistId, artistId),
-    })
+    console.log(
+        `need to complete method to get songs from db by artistId: ${artistId}`
+    )
+    return null
+    // const songsByArtist = await db.query.songs.findMany({
+    //     where: eq(schema.songs.artistId, artistId),
+    // })
 
-    if (!songsByArtist) {
-        return null
-    }
+    // if (!songsByArtist) {
+    //     return null
+    // }
 
-    return songsByArtist as Song[]
+    // return songsByArtist as Song[]
 }
 
 export async function getSongsFromDbByAlbumId(
     albumId: string
 ): Promise<Song[] | null> {
     const songsOnAlbum = await db.query.songs.findMany({
-        where: eq(songs.albumId, albumId),
+        where: eq(schema.songs.albumId, albumId),
     })
 
     if (!songsOnAlbum) {

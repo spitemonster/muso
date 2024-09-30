@@ -1,6 +1,6 @@
 # muso
 
-an open source music distribution service, internet radio, streaming app and social music discovery platform.
+an in-progress open source music distribution service, internet radio, streaming app and social music discovery platform.
 
 ## philosophy
 

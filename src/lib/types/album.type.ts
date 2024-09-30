@@ -1,4 +1,4 @@
-import type { Song, Artist, AlbumArtist } from '.'
+import type { Song, Artist } from '.'
 
 export interface Album {
     id: string
@@ -6,7 +6,7 @@ export interface Album {
     duration: number
     coverUrl: string
     songs?: Song[]
-    artists: Artist[]
+    artists?: Artist[]
     albumArtists?: AlbumArtist[]
 }
 
@@ -14,4 +14,6 @@ export interface AlbumArtist {
     id: string
     albumId: string
     artistId: string
+    album?: Album
+    artist?: Artist
 }

@@ -26,7 +26,7 @@ export async function getAlbumFromDbById(id: string): Promise<Album | null> {
             (a) => a.artist as Artist
         )
 
-        const a: Album = { ...album, artists }
+        const a: Album = { ...album, artists } as Album
 
         delete a.albumArtists
 

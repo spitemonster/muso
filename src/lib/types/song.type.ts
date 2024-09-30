@@ -4,5 +4,14 @@ export interface Song {
     title: string
     duration: number
     albumId: string
-    artists: Artist[]
+    artists?: Artist[]
+    songArtists?: SongArtist[]
+}
+
+export interface SongArtist {
+    id: string
+    songId: string
+    artistId: string
+    song?: Song
+    artist?: Artist
 }

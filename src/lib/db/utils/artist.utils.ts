@@ -1,7 +1,7 @@
 import { db } from '$lib/db'
 import * as schema from '$lib/db/schema'
 import { eq, sql } from 'drizzle-orm'
-import type { Artist, Tag, Album } from '$lib/types'
+import type { Artist, Tag, Song, Album } from '$lib/types'
 
 export async function createArtistDbRecord(
     adminId: string,
@@ -28,12 +28,49 @@ export async function createArtistDbRecord(
     return createdArtist as Artist
 }
 
+// first pass at the conditional includes thing
+// not sure i'm happy with it; it's neither terribly scalable nor terribly dry
+// though there is sort of a ceiling to the amount of data related to an artist we might fetch at a time
 export async function getArtistFromDbById(
     queryId: string,
     include: string[] = []
 ): Promise<Artist | null> {
     try {
-        const query = {
+        const inc = {
+            artistTags: {},
+            songArtists: {},
+            albumArtists: {},
+        }
+
+        if (include.includes('tags')) {
+            inc.artistTags = {
+                with: {
+                    tag: true,
+                },
+            }
+        } else {
+            inc.artistTags = false
+        }
+
+        if (include.includes('songs')) {
+            inc.songArtists = {
+                with: {
+                    song: true,
+                },
+            }
+        } else {
+            inc.songArtists = false
+        }
+
+        if (include.includes('albums')) {
+            inc.albumArtists = {
+                with: {
+                    album: true,
+                },
+            }
+        }
+
+        const result = await db.query.artists.findFirst({
             where: eq(schema.artists.id, queryId),
             columns: {
                 name: true,
@@ -42,92 +79,92 @@ export async function getArtistFromDbById(
                 adminId: true,
                 url: true,
             },
-            with: {
-                artistTags: false,
-            },
-        }
-
-        if (include?.includes('tags')) {
-            query.with.artistTags = true
-        }
-
-        const result = await db.query.artists.findFirst(query)
+            with: inc,
+        })
 
         if (!result) {
-            throw new Error(`No artist found with given id.`)
+            throw new Error(`No artist found with id ${queryId}`)
         }
 
-        return result as Artist
+        const artist: Artist = { ...result } as Artist
 
-        // const { name, id, createdAt, adminId, url } = result
+        if (include.includes('songs')) {
+            artist.songs = artist.songArtists?.map((sa) => sa.song as Song)
+        } else {
+            delete artist.songs
+        }
 
-        // // const albums = result.albumArtists.map((ar) => ar.album)
-        // const tags = result.artistTags.map((t) => t.tag)
+        delete artist.songArtists
 
-        // return { name, id, createdAt, adminId, url, tags } as Artist
+        if (include.includes('tags')) {
+            artist.tags = artist.artistTags?.map((at) => at.tag as Tag)
+        } else {
+            delete artist.tags
+        }
 
-        // // const albums: Album[] = result.albumArtists.map((ar) => ar.album)
-        // // const tags: Tag[] = result.artistTags.map((t) => t.tag)
+        delete artist.artistTags
 
-        // // const { name, createdAt, adminId, url } = result
+        if (include.includes('albums')) {
+            artist.albums = artist.albumArtists?.map((aa) => aa.album as Album)
+        } else {
+            delete artist.albums
+        }
 
-        // // if (!name || !createdAt || !adminId || !url) {
-        // //     throw new Error(`No artist found with given id.`)
-        // // }
+        delete artist.albumArtists
 
-        // // const a: Artist = { name, id, createdAt, adminId, url, albums, tags }
+        return artist
     } catch (err) {
         console.error(err)
-        return err
+        throw new Error(`${err}`)
     }
 }
 
-export async function getArtistsFromDbByUserId(
-    userId: string
-): Promise<Artist[] | null> {
-    const artistsAdminedByUser = await db.query.artists.findMany({
-        where: eq(schema.artists.adminId, userId),
-        with: {
-            albums: {
-                with: {
-                    songs: true,
-                },
-            },
-        },
-    })
+// export async function getArtistsFromDbByUserId(
+//     userId: string
+// ): Promise<Artist[] | null> {
+//     const artistsAdminedByUser = await db.query.artists.findMany({
+//         where: eq(schema.artists.adminId, userId),
+//         with: {
+//             albums: {
+//                 with: {
+//                     songs: true,
+//                 },
+//             },
+//         },
+//     })
 
-    if (!artistsAdminedByUser) {
-        return null
-    }
+//     if (!artistsAdminedByUser) {
+//         return null
+//     }
 
-    return artistsAdminedByUser as Artist[]
-}
+//     return artistsAdminedByUser as Artist[]
+// }
 
-export async function getArtistsFromDbByUserEmail(
-    userEmail: string
-): Promise<Artist[] | null> {
-    const user = await db.query.users.findFirst({
-        where: eq(users.email, userEmail),
-    })
+// export async function getArtistsFromDbByUserEmail(
+//     userEmail: string
+// ): Promise<Artist[] | null> {
+//     const user = await db.query.users.findFirst({
+//         where: eq(users.email, userEmail),
+//     })
 
-    if (!user || !user.id)
-        throw new Error(`User not found with email ${userEmail}`)
+//     if (!user || !user.id)
+//         throw new Error(`User not found with email ${userEmail}`)
 
-    const { id } = user
+//     const { id } = user
 
-    const artistsAdminedByUser = await getArtistsFromDbByUserId(id)
+//     const artistsAdminedByUser = await getArtistsFromDbByUserId(id)
 
-    if (!artistsAdminedByUser) {
-        return null
-    }
+//     if (!artistsAdminedByUser) {
+//         return null
+//     }
 
-    return artistsAdminedByUser as Artist[]
-}
+//     return artistsAdminedByUser as Artist[]
+// }
 
 export async function getRandomArtists(count: number): Promise<Artist[]> {
     const query = db
         .select()
-        .from(artistsSchema)
+        .from(schema.artists)
         .orderBy(sql`RANDOM()`)
         .limit(count)
 
@@ -135,19 +172,22 @@ export async function getRandomArtists(count: number): Promise<Artist[]> {
     return randArtists as Artist[]
 }
 
-export async function getArtistsByTagId(tagId: string): Promise<Artist[]> {
-    const query = db
-        .select({
-            artist: artistsSchema,
-        })
-        .from(artistTags)
-        .leftJoin(artistsSchema, eq(artistsSchema.id, artistTags.artistId))
-        .where(eq(artistTags.tagId, tagId))
+// export async function getArtistsByTagId(tagId: string): Promise<Artist[]> {
+//     const query = db
+//         .select({
+//             artist: schema.artists,
+//         })
+//         .from(schema.tags)
+//         .leftJoin(
+//             schema.artists,
+//             eq(schema.artists.id, schema.artistTags.artistId)
+//         )
+//         .where(eq(schema.artistTags.id, tagId))
 
-    const result = await query.execute()
+//     const result = await query.execute()
 
-    // Map the result to extract the artist data
-    const artistsWithTag: Artist[] = result.map((row) => row.artist)
+//     // Map the result to extract the artist data
+//     const artistsWithTag: Artist[] = result.map((row) => row.artist as Artist)
 
-    return artistsWithTag
-}
+//     return artistsWithTag
+// }
