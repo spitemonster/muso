@@ -32,7 +32,7 @@ export async function getSongFromDbById(id: string): Promise<Song | null> {
 export async function getSongsFromDbByArtistId(
     artistId: string
 ): Promise<Song[] | null> {
-    console.log(
+    console.error(
         `need to complete method to get songs from db by artistId: ${artistId}`
     )
     return null

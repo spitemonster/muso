@@ -49,7 +49,6 @@ export async function generateSongArtistData(
             return
         }
 
-        console.log('should be alright seeding')
         let multiArtist: number = 0
 
         // if there is more than one artist, randomly determine if we're creating two song artist records or just one
@@ -58,7 +57,6 @@ export async function generateSongArtistData(
             multiArtist = Math.random() < 0.1 ? 1 : 0
         }
 
-        console.log('alright setting up multi artist')
         // if multi artist == 1 this loop runs twice, generating two artists for a song
         for (let i = 0; i < multiArtist + 1; i++) {
             const id = await generateId()
@@ -70,18 +68,13 @@ export async function generateSongArtistData(
                 songId,
             }
 
-            console.log('creating: ', aa)
-
             generatedSongArtistData.push(aa)
-
-            console.log(generatedSongArtistData)
         }
     })
 
     // for every song
     // get the album to which it belongs
     // get its artists via itsAlbumArtists
-    console.log('generated song artist data: ', generatedSongArtistData)
     return generatedSongArtistData
 }
 

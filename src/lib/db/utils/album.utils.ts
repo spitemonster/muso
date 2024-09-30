@@ -6,7 +6,7 @@ import { eq, count, sql } from 'drizzle-orm'
 
 export async function getAlbumFromDbById(id: string): Promise<Album | null> {
     try {
-        const album = await db.query.albums.findFirst({
+        const res = await db.query.albums.findFirst({
             where: eq(albumsSchema.id, id),
             with: {
                 songs: true,
@@ -18,15 +18,15 @@ export async function getAlbumFromDbById(id: string): Promise<Album | null> {
             },
         })
 
-        if (!album) {
+        if (!res) {
             throw new Error(`No album found with id ${id}.`)
         }
 
-        const artists: Artist[] = album.albumArtists.map(
+        const artists: Artist[] = res.albumArtists.map(
             (a) => a.artist as Artist
         )
 
-        const a: Album = { ...album, artists } as Album
+        const a: Album = { ...res, artists } as Album
 
         delete a.albumArtists
 
@@ -103,18 +103,34 @@ export async function getAlbumTableSize(): Promise<number> {
 }
 
 export async function getRandomAlbums(count: number): Promise<Album[]> {
-    const randAlbums = await db.query.albums.findMany({
+    const res = await db.query.albums.findMany({
         columns: {
             id: true,
             coverUrl: true,
+            duration: true,
             title: true,
         },
         orderBy: sql`RANDOM()`,
         limit: count,
         with: {
             songs: true,
-            artists: true,
+            albumArtists: {
+                with: {
+                    artist: true,
+                },
+            },
         },
+    })
+
+    const randAlbums: Album[] = res.map((album) => {
+        const artists: Artist[] = album.albumArtists.map(
+            (aa) => aa.artist as Artist
+        )
+        const a: Album = { ...album, artists }
+
+        delete a.albumArtists
+
+        return a
     })
 
     return randAlbums as Album[]

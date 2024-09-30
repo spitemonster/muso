@@ -6,6 +6,7 @@ import {
     getUserFromDbById,
     getArtistsByTagId,
     getArtistTags,
+    getRandomArtists,
 } from '$lib/db/utils'
 import { createArtistDbRecord } from '../utils/artist.utils'
 
@@ -48,5 +49,9 @@ export class ArtistController {
 
     static async GetArtistTags(artistId: string): Promise<Tag[] | null> {
         return await getArtistTags(artistId)
+    }
+
+    static async GetRandomArtists(count: number): Promise<Artist[]> {
+        return await getRandomArtists(count)
     }
 }

@@ -8,7 +8,5 @@ export const GET: RequestHandler = async ({ params, url }) => {
 
     const include = url.searchParams.get('include')?.split(',')
 
-    console.log(`include: ${include}`)
-
     return json(await ArtistController.FindArtistById(id, include ?? []))
 }

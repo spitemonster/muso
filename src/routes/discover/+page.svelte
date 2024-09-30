@@ -5,11 +5,12 @@ export let data;
 import type { Tag } from '$lib/types'
 import AlbumCards from '$lib/components/album-card/AlbumCards.svelte';
 
-const { user, tags, artists, albums } = data;
+const { user, artists, albums, tags } = data;
 
 if (!artists) {
 	throw Error();
 }
+
 </script>
 
 <section class="container">

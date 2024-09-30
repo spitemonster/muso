@@ -161,33 +161,49 @@ export async function getArtistFromDbById(
 //     return artistsAdminedByUser as Artist[]
 // }
 
-export async function getRandomArtists(count: number): Promise<Artist[]> {
-    const query = db
-        .select()
-        .from(schema.artists)
-        .orderBy(sql`RANDOM()`)
-        .limit(count)
+// const randAlbums = await db.query.albums.findMany({
+// 	columns: {
+// 		id: true,
+// 		coverUrl: true,
+// 		title: true,
+// 	},
+// 	orderBy: sql`RANDOM()`,
+// 	limit: count,
+// 	with: {
+// 		songs: true,
+// 		artists: true,
+// 	},
+// })
 
-    const randArtists = await query.execute()
+export async function getRandomArtists(count: number): Promise<Artist[]> {
+    const randArtists = await db.query.artists.findMany({
+        columns: {
+            id: true,
+            name: true,
+            url: true,
+        },
+        orderBy: sql`RANDOM()`,
+        limit: count,
+    })
+
     return randArtists as Artist[]
 }
 
-// export async function getArtistsByTagId(tagId: string): Promise<Artist[]> {
-//     const query = db
-//         .select({
-//             artist: schema.artists,
-//         })
-//         .from(schema.tags)
-//         .leftJoin(
-//             schema.artists,
-//             eq(schema.artists.id, schema.artistTags.artistId)
-//         )
-//         .where(eq(schema.artistTags.id, tagId))
+export async function getArtistsByTagId(
+    tagId: string
+): Promise<Artist[] | string> {
+    const artistTags = await db.query.artistTags.findMany({
+        where: eq(schema.artistTags.tagId, tagId),
+        with: {
+            artist: true,
+        },
+    })
 
-//     const result = await query.execute()
+    if (!artistTags) {
+        return `No artists found with selected tag.`
+    }
 
-//     // Map the result to extract the artist data
-//     const artistsWithTag: Artist[] = result.map((row) => row.artist as Artist)
+    const artists: Artist[] = artistTags.map((at) => at.artist as Artist)
 
-//     return artistsWithTag
-// }
+    return artists
+}
