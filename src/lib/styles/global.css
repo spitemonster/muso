@@ -1,7 +1,11 @@
-@import '_reset';
-@import '_util';
-@import '_muso';
-@import 'muso/_type';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* @import '_reset'; */
+/* @import '_util'; */
+/* @import '_muso'; */
+/* @import 'muso/_type'; */
 
 :root {
     --color-black: #071013;

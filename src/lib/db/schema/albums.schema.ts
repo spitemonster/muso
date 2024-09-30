@@ -19,7 +19,7 @@ export const albums = pgTable('albums', {
 
 export const albumsRelations = relations(albums, ({ many }) => ({
     songs: many(schema.songs),
-    artists: many(schema.albumArtists),
+    albumArtists: many(schema.albumArtists),
 }))
 
 export const albumsTableInfo = getTableConfig(albums)

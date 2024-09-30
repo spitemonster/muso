@@ -1,5 +1,4 @@
 <script lang="ts">
-	import '../app.pcss';
 	import PrimaryNavigation from '$lib/components/PrimaryNavigation/PrimaryNavigation.svelte';
 	import ControlBar from '$lib/components/control-bar/ControlBar.svelte';
 	import '$lib/styles/global.css';

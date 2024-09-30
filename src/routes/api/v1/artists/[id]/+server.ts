@@ -3,8 +3,12 @@ import { json } from '@sveltejs/kit'
 import { ArtistController } from '$lib/db/controllers'
 
 // returns an array of artists for a given query; will accept user ID, user email or artist ID
-export const GET: RequestHandler = async ({ params }) => {
+export const GET: RequestHandler = async ({ params, url }) => {
     const { id } = params
 
-    return json(await ArtistController.FindArtistById(id))
+    const include = url.searchParams.get('include')?.split(',')
+
+    console.log(`include: ${include}`)
+
+    return json(await ArtistController.FindArtistById(id, include ?? []))
 }

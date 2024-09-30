@@ -1,7 +1,7 @@
 import { db } from '$lib/db'
 import * as schema from '$lib/db/schema'
 import { eq, sql } from 'drizzle-orm'
-import type { Artist } from '$lib/types'
+import type { Artist, Tag, Album } from '$lib/types'
 
 export async function createArtistDbRecord(
     adminId: string,
@@ -28,37 +28,65 @@ export async function createArtistDbRecord(
     return createdArtist as Artist
 }
 
-export async function getArtistFromDbById(id: string): Promise<Artist | null> {
-    console.log(`ID: ${id}`)
-    const artist = await db.query.artists.findFirst({
-        where: eq(schema.artists.id, id),
-        with: {
-            artistTags: {
-                with: {
-                    tag: true,
-                },
+export async function getArtistFromDbById(
+    queryId: string,
+    include: string[] = []
+): Promise<Artist | null> {
+    try {
+        const query = {
+            where: eq(schema.artists.id, queryId),
+            columns: {
+                name: true,
+                id: true,
+                createdAt: true,
+                adminId: true,
+                url: true,
             },
-        },
-    })
+            with: {
+                artistTags: false,
+            },
+        }
 
-    if (!artist) {
-        return null
+        if (include?.includes('tags')) {
+            query.with.artistTags = true
+        }
+
+        const result = await db.query.artists.findFirst(query)
+
+        if (!result) {
+            throw new Error(`No artist found with given id.`)
+        }
+
+        return result as Artist
+
+        // const { name, id, createdAt, adminId, url } = result
+
+        // // const albums = result.albumArtists.map((ar) => ar.album)
+        // const tags = result.artistTags.map((t) => t.tag)
+
+        // return { name, id, createdAt, adminId, url, tags } as Artist
+
+        // // const albums: Album[] = result.albumArtists.map((ar) => ar.album)
+        // // const tags: Tag[] = result.artistTags.map((t) => t.tag)
+
+        // // const { name, createdAt, adminId, url } = result
+
+        // // if (!name || !createdAt || !adminId || !url) {
+        // //     throw new Error(`No artist found with given id.`)
+        // // }
+
+        // // const a: Artist = { name, id, createdAt, adminId, url, albums, tags }
+    } catch (err) {
+        console.error(err)
+        return err
     }
-
-    const tags = artist.artistTags?.map((a) => a.tag)
-
-    const a = { ...artist, tags } as Artist
-
-    delete a.artistTags
-
-    return a
 }
 
 export async function getArtistsFromDbByUserId(
     userId: string
 ): Promise<Artist[] | null> {
     const artistsAdminedByUser = await db.query.artists.findMany({
-        where: eq(artistsSchema.adminId, userId),
+        where: eq(schema.artists.adminId, userId),
         with: {
             albums: {
                 with: {

@@ -25,8 +25,11 @@ export class ArtistController {
         return await createArtistDbRecord(adminId, id, name, url)
     }
 
-    static async FindArtistById(id: string): Promise<Artist | null> {
-        return await getArtistFromDbById(id)
+    static async FindArtistById(
+        id: string,
+        include: string[]
+    ): Promise<Artist | null> {
+        return await getArtistFromDbById(id, include)
     }
 
     static async FindArtistsByUserId(userId: string): Promise<Artist[] | null> {
