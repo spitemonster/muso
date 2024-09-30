@@ -1,7 +1,7 @@
 <script lang="ts">
 	export let data;
 
-	const { artist, artistTags } = data;
+	const { artist } = data;
 
 	if (!artist) {
 		throw Error();
@@ -20,10 +20,10 @@
 		</ul>
 	{/if}
 
-	{#if artistTags && artistTags.length > 0}
+	{#if artist.tags && artist.tags.length > 0}
 	<h2>Tags</h2>
 		<ul>
-			{#each artistTags as tag}
+			{#each artist.tags as tag}
 				<li><a href="/tag/{tag.id}">{tag.name}</a></li>
 			{/each}
 		</ul>
