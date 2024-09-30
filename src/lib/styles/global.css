@@ -16,6 +16,12 @@
         24px
     );
 
+    --color-black: #303036;
+    --color-white: #e9e3e6;
+    --color-red: #ac2f40;
+    --color-blue: #2191fb;
+    --color-green: #417b5a;
+
     --font-size-xs: calc(var(--font-size-base) * pow(var(--type-scale), -2));
     --font-size-sm: calc(var(--font-size-base) * pow(var(--type-scale), -1));
     --font-size-lg: calc(var(--font-size-base) * pow(var(--type-scale), 1));
