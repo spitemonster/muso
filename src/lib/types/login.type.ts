@@ -14,7 +14,7 @@ export type LoginUserResponse = {
     message: string
 }
 
-export type LoginSession = {
+export type UserSession = {
     id: string
     user: User
     expires: string
