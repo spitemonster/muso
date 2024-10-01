@@ -1,4 +1,9 @@
 @layer base {
+    body {
+        font-size: 1.125rem;
+        font-size: var(--font-size-base);
+    }
+
     h1,
     h2,
     h3,

@@ -10,11 +10,7 @@
     --container-max-width: 90rem;
 
     --type-scale: 1.333;
-    --font-size-base: clamp(
-        18px,
-        calc(1.125rem + ((1vw - 4.8px) * 0.75)),
-        24px
-    );
+    --font-size-base: clamp(1.125rem, 1.05rem + 0.25vw, 1.25rem);
 
     --color-black: #303036;
     --color-white: #e9e3e6;
