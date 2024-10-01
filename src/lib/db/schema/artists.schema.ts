@@ -8,6 +8,9 @@ export const artists = pgTable('artists', {
     name: text('name'),
     url: text('url'),
     adminId: text('admin_id'),
+    location: text('location'),
+    profileImageUrl: text('profile_image_url'),
+    biography: text('biography'),
     createdAt: timestamp('created_at').defaultNow(),
 })
 

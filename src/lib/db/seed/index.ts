@@ -27,10 +27,10 @@ const main = async () => {
     const db = drizzle(client, { schema })
 
     const userCount = 10
-    const artistCount = 25
-    const albumCount = 50
-    const songCount = 500
-    const tagCount = 25
+    const artistCount = 250
+    const albumCount = 165
+    const songCount = 5000
+    const tagCount = 100
     const artistTagCount = 25
     const albumTagCount = 25
 

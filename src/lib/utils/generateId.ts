@@ -5,7 +5,7 @@ export const charset =
 
 export default async function generateId(): Promise<string> {
     return await new Promise((resolve, reject) => {
-        randomBytes(8, (err, buffer) => {
+        randomBytes(16, (err, buffer) => {
             if (err) {
                 reject()
             }

@@ -78,6 +78,9 @@ export async function getArtistFromDbById(
                 createdAt: true,
                 adminId: true,
                 url: true,
+                location: true,
+                biography: true,
+                profileImageUrl: true,
             },
             with: inc,
         })

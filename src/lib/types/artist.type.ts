@@ -5,6 +5,9 @@ export interface Artist {
     adminId: string
     name: string
     url: string
+    location?: string
+    biography?: string
+    profileImageUrl?: string
     createdAt: Date
     albums?: Album[]
     albumArtists?: AlbumArtist[]
