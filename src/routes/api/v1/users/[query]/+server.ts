@@ -9,8 +9,8 @@ export const GET: RequestHandler = async ({ params }) => {
     const { query } = params
 
     if (isEmail(query)) {
-        return json(await UserController.FindSafeUserByEmail(query))
+        return json(await UserController.FindUserByEmail(query))
     } else {
-        return json(await UserController.FindSafeUserById(query))
+        return json(await UserController.FindUserById(query))
     }
 }

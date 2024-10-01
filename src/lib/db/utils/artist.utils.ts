@@ -119,47 +119,40 @@ export async function getArtistFromDbById(
     }
 }
 
-// export async function getArtistsFromDbByUserId(
-//     userId: string
-// ): Promise<Artist[] | null> {
-//     const artistsAdminedByUser = await db.query.artists.findMany({
-//         where: eq(schema.artists.adminId, userId),
-//         with: {
-//             albums: {
-//                 with: {
-//                     songs: true,
-//                 },
-//             },
-//         },
-//     })
+export async function getArtistsFromDbByUserId(
+    userId: string
+): Promise<Artist[] | null> {
+    const artistsAdminedByUser = await db.query.artists.findMany({
+        where: eq(schema.artists.adminId, userId),
+    })
 
-//     if (!artistsAdminedByUser) {
-//         return null
-//     }
+    if (!artistsAdminedByUser) {
+        return null
+    }
 
-//     return artistsAdminedByUser as Artist[]
-// }
+    return artistsAdminedByUser as Artist[]
+}
 
-// export async function getArtistsFromDbByUserEmail(
-//     userEmail: string
-// ): Promise<Artist[] | null> {
-//     const user = await db.query.users.findFirst({
-//         where: eq(users.email, userEmail),
-//     })
+export async function getArtistsFromDbByUserEmail(
+    userEmail: string
+): Promise<Artist[] | null> {
+    const user = await db.query.users.findFirst({
+        where: eq(schema.users.email, userEmail),
+    })
 
-//     if (!user || !user.id)
-//         throw new Error(`User not found with email ${userEmail}`)
+    if (!user || !user.id)
+        throw new Error(`User not found with email ${userEmail}`)
 
-//     const { id } = user
+    const { id } = user
 
-//     const artistsAdminedByUser = await getArtistsFromDbByUserId(id)
+    const artistsAdminedByUser = await getArtistsFromDbByUserId(id)
 
-//     if (!artistsAdminedByUser) {
-//         return null
-//     }
+    if (!artistsAdminedByUser) {
+        return null
+    }
 
-//     return artistsAdminedByUser as Artist[]
-// }
+    return artistsAdminedByUser as Artist[]
+}
 
 // const randAlbums = await db.query.albums.findMany({
 // 	columns: {

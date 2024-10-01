@@ -1,7 +1,7 @@
 import { vi, expect, describe, it } from 'vitest'
 import { UserController } from '$lib/db/controllers'
 
-import type { SafeUser, NewUser, LoginUserResponse } from '$lib/types'
+import type { User, LoginUserResponse } from '$lib/types'
 import bcrypt from 'bcrypt'
 
 // override user utils functions as they directly interact with the database
@@ -37,7 +37,7 @@ vi.mock('$lib/db/utils', async () => {
                     email: newUser.email,
                     name: newUser.name,
                     type: newUser.type,
-                } as SafeUser
+                } as User
             } else {
                 return null
             }
@@ -54,7 +54,7 @@ vi.spyOn(bcrypt, 'compare').mockImplementation((data, hashed) => {
 describe('UserController', () => {
     describe('CreateUser', () => {
         it('returns a safe user with valid information when given valid new user data', async () => {
-            const newUser: NewUser = {
+            const newUser: User = {
                 id: '',
                 email: userData[1].email,
                 name: userData[1].name,
@@ -63,15 +63,16 @@ describe('UserController', () => {
             }
 
             const user = await UserController.CreateUser(newUser)
+
             expect(user).not.toBe(null)
             expect(user).toHaveProperty('id')
-            expect(user).toHaveProperty('name', newUser.name)
-            expect(user).toHaveProperty('email', newUser.email)
+            expect(user).toHaveProperty('name', newUser!.name)
+            expect(user).toHaveProperty('email', newUser!.email)
             expect(user).not.toHaveProperty('password')
         })
 
         it('returns null when given empty new user data', async () => {
-            const newUser: NewUser = {
+            const newUser: User = {
                 id: '',
                 email: '',
                 name: '',
@@ -85,13 +86,13 @@ describe('UserController', () => {
     })
     describe('FindSafeUserById', () => {
         it('returns null when given a non-existent user id', async () => {
-            const user = await UserController.FindSafeUserById('000000')
+            const user = await UserController.FindUserById('000000')
             expect(user).toBe(null)
         })
 
         it('retrieves a valid safe user when given an extant user id', async () => {
             const testUser = userData[2]
-            const user = await UserController.FindSafeUserById(testUser.id)
+            const user = await UserController.FindUserById(testUser.id)
             expect(user).not.toBe(null)
             expect(user).toHaveProperty('id', testUser.id)
             expect(user).toHaveProperty('name', testUser.name)
@@ -101,16 +102,13 @@ describe('UserController', () => {
 
     describe('FindSafeUserByEmail', () => {
         it('returns null when given a non-existent user email', async () => {
-            const user =
-                await UserController.FindSafeUserByEmail('1234@email.test')
+            const user = await UserController.FindUserByEmail('1234@email.test')
             expect(user).toBe(null)
         })
 
         it('returns a valid safe user when given an extant user email', async () => {
             const testUser = userData[2]
-            const user = await UserController.FindSafeUserByEmail(
-                testUser.email
-            )
+            const user = await UserController.FindUserByEmail(testUser.email)
             expect(user).not.toBe(null)
             expect(user).toHaveProperty('id', testUser.id)
             expect(user).toHaveProperty('name', testUser.name)

@@ -1,11 +1,11 @@
 <script lang="ts">
-	import type {SafeUser, Artist} from '$lib/types'
+	import type { User, Artist} from '$lib/types'
 	import { afterUpdate, onMount } from 'svelte';
 	import ArtistListItem from './ArtistListItem.svelte';
 	import NewArtist from "../forms/NewArtist.svelte";
 	import ManageArtists from './ManageArtists.svelte';
 
-	export let user: SafeUser;
+	export let user: User;
 	export let artists: Artist[];
 </script>
 

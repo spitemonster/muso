@@ -1,21 +1,14 @@
 import type { Artist, Album, Tag } from '.'
 
-export interface User {
+interface UserProperties {
     id: string
     email: string
     name: string
-    password: string
-    type: string
+    type: 'user' | 'artist'
+    password?: string
+    artists?: Artist[]
+    albums?: Album[]
+    tags?: Tag[]
 }
 
-export interface NewUser extends User {}
-
-export interface SafeUser {
-    id: string
-    email: string
-    name: string
-    type: string
-    artists: Artist[]
-    albums: Album[]
-    tags: Tag[]
-}
+export type User = UserProperties | undefined | null

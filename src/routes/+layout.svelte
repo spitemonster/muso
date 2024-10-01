@@ -7,7 +7,7 @@
 	export let data: PageData;
 
 	import PrimaryNavigation from '$lib/components/PrimaryNavigation/PrimaryNavigation.svelte';
-	import ControlBar from '$lib/components/control-bar/ControlBar.svelte';
+	// import ControlBar from '$lib/components/control-bar/ControlBar.svelte';
 </script>
 
 <header>
@@ -19,7 +19,7 @@
 </main>
 
 <footer>
-	<ControlBar />
+	<!-- <ControlBar /> -->
 	<section class="container">
 		©2024 Muso
 	</section>

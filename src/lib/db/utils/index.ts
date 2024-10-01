@@ -1,10 +1,6 @@
-import { sql } from 'drizzle-orm'
-import { db } from '$lib/db'
-
 export {
     getUserFromDbById,
     getUserFromDbByEmail,
-    userToSafeUser,
     createUser,
 } from './user.utils'
 

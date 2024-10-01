@@ -1,4 +1,4 @@
-import type { NewUser, SafeUser, User } from '$lib/types'
+import type { User } from '$lib/types'
 import bcrypt from 'bcrypt'
 import { generateId } from '$lib/utils'
 import type { LoginUserResponse } from '$lib/types'
@@ -8,13 +8,16 @@ import {
     getUserFromDbByEmail,
     getUserFromDbById,
     createUser,
-    userToSafeUser,
 } from '$lib/db/utils'
 
 export class UserController {
-    static async CreateUser(newUser: NewUser): Promise<SafeUser | null> {
+    static async CreateUser(newUser: User): Promise<User | null> {
+        if (!newUser) {
+            throw new Error()
+        }
+
         try {
-            const hashedPassword = await bcrypt.hash(newUser.password, 10)
+            const hashedPassword = await bcrypt.hash(newUser.password!, 10)
 
             const newUserData = {
                 id: await generateId(),
@@ -38,20 +41,12 @@ export class UserController {
         }
     }
 
-    static async FindUserByEmail(email: string): Promise<User | null> {
+    static async FindUserByEmail(email: string): Promise<User> {
         return await getUserFromDbByEmail(email)
-    }
-
-    static async FindSafeUserByEmail(email: string): Promise<SafeUser | null> {
-        return userToSafeUser(await getUserFromDbByEmail(email))
     }
 
     static async FindUserById(id: string): Promise<User | null> {
         return await getUserFromDbById(id)
-    }
-
-    static async FindSafeUserById(id: string): Promise<SafeUser | null> {
-        return userToSafeUser(await getUserFromDbById(id))
     }
 
     static async LoginUser(

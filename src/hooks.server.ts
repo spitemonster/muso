@@ -27,7 +27,7 @@ export const handle: Handle = async ({ event, resolve }) => {
             throw new Error('Token could not be verified')
         }
 
-        const user = await UserController.FindSafeUserByEmail(auth_result.email)
+        const user = await UserController.FindUserByEmail(auth_result.email)
 
         if (!user || user.id === '') {
             throw new Error('Token could not be verified')

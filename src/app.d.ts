@@ -1,13 +1,13 @@
 // See https://kit.svelte.dev/docs/types#app
 
-import type { SafeUser } from '$lib/types/user.type'
+import type { User } from '$lib/types/user.type'
 
 // for information about these interfaces
 declare global {
     namespace App {
         // interface Error {}
         interface Locals {
-            user: SafeUser | undefined
+            user: User
             // artists: A
         }
         interface PageData {}

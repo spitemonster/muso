@@ -1,6 +1,7 @@
 export type { Song, SongArtist } from './song.type.ts'
 export type { Album, AlbumArtist } from './album.type.ts'
 export { type Artist } from './artist.type.ts'
-export type { User, NewUser, SafeUser } from './user.type.ts'
+export type { User } from './user.type.ts'
 export type { LoginFormResponse, LoginUserResponse } from './login.type.ts'
 export type { Tag, ArtistTag } from './tag.type.ts'
+export type { LoginSession } from './login.type.ts'

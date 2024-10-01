@@ -1,10 +1,14 @@
 import { db } from '$lib/db'
 import { users } from '$lib/db/schema'
-import type { User, SafeUser, NewUser } from '$lib/types'
+import type { User } from '$lib/types'
 import { eq } from 'drizzle-orm'
 import { generateId } from '$lib/utils'
 
-export async function createUser(newUser: NewUser): Promise<SafeUser | null> {
+export async function createUser(newUser: User): Promise<User> {
+    if (!newUser) {
+        throw new Error()
+    }
+
     const res = await db
         .insert(users)
         .values({
@@ -22,10 +26,10 @@ export async function createUser(newUser: NewUser): Promise<SafeUser | null> {
         return null
     }
 
-    return createdUser as SafeUser
+    return createdUser as User
 }
 
-export async function getUserFromDbById(id: string): Promise<User | null> {
+export async function getUserFromDbById(id: string): Promise<User> {
     try {
         if (id === '') {
             throw new Error('No user ID given.')
@@ -44,9 +48,7 @@ export async function getUserFromDbById(id: string): Promise<User | null> {
     }
 }
 
-export async function getUserFromDbByEmail(
-    email: string
-): Promise<User | null> {
+export async function getUserFromDbByEmail(email: string): Promise<User> {
     try {
         if (email === '') {
             throw new Error('No user email given.')
@@ -63,17 +65,4 @@ export async function getUserFromDbByEmail(
         console.error(err)
         return null
     }
-}
-
-export function userToSafeUser(user: User | null): SafeUser | null {
-    if (!user) {
-        return null
-    }
-
-    return {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        type: user.type,
-    } as SafeUser
 }

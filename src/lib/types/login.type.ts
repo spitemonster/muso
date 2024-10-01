@@ -1,4 +1,4 @@
-import { type SafeUser } from '$lib/types'
+import { type User } from '$lib/types'
 
 export type LoginFormResponse = {
     email: string
@@ -8,8 +8,14 @@ export type LoginFormResponse = {
 }
 
 export type LoginUserResponse = {
-    user: SafeUser | null
+    user: User
     token: string
     error: boolean
     message: string
+}
+
+export type LoginSession = {
+    id: string
+    user: User
+    expires: string
 }

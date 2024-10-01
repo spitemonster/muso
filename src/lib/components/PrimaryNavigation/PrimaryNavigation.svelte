@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { enhance } from "$app/forms";
-	import type { SafeUser } from "$lib/types/user.type";
-	export let user: SafeUser | undefined;
+	import type { User } from "$lib/types/user.type";
+	export let user: User
 </script>
 
 <nav class="container mb-base">
