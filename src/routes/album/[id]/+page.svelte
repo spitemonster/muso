@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { SongPlayer, AlbumCover, SongList } from '$lib/components/';
+	import { MusicPlayer, AlbumCover, SongList } from '$lib/components/';
 
 	export let data;
 
@@ -25,7 +25,7 @@
 					<a class="text-blue" href="/artist/{artist?.id}">{artist?.name}</a>
 				{/each}
 			</h2>
-			<SongPlayer />
+			<MusicPlayer song={songs[0]} />
 			<SongList songs={songs} />
 		</div>
 		<div class="order-1 md:order-2">
