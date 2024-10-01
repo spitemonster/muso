@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { MusicPlayer, AlbumCover, SongList } from '$lib/components/';
+	import { MusicPlayer, AlbumCover, SongList, TagComponent } from '$lib/components/';
 
 	export let data;
 
@@ -9,7 +9,7 @@
 		throw Error(`Problem displaying album page. No album.`)
 	}
 
-	const { artists, songs } = album;
+	const { artists, songs, tags } = album;
 
 	if (!artists || !songs) {
 		throw Error(`Problem displaying album page for ${album.id}. Artists: ${album.artists}. Songs: ${album.songs}`)
@@ -27,6 +27,13 @@
 			</h2>
 			<MusicPlayer song={songs[0]} />
 			<SongList songs={songs} />
+			{#if tags && tags.length > 0}
+				<ul>
+					{#each tags as tag}
+						<li><TagComponent tag={tag} /></li>
+					{/each}
+				</ul>
+			{/if}
 		</div>
 		<div class="order-1 md:order-2">
 			<AlbumCover album={album} />

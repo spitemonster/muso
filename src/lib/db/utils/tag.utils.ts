@@ -1,6 +1,6 @@
 import { db } from '$lib/db'
 import { tags, artistTags } from '$lib/db/schema'
-import type { Tag, ArtistTag, Album, Artist, AlbumTag } from '$lib/types'
+import type { Tag, ArtistTag, Album, Artist } from '$lib/types'
 import { eq, and, sql } from 'drizzle-orm'
 import { generateId } from '$lib/utils'
 
@@ -145,20 +145,3 @@ export async function getArtistTags(artistId: string) {
 
     return foundTags
 }
-
-// export async function getArtistsByTagId(tagId: string): Promise<Artist[]> {
-//     const query = db
-//         .select({
-//             artist: artists,
-//         })
-//         .from(artistTags)
-//         .leftJoin(artists, eq(artists.id, artistTags.artistId))
-//         .where(eq(artistTags.tagId, tagId))
-
-//     const result = await query.execute()
-
-//     // Map the result to extract the artist data
-//     const artistsWithTag: Artist[] = result.map((row) => row.artist)
-
-//     return artistsWithTag
-// }

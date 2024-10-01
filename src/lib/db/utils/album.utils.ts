@@ -1,7 +1,7 @@
 import { db } from '$lib/db'
 import { albums as albumsSchema } from '$lib/db/schema'
 
-import type { Album, Artist } from '$lib/types'
+import type { Album, Artist, Tag } from '$lib/types'
 import { eq, count, sql } from 'drizzle-orm'
 
 export async function getAlbumFromDbById(id: string): Promise<Album | null> {
@@ -15,6 +15,11 @@ export async function getAlbumFromDbById(id: string): Promise<Album | null> {
                         artist: true,
                     },
                 },
+                albumTags: {
+                    with: {
+                        tag: true,
+                    },
+                },
             },
         })
 
@@ -22,11 +27,10 @@ export async function getAlbumFromDbById(id: string): Promise<Album | null> {
             throw new Error(`No album found with id ${id}.`)
         }
 
-        const artists: Artist[] = res.albumArtists.map(
-            (a) => a.artist as Artist
-        )
+        const a: Album = { ...res } as Album
 
-        const a: Album = { ...res, artists } as Album
+        a.artists = res.albumArtists.map((a) => a.artist as Artist)
+        a.tags = res.albumTags.map((a) => a.tag as Tag)
 
         delete a.albumArtists
 

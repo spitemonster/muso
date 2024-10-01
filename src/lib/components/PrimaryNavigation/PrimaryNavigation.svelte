@@ -4,7 +4,7 @@
 	export let user: User
 </script>
 
-<nav class="container mb-base">
+<nav class="container mb-base py-sm">
 	<menu class="flex gap-base text-nowrap">
 		<li><a href="/">Home</a></li>
 		<li><a href="/discover">Discover</a></li>
