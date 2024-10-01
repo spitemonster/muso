@@ -4,7 +4,7 @@
 	export let user: SafeUser | undefined;
 </script>
 
-<nav class="container">
+<nav class="container mb-base">
 	<menu class="flex gap-base text-nowrap">
 		<li><a href="/">Home</a></li>
 		<li><a href="/discover">Discover</a></li>

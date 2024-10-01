@@ -6,7 +6,7 @@
 </script>
 
 <div class="album-cards">
-	<ul>
+	<ul class="grid gap-base grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
 		{#each albums as album}
 			<li>
 				<AlbumCard album={album} />
@@ -14,14 +14,3 @@
 		{/each}
 	</ul>
 </div>
-
-<style lang="scss">
-	.album-cards {
-		ul {
-			display: grid;
-			grid-template-columns: repeat(4, 1fr);
-			gap: 1rem;
-			list-style: none;
-		}
-	}
-</style>

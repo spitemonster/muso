@@ -1,2 +1,4 @@
-export { default as EyeOpen } from './EyeOpen.svelte'
-export { default as EyeClosed } from './EyeClosed.svelte'
+export { default as EyeOpenIcon } from './EyeOpenIcon.svelte'
+export { default as EyeClosedIcon } from './EyeClosedIcon.svelte'
+export { default as MicIcon } from './MicIcon.svelte'
+export { default as TagIcon } from './TagIcon.svelte'

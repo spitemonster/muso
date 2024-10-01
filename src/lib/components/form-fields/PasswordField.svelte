@@ -1,7 +1,7 @@
 <script lang="ts">
 	export let confirmation = false;
 
-	import { EyeOpen, EyeClosed } from '$lib/icons'
+	import { EyeOpenIcon, EyeClosedIcon } from '$lib/icons'
 
 	let passwordVisibilityToggle: HTMLButtonElement;
 	let passwordEl: HTMLInputElement;
@@ -26,9 +26,9 @@
 		id="password-visibility-toggle"
 		><span class="sr-only">Toggle Password Visibility</span>
 		{#if passwordType == 'password'}
-			<EyeOpen />
+			<EyeOpenIcon />
 		{:else}
-			<EyeClosed />
+			<EyeClosedIcon />
 		{/if}
 	</button>
 </label>
