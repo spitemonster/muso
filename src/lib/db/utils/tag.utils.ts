@@ -1,6 +1,6 @@
 import { db } from '$lib/db'
 import { tags, artistTags } from '$lib/db/schema'
-import type { Tag, ArtistTag } from '$lib/types'
+import type { Tag, ArtistTag, Album, Artist, AlbumTag } from '$lib/types'
 import { eq, and, sql } from 'drizzle-orm'
 import { generateId } from '$lib/utils'
 
@@ -31,13 +31,33 @@ export async function getTagFromDbById(id: string): Promise<Tag | null> {
             throw new Error('No tag ID given.')
         }
 
-        const tag = await db.query.tags.findFirst({
+        const res = await db.query.tags.findFirst({
             where: eq(tags.id, id),
+            with: {
+                albumTags: {
+                    with: {
+                        album: true,
+                    },
+                },
+                artistTags: {
+                    with: {
+                        artist: true,
+                    },
+                },
+            },
         })
 
-        if (!tag) return null
+        if (!res) throw new Error(`no tag with id ${id} found`)
 
-        return tag as Tag
+        const tag: Tag = { ...res } as Tag
+
+        tag.albums = res.albumTags.map((at) => at.album as Album)
+        tag.artists = res.artistTags.map((at) => at.artist as Artist)
+
+        delete tag.artistTags
+        delete tag.albumTags
+
+        return tag
     } catch (err) {
         console.error(err)
         return null

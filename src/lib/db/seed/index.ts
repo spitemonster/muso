@@ -10,6 +10,7 @@ import { generateAlbumArtistData, generateAlbumData } from './albums.seed'
 import { generateSongArtistData, generateSongData } from './songs.seed'
 import { generateTagData } from './tags.seed'
 import { generateArtistTagData } from './artistTags.seed'
+import { generateAlbumTagData } from './albumTags.seed'
 
 dotenv.config({ path: './.env' })
 
@@ -31,6 +32,7 @@ const main = async () => {
     const songCount = 500
     const tagCount = 25
     const artistTagCount = 25
+    const albumTagCount = 25
 
     const userData: (typeof schema.users.$inferInsert)[] =
         await generateUserData(userCount)
@@ -63,6 +65,9 @@ const main = async () => {
     const songArtistData: (typeof schema.songArtists.$inferInsert)[] =
         await generateSongArtistData(songData, albumArtistData)
 
+    const albumTagData: (typeof schema.albumTags.$inferInsert)[] =
+        await generateAlbumTagData(albumTagCount, albumData, tagData)
+
     await db.insert(schema.users).values(userData)
     await db.insert(schema.artists).values(artistData)
     await db.insert(schema.albums).values(albumData)
@@ -71,6 +76,7 @@ const main = async () => {
     await db.insert(schema.artistTags).values(artistTagData)
     await db.insert(schema.albumArtists).values(albumArtistData)
     await db.insert(schema.songArtists).values(songArtistData)
+    await db.insert(schema.albumTags).values(albumTagData)
 
     client.end()
 }
