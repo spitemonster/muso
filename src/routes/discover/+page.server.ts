@@ -7,7 +7,7 @@ export const load: PageServerLoad = async ({ locals }) => {
     const { user } = locals
     const artists = await getRandomArtists(3)
     const albums = await getRandomAlbums(8)
-    const tags = await getRandomTags(3)
+    const tags = await getRandomTags(12)
 
     return {
         user,

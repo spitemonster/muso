@@ -1,5 +1,5 @@
 <script lang="ts">
-	import songLength from '$lib/utils/songLength.js';
+	import { SongPlayer, AlbumCover, SongList } from '$lib/components/';
 
 	export let data;
 
@@ -17,19 +17,21 @@
 </script>
 
 <section class="container">
-	<h1>{album.title}</h1>
-	<h2>by
-		{#each artists as artist}
-			<a class="text-blue" href="/artist/{artist?.id}">{artist?.name}</a>
-		{/each}
-	</h2>
-	<ol>
-		{#each songs as song}
-			<li>
-				<a href={`/song/${song.id}`}>{song.title}</a> - {songLength(song.duration)}
-			</li>
-		{/each}
-	</ol>
+	<div class="grid grid-cols-1 md:grid-cols-2">
+		<div class="order-2 md:order-1">
+			<h1>{album.title}</h1>
+			<h2>by
+				{#each artists as artist}
+					<a class="text-blue" href="/artist/{artist?.id}">{artist?.name}</a>
+				{/each}
+			</h2>
+			<SongPlayer />
+			<SongList songs={songs} />
+		</div>
+		<div class="order-1 md:order-2">
+			<AlbumCover album={album} />
+		</div>
+	</div>
 </section>
 
 <style>

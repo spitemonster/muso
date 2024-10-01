@@ -4,6 +4,7 @@ export let data;
 
 import type { Tag } from '$lib/types'
 import AlbumCards from '$lib/components/album-card/AlbumCards.svelte';
+import { TagComponent } from '$lib/components/index.js';
 
 const { user, artists, albums, tags } = data;
 
@@ -20,9 +21,9 @@ if (!artists) {
 	
 	{#if tags != null}
 	<h3>Check out some tags</h3>
-	<ul>
+	<ul class="flex flex-wrap gap-base">
 		{#each tags as tag}
-			<li><a href="/tag/{tag.id}">{tag.name}</a></li>
+			<li><TagComponent tag={tag} /></li>
 		{/each}
 	</ul>
 	{/if}
