@@ -30,8 +30,6 @@
 	{/if}
 
 	{#if artist.tags && artist.tags.length > 0}
-		<TagGrid tags={artist.tags}>
-			<h2 class="mt-lg mb-base">{ artist.name}'s tags</h2>
-		</TagGrid>
+		<TagGrid tags={artist.tags} className="mt-lg"></TagGrid>
 	{/if}
 </div>

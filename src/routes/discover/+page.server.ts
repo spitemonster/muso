@@ -6,16 +6,11 @@ import type { PageServerLoad } from './$types'
 
 export const load: PageServerLoad = async ({ locals }) => {
     const { user } = locals
-    const [artists, albums, tags] = await Promise.all([
-        await getRandomArtists(9),
-        await getRandomAlbums(12),
-        await getRandomTags(24),
-    ])
 
     return {
         user,
-        artists,
-        albums,
-        tags,
+        artists: await getRandomArtists(9),
+        albums: await getRandomAlbums(12),
+        tags: await getRandomTags(50),
     } as PageData
 }
