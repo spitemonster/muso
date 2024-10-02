@@ -125,16 +125,18 @@ export async function getArtistTagFromDb(artistId: string, tagId: string) {
     return artistTag as ArtistTag
 }
 
-export async function getRandomTags(count: number): Promise<Tag[] | null> {
-    const query = db
-        .select()
-        .from(tags)
-        .orderBy(sql`RANDOM()`)
-        .limit(count)
+export async function getRandomTags(count: number): Promise<Tag[]> {
+    const result = await db.query.tags.findMany({
+        columns: {
+            id: true,
+            name: true,
+            slug: true,
+        },
+        orderBy: sql`RANDOM()`,
+        limit: count,
+    })
 
-    const randTags = await query.execute()
-
-    return randTags as Tag[]
+    return result as Tag[]
 }
 
 export async function getArtistTags(artistId: string) {

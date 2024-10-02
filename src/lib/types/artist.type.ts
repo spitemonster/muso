@@ -4,6 +4,7 @@ export interface Artist {
     id: string
     adminId: string
     name: string
+    slug: string
     url: string
     location?: string
     biography?: string

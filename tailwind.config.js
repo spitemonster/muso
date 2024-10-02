@@ -2,6 +2,17 @@
 export default {
     content: ['./src/**/*.{html,js,svelte,ts}'],
     theme: {
+        extend: {
+            spacing: {
+                xs: '0.625rem',
+                sm: '0.8125rem',
+                base: '1rem',
+                md: '1.125rem',
+                lg: '2.5rem',
+                xl: '3rem',
+                xxl: '4rem',
+            },
+        },
         container: {
             center: true,
             padding: `var(--container-min-padding)`,
@@ -24,15 +35,6 @@ export default {
         fontFamily: {
             mono: ['IBM Plex Mono', 'mono'],
             sans: ['IBM Plex Sans', 'sans'],
-        },
-        spacing: {
-            xs: '0.625rem',
-            sm: '0.8125rem',
-            base: '1rem',
-            md: '1.125rem',
-            lg: '2.5rem',
-            xl: '3rem',
-            xxl: '4rem',
         },
         fontSize: {
             xs: 'var(--font-size-xs',

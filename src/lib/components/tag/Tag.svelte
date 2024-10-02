@@ -5,7 +5,7 @@
 	export let tag: TagType;
 </script>
 
-<a class="inline-block border rounded p-xs" href={`/tag/${tag.id}`}>
+<a class="inline-block border rounded p-1 text-sm" href={`/tag/${tag.id}`}>
 	{tag.name}
 	<TagIcon />
 </a>

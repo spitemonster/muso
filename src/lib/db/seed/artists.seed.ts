@@ -9,13 +9,23 @@ export async function generateArtistData(
     userIds: string[]
 ): Promise<Artist[]> {
     const generatedArtistData: Artist[] = []
+    const assignedArtistNames = new Set<string>()
 
     for (let i = 0; i < artistCount; i++) {
         const id = await generateId()
+        let name: string
+
+        do {
+            name = faker.word.words(Math.round(Math.random() * 2) + 1)
+        } while (assignedArtistNames.has(name))
+
+        assignedArtistNames.add(name)
+        const slug = name.replaceAll(' ', '-')
 
         generatedArtistData.push({
             id,
-            name: faker.word.words(Math.round(Math.random() * 2) + 1),
+            name,
+            slug,
             url: faker.internet.url(),
             adminId: faker.helpers.arrayElement(userIds),
             biography: faker.word.words({

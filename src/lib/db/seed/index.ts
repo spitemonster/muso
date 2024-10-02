@@ -36,9 +36,9 @@ const main = async () => {
 
         const db = drizzle(client, { schema })
 
-        const userCount = 2
-        const artistCount = 100
-        const tagCount = 25
+        const userCount = 130
+        const artistCount = 200
+        const tagCount = 200
 
         const userData: (typeof schema.users.$inferInsert)[] =
             (await generateUserData(
@@ -96,12 +96,18 @@ const main = async () => {
             }
 
             // generate albums
-            const albumCount = Math.ceil(Math.random() * 7)
+            const albumCount = Math.ceil(Math.random() * 4)
             const artistAlbums: Album[] = new Array<Album>(albumCount)
             for await (let album of artistAlbums) {
+                const albumTitle = faker.word.words(
+                    Math.ceil(Math.random() * 4)
+                )
+                const albumSlug = albumTitle.replaceAll(' ', '-')
+
                 album = {
                     id: await generateId(),
-                    title: faker.word.words(Math.ceil(Math.random() * 4)),
+                    title: albumTitle,
+                    slug: albumSlug,
                     coverUrl: `https://picsum.photos/200.webp?${Math.floor(Math.random() * 99)}`,
                     duration: 0,
                     songs: [],
@@ -115,12 +121,18 @@ const main = async () => {
                 }
 
                 // generate songs
-                const songCount = Math.floor(Math.random() * 11) + 2
+                const songCount = Math.floor(Math.random() * 8) + 2
                 const albumSongs: Song[] = new Array<Song>(songCount)
                 for await (let song of albumSongs) {
+                    const songTitle = faker.word.words(
+                        Math.ceil(Math.random() * 4)
+                    )
+                    const songSlug = songTitle.replaceAll(' ', '-')
+
                     song = {
                         id: await generateId(),
-                        title: faker.word.words(Math.ceil(Math.random() * 4)),
+                        title: songTitle,
+                        slug: songSlug,
                         albumId: album.id,
                         duration: faker.number.int({ min: 11, max: 1200 }),
                         artists: [],

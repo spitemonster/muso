@@ -3,6 +3,7 @@ import type { Song, Artist, AlbumTag, Tag } from '.'
 export interface Album {
     id: string
     title: string
+    slug: string
     duration: number
     coverUrl: string
     songs?: Song[]

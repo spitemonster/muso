@@ -1,12 +1,12 @@
 <script lang="ts">
-export let data;
-import { TagGrid, AlbumCardGrid, ArtistCardGrid } from '$lib/components';
+	import { TagGrid, AlbumCardGrid, ArtistCardGrid } from '$lib/components';
 
-const { artists, albums, tags } = data;
+	export let data
+// const { artists, albums, tags } = data;
 
-if (!artists) {
-	throw Error();
-}
+// if (!artists) {
+// 	throw Error();
+// }
 
 </script>
 
@@ -15,21 +15,29 @@ if (!artists) {
 	<h2 class="mb-lg">You've come to the right place.</h2>
 
 	
-	{#if tags}
-		<TagGrid className="mt-lg" tags={tags}>
-			<h3 class="mb-base">Check out some tags</h3>
-		</TagGrid>
-	{/if}
+	{#await data.tags}
+		<p>Loading tags</p>
+	{:then tags } 
+		{#if tags}
+			<TagGrid className="mt-lg" tags={tags}>
+				<h3 class="mb-base">Check out some tags:</h3>
+			</TagGrid>
+		{/if}
+	{/await}
 
-	{#if artists}
+	{#await data.artists}
+		<p>Loading artists</p>
+	{:then artists} 
 		<ArtistCardGrid className="mt-lg" artists={artists}>
 			<h3 class="mb-base">Some artists to get you started:</h3>
 		</ArtistCardGrid>
-	{/if}
+	{/await}
 	
-	{#if albums}
+	{#await data.albums}
+		<p>loading albums</p>
+	{:then albums}
 		<AlbumCardGrid className="mt-lg" albums={albums}>
 			<h3 class="mb-base">Some albums to pique your interest:</h3>
 		</AlbumCardGrid>
-	{/if}
+	{/await}
 </section>
