@@ -1,6 +1,6 @@
 import { db } from '$lib/db'
 import { tags, artistTags } from '$lib/db/schema'
-import type { Tag, ArtistTag, Album, Artist } from '$lib/types'
+import type { Tag, ArtistTag, Album, Artist, Song } from '$lib/types'
 import { eq, and, sql } from 'drizzle-orm'
 import { generateId } from '$lib/utils'
 
@@ -44,6 +44,11 @@ export async function getTagFromDbById(id: string): Promise<Tag | null> {
                         artist: true,
                     },
                 },
+                songTags: {
+                    with: {
+                        song: true,
+                    },
+                },
             },
         })
 
@@ -53,9 +58,11 @@ export async function getTagFromDbById(id: string): Promise<Tag | null> {
 
         tag.albums = res.albumTags.map((at) => at.album as Album)
         tag.artists = res.artistTags.map((at) => at.artist as Artist)
+        tag.songs = res.songTags.map((st) => st.song as Song)
 
         delete tag.artistTags
         delete tag.albumTags
+        delete tag.songTags
 
         return tag
     } catch (err) {

@@ -1,4 +1,4 @@
-import type { Artist, Album } from '.'
+import type { Artist, Album, Song } from '.'
 
 export interface Tag {
     id: string
@@ -6,8 +6,10 @@ export interface Tag {
     slug: string
     albums?: Album[]
     artists?: Artist[]
+    songs?: Song[]
     albumTags?: AlbumTag[]
     artistTags?: ArtistTag[]
+    songTags?: SongTag[]
 }
 
 export interface ArtistTag {
@@ -24,4 +26,12 @@ export interface AlbumTag {
     tagId: string
     tag?: Tag
     album?: Album
+}
+
+export interface SongTag {
+    id: string
+    songId: string
+    tagId: string
+    song?: Song
+    tag?: Tag
 }

@@ -17,4 +17,5 @@ export const songsRelations = relations(songs, ({ one, many }) => ({
         references: [schema.albums.id],
     }),
     songArtists: many(schema.songArtists),
+    songTags: many(schema.songTags),
 }))
