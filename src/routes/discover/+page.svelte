@@ -1,6 +1,6 @@
 <script lang="ts">
 export let data;
-import { TagGrid, AlbumGrid, ArtistCardGrid } from '$lib/components';
+import { TagGrid, AlbumCardGrid, ArtistCardGrid } from '$lib/components';
 
 const { artists, albums, tags } = data;
 
@@ -28,8 +28,8 @@ if (!artists) {
 	{/if}
 	
 	{#if albums && albums.length > 0}
-		<AlbumGrid albums={albums}>
+		<AlbumCardGrid albums={albums}>
 			<h3 class="mt-lg mb-base">Some albums to pique your interest:</h3>
-		</AlbumGrid>
+		</AlbumCardGrid>
 	{/if}
 </section>

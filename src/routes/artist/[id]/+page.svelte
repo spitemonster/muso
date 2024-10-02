@@ -1,5 +1,5 @@
 <script lang="ts">
-	import AlbumGrid from '$lib/components/album-card/AlbumGrid.svelte';
+	import AlbumCardGrid from '$lib/components/album/AlbumCardGrid.svelte';
 	// import Tag from '$lib/components/Tag.svelte'
 	import { TagGrid } from '$lib/components';
 	export let data;
@@ -13,15 +13,18 @@
 
 <div class="container">
 	<h1>{artist.name}</h1>
-	
+	<div class="max-w-2xl">
+		<p>{artist.biography}</p>
+	</div>
 	{#if artist.albums && artist.albums.length > 0}
-		<h2>Albums by { artist.name }</h2>
-		<AlbumGrid albums={artist.albums} />
+		<AlbumCardGrid albums={artist.albums}>
+			<h2 class="mt-lg mb-base">Albums by { artist.name }</h2>
+		</AlbumCardGrid>
 	{/if}
 
 	{#if artist.tags && artist.tags.length > 0}
 		<TagGrid tags={artist.tags}>
-			<h2>{ artist.name}'s tags</h2>
+			<h2 class="mt-lg mb-base">{ artist.name}'s tags</h2>
 		</TagGrid>
 	{/if}
 </div>

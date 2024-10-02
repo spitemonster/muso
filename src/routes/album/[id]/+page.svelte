@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { MusicPlayer, AlbumCover, SongList, TagComponent } from '$lib/components/';
+	import { MusicPlayer, AlbumCover, SongList, TagGrid } from '$lib/components/';
 
 	export let data;
 
@@ -27,12 +27,8 @@
 			</h2>
 			<MusicPlayer song={songs[0]} />
 			<SongList songs={songs} />
-			{#if tags && tags.length > 0}
-				<ul>
-					{#each tags as tag}
-						<li><TagComponent tag={tag} /></li>
-					{/each}
-				</ul>
+			{#if album.tags != null && album.tags.length > 0}
+				<TagGrid tags={album.tags} />
 			{/if}
 		</div>
 		<div class="order-1 md:order-2">

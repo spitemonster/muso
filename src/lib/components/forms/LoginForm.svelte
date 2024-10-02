@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { EmailField, PasswordField } from "$lib/components/form-fields";
+	import { EmailField, PasswordField } from "$lib/components";
 	import { enhance } from '$app/forms';
 	import { deserialize } from "$app/forms";
 

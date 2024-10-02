@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { EmailField, NameField, PasswordField } from '$lib/components/form-fields';
+	import { EmailField, NameField, PasswordField } from '$lib/components';
 	import { enhance } from '$app/forms';
 
 	let form: HTMLFormElement;

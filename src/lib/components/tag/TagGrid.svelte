@@ -8,7 +8,6 @@
 <slot></slot>
 <ul class="flex gap-base flex-wrap">
 	{#each tags as tag}
-
 		<li>
 			<TagView tag={tag} />
 		</li>
