@@ -3,14 +3,21 @@
 	import { Tag as TagView } from '$lib/components'
 
 	export let tags: Tag[]
+	export let className: string = "";
 </script>
 
-<slot></slot>
-<ul class="flex gap-base flex-wrap">
-	{#each tags as tag}
-		<li>
-			<TagView tag={tag} />
-		</li>
+{#if tags.length > 0}
 
-	{/each}
-</ul>
+<div class={`tag-grid ${className}`}>
+	<slot></slot>
+	<ul class="flex gap-base flex-wrap">
+		{#each tags as tag}
+			<li>
+				<TagView tag={tag} />
+			</li>
+	
+		{/each}
+	</ul>
+</div>
+
+{/if}

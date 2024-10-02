@@ -15,21 +15,21 @@ if (!artists) {
 	<h2 class="mb-lg">You've come to the right place.</h2>
 
 	
-	{#if tags != null}
-		<TagGrid tags={tags}>
+	{#if tags}
+		<TagGrid className="mt-lg" tags={tags}>
 			<h3 class="mb-base">Check out some tags</h3>
 		</TagGrid>
 	{/if}
 
-	{#if artists && artists.length > 0}
-		<ArtistCardGrid artists={artists}>
-			<h3 class="mt-lg mb-base">Some artists to get you started:</h3>
+	{#if artists}
+		<ArtistCardGrid className="mt-lg" artists={artists}>
+			<h3 class="mb-base">Some artists to get you started:</h3>
 		</ArtistCardGrid>
 	{/if}
 	
-	{#if albums && albums.length > 0}
-		<AlbumCardGrid albums={albums}>
-			<h3 class="mt-lg mb-base">Some albums to pique your interest:</h3>
+	{#if albums}
+		<AlbumCardGrid className="mt-lg" albums={albums}>
+			<h3 class="mb-base">Some albums to pique your interest:</h3>
 		</AlbumCardGrid>
 	{/if}
 </section>

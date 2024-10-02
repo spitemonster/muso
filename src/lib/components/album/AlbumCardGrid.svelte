@@ -1,16 +1,23 @@
 <script lang="ts">
 	import type { Album } from '$lib/types';
-	import AlbumCard from "./AlbumCard.svelte"
+	import { AlbumCard } from "$lib/components"
 
 	export let albums: Album[];
+	export let className: string = "";
 </script>
 
-<slot></slot>
+{#if albums.length > 0}
 
-<ul class="grid gap-base grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-	{#each albums as album}
-		<li>
-			<AlbumCard album={album} />
-		</li>
-	{/each}
-</ul>
+<div class={`album-card-grid ${className}`}>
+	<slot></slot>
+
+	<ul class="grid gap-base grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+		{#each albums as album}
+			<li>
+				<AlbumCard album={album} />
+			</li>
+		{/each}
+	</ul>
+</div>
+
+{/if}

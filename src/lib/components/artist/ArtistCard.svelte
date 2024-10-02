@@ -5,11 +5,11 @@
 </script>
 
 <a href={`/artist/${artist.id}`}>
-	<figure class="flex gap-base bg-white text-black p-base rounded">
+	<figure class="flex gap-base bg-white text-black p-base rounded h-full">
 		<img class="inline-block h-xxl aspect-square rounded-full" src={artist.profileImageUrl} alt={artist.name}>
 		<figcaption class="inline-block">
 			<p class="mb-base font-bold font-mono">{artist.name}</p>
-			<div class="text-sm">
+			<div class="text-sm line-clamp-3">
 				<p>{artist.biography}</p>
 			</div>
 		</figcaption>

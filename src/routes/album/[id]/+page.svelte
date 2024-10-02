@@ -28,7 +28,7 @@
 			<MusicPlayer song={songs[0]} />
 			<SongList songs={songs} />
 			{#if album.tags != null && album.tags.length > 0}
-				<TagGrid tags={album.tags} />
+				<TagGrid tags={album.tags} className="mt-lg" />
 			{/if}
 		</div>
 		<div class="order-1 md:order-2">
