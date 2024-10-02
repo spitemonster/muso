@@ -59,13 +59,33 @@ const main = async () => {
         const songData: (typeof schema.songs.$inferInsert)[] = []
         const songArtistData: (typeof schema.songArtists.$inferInsert)[] = []
 
-        for await (const artist of artistData) {
-            const tagCount = Math.ceil(Math.random() * 5)
+        // for every artist generate
+        //    a random number (1-6) of artistTag records
+        //    a random number (1-8) of album records
+        //    for every album generate
+        //        an albumArtist record
+        //        a random number (1-6) of albumTag records
+        //        a random number (2-13) of songs
+        //        for every song generate
+        //            a songArtist record
+        //            TODO: a random number of songTags
 
+        // TODO: fix broken method of randomly assigning tags
+
+        for await (const artist of artistData) {
+            // generate artist tags
+            const tagCount: number = Math.ceil(Math.random() * 5)
             const artistTags: ArtistTag[] = new Array<ArtistTag>(tagCount)
+            const assignedArtistTagIds = new Set<string>()
 
             for await (let artistTag of artistTags) {
-                const tag: Tag = faker.helpers.arrayElement(tagData) as Tag
+                let tag: Tag
+
+                do {
+                    tag = faker.helpers.arrayElement(tagData) as Tag
+                } while (assignedArtistTagIds.has(tag.id))
+
+                assignedArtistTagIds.add(tag.id)
 
                 artistTag = {
                     id: await generateId(),
@@ -76,9 +96,9 @@ const main = async () => {
                 artistTagData.push(artistTag)
             }
 
+            // generate albums
             const albumCount = Math.ceil(Math.random() * 7)
             const artistAlbums: Album[] = new Array<Album>(albumCount)
-
             for await (let album of artistAlbums) {
                 album = {
                     id: await generateId(),
@@ -95,11 +115,9 @@ const main = async () => {
                     albumId: album.id,
                 }
 
+                // generate songs
                 const songCount = Math.floor(Math.random() * 11) + 2
-
                 const albumSongs: Song[] = new Array<Song>(songCount)
-
-                // create songs for album
                 for await (let song of albumSongs) {
                     song = {
                         id: await generateId(),
@@ -122,9 +140,16 @@ const main = async () => {
 
                 const albumTagCount = Math.ceil(Math.random() * 7)
                 const albumTags = new Array<AlbumTag>(albumTagCount)
+                const assignedAlbumTagIds = new Set<string>()
 
                 for await (let albumTag of albumTags) {
-                    const tag = faker.helpers.arrayElement(tagData) as Tag
+                    let tag: Tag
+
+                    do {
+                        tag = faker.helpers.arrayElement(tagData) as Tag
+                    } while (assignedAlbumTagIds.has(tag.id))
+
+                    assignedAlbumTagIds.add(tag.id)
 
                     albumTag = {
                         id: await generateId(),
