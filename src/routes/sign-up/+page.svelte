@@ -1,5 +1,5 @@
 <script>
-	import SignupForm from '$lib/components/SignupForm/SignupForm.svelte';
+	import {SignupForm} from '$lib/components';
 </script>
 
 <section class="container">
