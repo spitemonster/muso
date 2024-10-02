@@ -36,9 +36,9 @@ const main = async () => {
 
         const db = drizzle(client, { schema })
 
-        const userCount = 10
+        const userCount = 2
         const artistCount = 100
-        const tagCount = 1000
+        const tagCount = 25
 
         const userData: (typeof schema.users.$inferInsert)[] =
             (await generateUserData(

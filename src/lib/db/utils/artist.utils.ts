@@ -157,26 +157,17 @@ export async function getArtistsFromDbByUserEmail(
     return artistsAdminedByUser as Artist[]
 }
 
-// const randAlbums = await db.query.albums.findMany({
-// 	columns: {
-// 		id: true,
-// 		coverUrl: true,
-// 		title: true,
-// 	},
-// 	orderBy: sql`RANDOM()`,
-// 	limit: count,
-// 	with: {
-// 		songs: true,
-// 		artists: true,
-// 	},
-// })
-
 export async function getRandomArtists(count: number): Promise<Artist[]> {
     const randArtists = await db.query.artists.findMany({
         columns: {
-            id: true,
             name: true,
+            id: true,
+            createdAt: true,
+            adminId: true,
             url: true,
+            location: true,
+            biography: true,
+            profileImageUrl: true,
         },
         orderBy: sql`RANDOM()`,
         limit: count,
