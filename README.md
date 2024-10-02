@@ -24,7 +24,7 @@ tools for organic discovery include artist and community tagging, non-algorithmi
 
 ## stack
 
-sveltekit stack, postgres database. i don't really believe in tailwind or css libraries in general anymore so custom css. what do you usually put here?
+sveltekit stack with tailwind, postgres database.
 
 ## setup
 
