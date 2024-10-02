@@ -16,8 +16,8 @@ declare global {
             artist?: Artist
             albums?: Album[]
             album?: Album
-            songs?: Song[]
-            song?: Song
+            tracks?: Track[]
+            track?: Track
             tags?: Tag[]
             tag?: Tag
         }

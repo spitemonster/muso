@@ -5,10 +5,10 @@ export {
 } from './user.utils'
 
 export {
-    getSongFromDbById,
-    getSongsFromDbByArtistId,
-    getSongsFromDbByAlbumId,
-} from './song.utils'
+    getTrackFromDbById,
+    getTracksFromDbByArtistId,
+    getTracksFromDbByAlbumId,
+} from './track.utils'
 
 export {
     getAlbumFromDbById,

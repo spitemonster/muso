@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { MusicPlayer, AlbumCover, SongList, TagGrid } from '$lib/components/';
+	import { MusicPlayer, AlbumCover, TrackList, TagGrid } from '$lib/components/';
 
 	export let data;
 
@@ -9,10 +9,10 @@
 		throw Error(`Problem displaying album page. No album.`)
 	}
 
-	const { artists, songs, tags } = album;
+	const { artists, tracks, tags } = album;
 
-	if (!artists || !songs) {
-		throw Error(`Problem displaying album page for ${album.id}. Artists: ${album.artists}. Songs: ${album.songs}`)
+	if (!artists || !tracks) {
+		throw Error(`Problem displaying album page for ${album.id}. Artists: ${album.artists}. Tracks: ${album.tracks}`)
 	}
 </script>
 
@@ -25,8 +25,8 @@
 					<a class="text-blue" href="/artist/{artist?.id}">{artist?.name}</a>
 				{/each}
 			</h2>
-			<MusicPlayer song={songs[0]} />
-			<SongList songs={songs} />
+			<MusicPlayer track={tracks[0]} />
+			<TrackList tracks={tracks} />
 			{#if album.tags != null && album.tags.length > 0}
 				<TagGrid tags={album.tags} className="mt-lg" />
 			{/if}

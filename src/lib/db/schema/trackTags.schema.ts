@@ -3,30 +3,30 @@ import { text, timestamp, pgTable, primaryKey } from 'drizzle-orm/pg-core'
 
 import * as schema from '.'
 
-export const songTags = pgTable(
-    'song_tags',
+export const trackTags = pgTable(
+    'track_tags',
     {
         id: text('id').notNull().unique(),
-        songId: text('song_id')
+        trackId: text('track_id')
             .notNull()
-            .references(() => schema.songs.id),
+            .references(() => schema.tracks.id),
         tagId: text('tag_id')
             .notNull()
             .references(() => schema.tags.id),
         createdAt: timestamp('created_at').defaultNow(),
     },
     (t) => ({
-        pk: primaryKey({ columns: [t.songId, t.tagId] }),
+        pk: primaryKey({ columns: [t.trackId, t.tagId] }),
     })
 )
 
-export const songTagsRelations = relations(songTags, ({ one }) => ({
-    song: one(schema.songs, {
-        fields: [songTags.songId],
-        references: [schema.songs.id],
+export const trackTagsRelations = relations(trackTags, ({ one }) => ({
+    track: one(schema.tracks, {
+        fields: [trackTags.trackId],
+        references: [schema.tracks.id],
     }),
     tag: one(schema.tags, {
-        fields: [songTags.tagId],
+        fields: [trackTags.tagId],
         references: [schema.tags.id],
     }),
 }))

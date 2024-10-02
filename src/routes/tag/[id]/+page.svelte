@@ -29,11 +29,11 @@
 		</ul>
 	{/if}
 
-	{#if tag.songs != null && tag.songs.length > 0}
-		<h2>Songs tagged with <i>{tag.name}</i></h2>
+	{#if tag.tracks != null && tag.tracks.length > 0}
+		<h2>Tracks tagged with <i>{tag.name}</i></h2>
 		<ul class="list-numeric">
-			{#each tag.songs as song }
-				<li class="block">{song.title}</li>
+			{#each tag.tracks as track }
+				<li class="block">{track.title}</li>
 			{/each}
 		</ul>
 	{/if}

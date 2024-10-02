@@ -1,5 +1,5 @@
 import type { Artist, Album } from '$lib/types'
-export interface Song {
+export interface Track {
     id: string
     title: string
     slug: string
@@ -7,13 +7,13 @@ export interface Song {
     album?: Album
     albumId?: string
     artists?: Artist[]
-    songArtists?: SongArtist[]
+    trackArtists?: TrackArtist[]
 }
 
-export interface SongArtist {
+export interface TrackArtist {
     id: string
-    songId: string
+    trackId: string
     artistId: string
-    song?: Song
+    track?: Track
     artist?: Artist
 }

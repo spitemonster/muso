@@ -2,7 +2,7 @@
 	import ArtistTags from './../forms/ArtistTags.svelte';
 	import type { Artist, Album } from '$lib/types'
 	export let artist: Artist
-	import songLength from '$lib/utils/songLength'
+	import trackLength from '$lib/utils/trackLength'
 
 </script>
 <section id="artist-dashboard">
@@ -15,8 +15,8 @@
 				<figcaption>
 					{album.title}
 					<ol>
-						{#each album.songs as song}
-						<li>{song.title} - {song.duration}</li>
+						{#each album.tracks as track}
+						<li>{track.title} - {track.duration}</li>
 						{/each}
 					</ol>
 					<a href={`/dashboard/album/${album.id}`}>Manage Album</a>

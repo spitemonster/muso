@@ -18,8 +18,8 @@
 		<figcaption>
 			<h3>{album.title}</h3>
 	<ol>
-		{#each album.songs as song}
-			<li>{song.title} - {song.duration} - <a href={`/dashboard/song/${song.id}`}>Manage Song</a></li>
+		{#each album.tracks as track}
+			<li>{track.title} - {track.duration} - <a href={`/dashboard/track/${track.id}`}>Manage Track</a></li>
 		{/each}
 	</ol>
 		</figcaption>

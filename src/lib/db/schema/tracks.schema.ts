@@ -3,8 +3,8 @@ import { text, timestamp, pgTable, integer, index } from 'drizzle-orm/pg-core'
 
 import * as schema from '.'
 
-export const songs = pgTable(
-    'songs',
+export const tracks = pgTable(
+    'tracks',
     {
         id: text('id').notNull().unique().primaryKey(),
         title: text('title'),
@@ -15,16 +15,16 @@ export const songs = pgTable(
     },
     (table) => {
         return {
-            slugIdx: index('song_slug_idx').on(table.slug),
+            slugIdx: index('track_slug_idx').on(table.slug),
         }
     }
 )
 
-export const songsRelations = relations(songs, ({ one, many }) => ({
+export const tracksRelations = relations(tracks, ({ one, many }) => ({
     album: one(schema.albums, {
-        fields: [songs.albumId],
+        fields: [tracks.albumId],
         references: [schema.albums.id],
     }),
-    songArtists: many(schema.songArtists),
-    songTags: many(schema.songTags),
+    trackArtists: many(schema.trackArtists),
+    trackTags: many(schema.trackTags),
 }))

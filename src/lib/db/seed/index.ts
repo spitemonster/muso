@@ -11,13 +11,13 @@ import { generateId } from '$lib/utils'
 
 import type {
     Album,
-    Song,
+    Track,
     AlbumArtist,
-    SongArtist,
+    TrackArtist,
     Tag,
     ArtistTag,
     AlbumTag,
-    SongTag,
+    TrackTag,
 } from '$lib/types'
 import { faker } from '@faker-js/faker'
 
@@ -54,12 +54,12 @@ const main = async () => {
 
         const artistTagData: (typeof schema.artistTags.$inferInsert)[] = []
         const albumTagData: (typeof schema.albumTags.$inferInsert)[] = []
-        const songTagData: (typeof schema.songTags.$inferInsert)[] = []
+        const trackTagData: (typeof schema.trackTags.$inferInsert)[] = []
 
         const albumData: (typeof schema.albums.$inferInsert)[] = []
         const albumArtistData: (typeof schema.albumArtists.$inferInsert)[] = []
-        const songData: (typeof schema.songs.$inferInsert)[] = []
-        const songArtistData: (typeof schema.songArtists.$inferInsert)[] = []
+        const trackData: (typeof schema.tracks.$inferInsert)[] = []
+        const trackArtistData: (typeof schema.trackArtists.$inferInsert)[] = []
 
         // for every artist generate
         //    a random number (1-6) of artistTag records
@@ -67,9 +67,9 @@ const main = async () => {
         //    for every album generate
         //        an albumArtist record
         //        a random number (1-6) of albumTag records
-        //        a random number (2-13) of songs
-        //        for every song generate
-        //            a songArtist record
+        //        a random number (2-13) of tracks
+        //        for every track generate
+        //            a trackArtist record
 
         for await (const artist of artistData) {
             // generate artist tags
@@ -110,7 +110,7 @@ const main = async () => {
                     slug: albumSlug,
                     coverUrl: `https://picsum.photos/200.webp?${Math.floor(Math.random() * 99)}`,
                     duration: 0,
-                    songs: [],
+                    tracks: [],
                     artists: [],
                 }
 
@@ -120,54 +120,54 @@ const main = async () => {
                     albumId: album.id,
                 }
 
-                // generate songs
-                const songCount = Math.floor(Math.random() * 8) + 2
-                const albumSongs: Song[] = new Array<Song>(songCount)
-                for await (let song of albumSongs) {
-                    const songTitle = faker.word.words(
+                // generate tracks
+                const trackCount = Math.floor(Math.random() * 8) + 2
+                const albumTracks: Track[] = new Array<Track>(trackCount)
+                for await (let track of albumTracks) {
+                    const trackTitle = faker.word.words(
                         Math.ceil(Math.random() * 4)
                     )
-                    const songSlug = songTitle.replaceAll(' ', '-')
+                    const trackSlug = trackTitle.replaceAll(' ', '-')
 
-                    song = {
+                    track = {
                         id: await generateId(),
-                        title: songTitle,
-                        slug: songSlug,
+                        title: trackTitle,
+                        slug: trackSlug,
                         albumId: album.id,
                         duration: faker.number.int({ min: 11, max: 1200 }),
                         artists: [],
                     }
 
-                    const songArtist: SongArtist = {
+                    const trackArtist: TrackArtist = {
                         id: await generateId(),
                         artistId: artist.id,
-                        songId: song.id,
+                        trackId: track.id,
                     }
 
-                    album.duration += song.duration
-                    songData.push(song)
-                    songArtistData.push(songArtist)
+                    album.duration += track.duration
+                    trackData.push(track)
+                    trackArtistData.push(trackArtist)
 
-                    const songTagCount = Math.ceil(Math.random() * 7)
-                    const songTags = new Array<SongTag>(songTagCount)
-                    const assignedSongTagIds = new Set<string>()
+                    const trackTagCount = Math.ceil(Math.random() * 7)
+                    const trackTags = new Array<TrackTag>(trackTagCount)
+                    const assignedTrackTagIds = new Set<string>()
 
-                    for await (let songTag of songTags) {
+                    for await (let trackTag of trackTags) {
                         let tag: Tag
 
                         do {
                             tag = faker.helpers.arrayElement(tagData) as Tag
-                        } while (assignedSongTagIds.has(tag.id))
+                        } while (assignedTrackTagIds.has(tag.id))
 
-                        assignedSongTagIds.add(tag.id)
+                        assignedTrackTagIds.add(tag.id)
 
-                        songTag = {
+                        trackTag = {
                             id: await generateId(),
-                            songId: song.id,
+                            trackId: track.id,
                             tagId: tag.id,
                         }
 
-                        songTagData.push(songTag)
+                        trackTagData.push(trackTag)
                     }
                 }
 
@@ -202,12 +202,12 @@ const main = async () => {
         await db.insert(schema.artists).values(artistData)
         await db.insert(schema.albums).values(albumData)
         await db.insert(schema.albumArtists).values(albumArtistData)
-        await db.insert(schema.songs).values(songData)
-        await db.insert(schema.songArtists).values(songArtistData)
+        await db.insert(schema.tracks).values(trackData)
+        await db.insert(schema.trackArtists).values(trackArtistData)
         await db.insert(schema.tags).values(tagData)
         await db.insert(schema.artistTags).values(artistTagData)
         await db.insert(schema.albumTags).values(albumTagData)
-        await db.insert(schema.songTags).values(songTagData)
+        await db.insert(schema.trackTags).values(trackTagData)
 
         client.end()
     } catch (err) {

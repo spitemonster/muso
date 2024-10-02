@@ -1,23 +1,23 @@
 import { faker } from '@faker-js/faker'
 
-import type { Song, SongArtist } from '$lib/types'
+import type { Track, TrackArtist } from '$lib/types'
 
 import * as schema from '../schema'
 
 import { generateId } from '$lib/utils'
 
-export async function generateSongData(
-    songCount: number,
-    albumData: (typeof schema.songs.$inferInsert)[]
-): Promise<Song[]> {
-    const generatedSongData: Song[] = []
+export async function generateTrackData(
+    trackCount: number,
+    albumData: (typeof schema.tracks.$inferInsert)[]
+): Promise<Track[]> {
+    const generatedTrackData: Track[] = []
 
-    for (let i = 0; i < songCount; i++) {
+    for (let i = 0; i < trackCount; i++) {
         const id = await generateId()
 
         const album = faker.helpers.arrayElement(albumData)
 
-        generatedSongData.push({
+        generatedTrackData.push({
             id,
             title: faker.word.words(Math.round(Math.random() * 4) + 1),
             duration: faker.number.int({ min: 15, max: 900 }),
@@ -26,56 +26,56 @@ export async function generateSongData(
         })
     }
 
-    return generatedSongData
+    return generatedTrackData
 }
 
-export async function generateSongArtistData(
-    songData: (typeof schema.songs.$inferInsert)[],
+export async function generateTrackArtistData(
+    trackData: (typeof schema.tracks.$inferInsert)[],
     albumArtistData: (typeof schema.albumArtists.$inferInsert)[]
-): Promise<SongArtist[]> {
-    // for every song
-    const generatedSongArtistData: SongArtist[] = []
+): Promise<TrackArtist[]> {
+    // for every track
+    const generatedTrackArtistData: TrackArtist[] = []
 
-    songData.forEach(async (song) => {
-        const songId = song.id
-        const albumId = song.albumId
+    trackData.forEach(async (track) => {
+        const trackId = track.id
+        const albumId = track.albumId
 
         // get the album artist data that corresponds to the album id
         const albumArtists = albumArtistData.filter((d) => d.albumId == albumId)
 
         // if we don't find anything, there is a problem
         if (albumArtists.length == 0) {
-            console.error('problem seeding song artist data')
+            console.error('problem seeding track artist data')
             return
         }
 
         let multiArtist: number = 0
 
-        // if there is more than one artist, randomly determine if we're creating two song artist records or just one
+        // if there is more than one artist, randomly determine if we're creating two track artist records or just one
         // as with albums
         if (albumArtists.length > 1) {
             multiArtist = Math.random() < 0.1 ? 1 : 0
         }
 
-        // if multi artist == 1 this loop runs twice, generating two artists for a song
+        // if multi artist == 1 this loop runs twice, generating two artists for a track
         for (let i = 0; i < multiArtist + 1; i++) {
             const id = await generateId()
             const artistId = albumArtists[i].artistId
 
-            const aa: SongArtist = {
+            const aa: TrackArtist = {
                 id,
                 artistId,
-                songId,
+                trackId,
             }
 
-            generatedSongArtistData.push(aa)
+            generatedTrackArtistData.push(aa)
         }
     })
 
-    // for every song
+    // for every track
     // get the album to which it belongs
     // get its artists via itsAlbumArtists
-    return generatedSongArtistData
+    return generatedTrackArtistData
 }
 
 // export async function generateAlbumArtistData(

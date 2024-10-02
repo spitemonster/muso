@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type {Song} from '$lib/types';
+	import type {Track} from '$lib/types';
 	import { onMount } from 'svelte';
 
-	export let song: Song;
+	export let track: Track;
 
 	let playing: boolean = false;
 	let audioEl: HTMLAudioElement;
@@ -22,7 +22,7 @@
 </script>
 
 <form class="music-player">
-	<input type="range" disabled min="0" max={song.duration} value={song.duration / 2}>
+	<input type="range" disabled min="0" max={track.duration} value={track.duration / 2}>
 
 	<button on:click={togglePlay}>{ playing ? "Pause" : "Play"}</button>
 </form>

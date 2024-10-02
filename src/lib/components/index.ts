@@ -10,7 +10,7 @@ export { default as ArtistListItem } from './dashboard/ArtistListItem.svelte'
 
 export { default as MusicPlayer } from './shared/MusicPlayer.svelte'
 
-export { default as SongList } from './song/SongList.svelte'
+export { default as TrackList } from './track/TrackList.svelte'
 
 export { default as AlbumCover } from './album/AlbumCover.svelte'
 export { default as AlbumCard } from './album/AlbumCard.svelte'

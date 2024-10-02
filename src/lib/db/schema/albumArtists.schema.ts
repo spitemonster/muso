@@ -2,7 +2,7 @@ import { relations } from 'drizzle-orm'
 import { text, timestamp, pgTable, primaryKey } from 'drizzle-orm/pg-core'
 
 import * as schema from '.'
-// import { albums, songs, users, artistTags } from '.'
+// import { albums, tracks, users, artistTags } from '.'
 
 export const albumArtists = pgTable(
     'album_artists',

@@ -1,10 +1,10 @@
-import { SongController } from '$lib/db/controllers'
+import { TrackController } from '$lib/db/controllers'
 import type { PageServerLoad } from './$types'
 
 export const load: PageServerLoad = async function ({ params }) {
-    const song = await SongController.FindSongById(params.id)
+    const track = await TrackController.FindTrackById(params.id)
 
     return {
-        song,
+        track,
     }
 }

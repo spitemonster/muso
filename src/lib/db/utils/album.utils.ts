@@ -9,7 +9,7 @@ export async function getAlbumFromDbById(id: string): Promise<Album | null> {
         const res = await db.query.albums.findFirst({
             where: eq(albumsSchema.id, id),
             with: {
-                songs: true,
+                tracks: true,
                 albumArtists: {
                     with: {
                         artist: true,
@@ -85,7 +85,7 @@ export async function getAlbumsFromDbByArtistId(
         // const albumsByArtist = await db.query.albums.findMany({
         //     where: eq(albumsSchema.artistId, artistId),
         //     with: {
-        //         songs: true,
+        //         tracks: true,
         // 		artists: true
         //     },
         // })
@@ -117,7 +117,7 @@ export async function getRandomAlbums(count: number): Promise<Album[]> {
         orderBy: sql`RANDOM()`,
         limit: count,
         with: {
-            songs: true,
+            tracks: true,
             albumArtists: {
                 with: {
                     artist: true,

@@ -15,7 +15,7 @@ export async function getUserArtists(userId: string | undefined) {
                 with: {
                     albums: {
                         with: {
-                            songs: true,
+                            tracks: true,
                         },
                     },
                 },
