@@ -13,4 +13,5 @@ export const tags = pgTable('tags', {
 export const tagsRelations = relations(tags, ({ many }) => ({
     artistTags: many(schema.artistTags),
     albumTags: many(schema.albumTags),
+    songTags: many(schema.songTags),
 }))

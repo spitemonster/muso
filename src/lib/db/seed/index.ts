@@ -17,6 +17,7 @@ import type {
     Tag,
     ArtistTag,
     AlbumTag,
+    SongTag,
 } from '$lib/types'
 import { faker } from '@faker-js/faker'
 
@@ -53,6 +54,7 @@ const main = async () => {
 
         const artistTagData: (typeof schema.artistTags.$inferInsert)[] = []
         const albumTagData: (typeof schema.albumTags.$inferInsert)[] = []
+        const songTagData: (typeof schema.songTags.$inferInsert)[] = []
 
         const albumData: (typeof schema.albums.$inferInsert)[] = []
         const albumArtistData: (typeof schema.albumArtists.$inferInsert)[] = []
@@ -68,9 +70,6 @@ const main = async () => {
         //        a random number (2-13) of songs
         //        for every song generate
         //            a songArtist record
-        //            TODO: a random number of songTags
-
-        // TODO: fix broken method of randomly assigning tags
 
         for await (const artist of artistData) {
             // generate artist tags
@@ -136,6 +135,28 @@ const main = async () => {
                     album.duration += song.duration
                     songData.push(song)
                     songArtistData.push(songArtist)
+
+                    const songTagCount = Math.ceil(Math.random() * 7)
+                    const songTags = new Array<SongTag>(songTagCount)
+                    const assignedSongTagIds = new Set<string>()
+
+                    for await (let songTag of songTags) {
+                        let tag: Tag
+
+                        do {
+                            tag = faker.helpers.arrayElement(tagData) as Tag
+                        } while (assignedSongTagIds.has(tag.id))
+
+                        assignedSongTagIds.add(tag.id)
+
+                        songTag = {
+                            id: await generateId(),
+                            songId: song.id,
+                            tagId: tag.id,
+                        }
+
+                        songTagData.push(songTag)
+                    }
                 }
 
                 const albumTagCount = Math.ceil(Math.random() * 7)
@@ -174,6 +195,7 @@ const main = async () => {
         await db.insert(schema.tags).values(tagData)
         await db.insert(schema.artistTags).values(artistTagData)
         await db.insert(schema.albumTags).values(albumTagData)
+        await db.insert(schema.songTags).values(songTagData)
 
         client.end()
     } catch (err) {
