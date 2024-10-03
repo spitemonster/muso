@@ -8,7 +8,7 @@ export const tags = pgTable(
     {
         id: text('id').notNull().unique().primaryKey(),
         name: text('name'),
-        slug: text('slug'),
+        slug: text('slug').unique(),
         createdAt: timestamp('created_at').defaultNow(),
     },
     (table) => {

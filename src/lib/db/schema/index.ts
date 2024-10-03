@@ -19,3 +19,4 @@ export {
     collectionTagsRelations,
 } from './collectionTags.schema'
 export { trackTags, trackTagsRelations } from './trackTags.schema'
+export { artistAdmins, artistAdminsRelations } from './artistAdmins.schema'

@@ -31,4 +31,5 @@ export const artistsRelations = relations(artists, ({ one, many }) => ({
     artistTags: many(schema.artistTags),
     collectionArtists: many(schema.collectionArtists),
     trackArtists: many(schema.trackArtists),
+    artistAdmins: many(schema.artistAdmins),
 }))

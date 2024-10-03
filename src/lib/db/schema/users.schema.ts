@@ -23,5 +23,5 @@ export const users = pgTable(
 )
 
 export const usersRelations = relations(users, ({ many }) => ({
-    artists: many(schema.artists),
+    artistAdmins: many(schema.artistAdmins),
 }))
