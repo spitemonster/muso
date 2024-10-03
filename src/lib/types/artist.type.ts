@@ -7,7 +7,7 @@ import type {
     CollectionArtist,
 } from '.'
 
-export interface Artist {
+interface ArtistProperties {
     id: string
     adminId: string
     name: string
@@ -24,3 +24,5 @@ export interface Artist {
     trackArtists?: TrackArtist[]
     artistTags?: ArtistTag[]
 }
+
+export type Artist = ArtistProperties | undefined | null

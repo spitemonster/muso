@@ -1,3 +1,4 @@
+export type { MusoEntity } from './musoEntity.type.ts'
 export type { Track, TrackArtist, TrackCollection } from './track.type.ts'
 export type { Collection, CollectionArtist } from './collection.type.ts'
 export { type Artist } from './artist.type.ts'

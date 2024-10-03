@@ -1,6 +1,6 @@
 import type { Track, Artist, CollectionTag, Tag, TrackCollection } from '.'
 
-export interface Collection {
+interface CollectionProperties {
     id: string
     title: string
     slug: string
@@ -14,10 +14,14 @@ export interface Collection {
     trackCollections?: TrackCollection[]
 }
 
-export interface CollectionArtist {
+export type Collection = CollectionProperties | undefined | null
+
+interface CollectionArtistProperties {
     id: string
     collectionId: string
     artistId: string
     collection?: Collection
     artist?: Artist
 }
+
+export type CollectionArtist = CollectionArtistProperties | undefined | null

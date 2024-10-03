@@ -1,5 +1,5 @@
 import type { Artist, Collection } from '$lib/types'
-export interface Track {
+interface TrackProperties {
     id: string
     title: string
     slug: string
@@ -10,7 +10,7 @@ export interface Track {
     trackArtists?: TrackArtist[]
 }
 
-export interface TrackArtist {
+interface TrackArtistProperties {
     id: string
     trackId: string
     artistId: string
@@ -18,10 +18,14 @@ export interface TrackArtist {
     artist?: Artist
 }
 
-export interface TrackCollection {
+interface TrackCollectionProperties {
     id: string
     collectionId: string
     trackId: string
     collection?: Collection
     track?: Track
 }
+
+export type Track = TrackProperties | undefined | null
+export type TrackArtist = TrackArtistProperties | undefined | null
+export type TrackCollection = TrackCollectionProperties | undefined | null
