@@ -1,5 +1,10 @@
 export { users, usersRelations } from './users.schema'
 export { artists, artistsRelations } from './artists.schema'
+export {
+    trackCollections,
+    trackCollectionsRelations,
+} from './trackCollections.schema'
+
 export { collections, collectionsRelations } from './collections.schema'
 export { tracks, tracksRelations } from './tracks.schema'
 export { tags, tagsRelations } from './tags.schema'

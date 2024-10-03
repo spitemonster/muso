@@ -1,4 +1,4 @@
-export type { Track, TrackArtist } from './track.type.ts'
+export type { Track, TrackArtist, TrackCollection } from './track.type.ts'
 export type { Collection, CollectionArtist } from './collection.type.ts'
 export { type Artist } from './artist.type.ts'
 export type { User } from './user.type.ts'

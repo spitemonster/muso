@@ -18,6 +18,7 @@ import type {
     ArtistTag,
     CollectionTag,
     TrackTag,
+    TrackCollection,
 } from '$lib/types'
 import { faker } from '@faker-js/faker'
 
@@ -62,6 +63,8 @@ const main = async () => {
             []
         const trackData: (typeof schema.tracks.$inferInsert)[] = []
         const trackArtistData: (typeof schema.trackArtists.$inferInsert)[] = []
+        const trackCollectionsData: (typeof schema.trackCollections.$inferInsert)[] =
+            []
 
         // for every artist generate
         //    a random number (1-6) of artistTag records
@@ -137,7 +140,6 @@ const main = async () => {
                         id: await generateId(),
                         title: trackTitle,
                         slug: trackSlug,
-                        collectionId: collection.id,
                         duration: faker.number.int({ min: 11, max: 1200 }),
                         artists: [],
                     }
@@ -148,9 +150,16 @@ const main = async () => {
                         trackId: track.id,
                     }
 
+                    const trackCollectionRecord: TrackCollection = {
+                        id: await generateId(),
+                        trackId: track.id,
+                        collectionId: collection.id,
+                    }
+
                     collection.duration += track.duration
                     trackData.push(track)
                     trackArtistData.push(trackArtist)
+                    trackCollectionsData.push(trackCollectionRecord)
 
                     const trackTagCount = Math.ceil(Math.random() * 7)
                     const trackTags = new Array<TrackTag>(trackTagCount)
@@ -210,6 +219,7 @@ const main = async () => {
         await db.insert(schema.collectionArtists).values(collectionArtistData)
         await db.insert(schema.tracks).values(trackData)
         await db.insert(schema.trackArtists).values(trackArtistData)
+        await db.insert(schema.trackCollections).values(trackCollectionsData)
         await db.insert(schema.tags).values(tagData)
         await db.insert(schema.artistTags).values(artistTagData)
         await db.insert(schema.collectionTags).values(collectionTagData)

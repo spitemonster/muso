@@ -4,8 +4,8 @@ export interface Track {
     title: string
     slug: string
     duration: number
-    collection?: Collection
-    collectionId?: string
+    trackCollections?: TrackCollection[]
+    collections?: Collection[]
     artists?: Artist[]
     trackArtists?: TrackArtist[]
 }
@@ -16,4 +16,12 @@ export interface TrackArtist {
     artistId: string
     track?: Track
     artist?: Artist
+}
+
+export interface TrackCollection {
+    id: string
+    collectionId: string
+    trackId: string
+    collection?: Collection
+    track?: Track
 }

@@ -28,7 +28,7 @@ export const collections = pgTable(
 )
 
 export const collectionsRelations = relations(collections, ({ many }) => ({
-    tracks: many(schema.tracks),
+    trackCollections: many(schema.trackCollections),
     collectionArtists: many(schema.collectionArtists),
     collectionTags: many(schema.collectionTags),
 }))

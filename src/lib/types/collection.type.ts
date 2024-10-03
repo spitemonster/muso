@@ -1,4 +1,4 @@
-import type { Track, Artist, CollectionTag, Tag } from '.'
+import type { Track, Artist, CollectionTag, Tag, TrackCollection } from '.'
 
 export interface Collection {
     id: string
@@ -11,6 +11,7 @@ export interface Collection {
     tags?: Tag[]
     collectionArtists?: CollectionArtist[]
     collectionTags?: CollectionTag[]
+    trackCollections?: TrackCollection[]
 }
 
 export interface CollectionArtist {

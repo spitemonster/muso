@@ -1,32 +1,27 @@
 import { db } from '$lib/db'
 import * as schema from '$lib/db/schema'
 import { eq } from 'drizzle-orm'
-import type { Track, Artist, TrackArtist } from '$lib/types'
+import type { Track, Artist, TrackArtist, Collection } from '$lib/types'
 
 export async function getTrackFromDbById(id: string): Promise<Track | null> {
     const res = await db.query.tracks.findFirst({
         where: eq(schema.tracks.id, id),
-        with: {
-            trackArtists: {
-                with: {
-                    artist: true,
-                },
-            },
-            collection: true,
-        },
     })
 
     if (!res) {
         throw new Error(`No collection found with id ${id}.`)
     }
 
-    const artists: Artist[] = res.trackArtists.map(
-        (a: TrackArtist) => a.artist as Artist
-    )
+    const track: Track = { ...res } as Track
 
-    const track: Track = { ...res, artists } as Track
+    // track.artists = res.trackArtists.map((a: TrackArtist) => a.artist as Artist)
 
-    delete track.trackArtists
+    // // track.collections = res.trackCollections.map(
+    // //     (tc) => tc.collection as Collection
+    // // )
+
+    // delete track.trackArtists
+    // delete track.trackCollections
 
     return track
 }

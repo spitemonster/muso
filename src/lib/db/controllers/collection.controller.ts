@@ -3,7 +3,7 @@ import type { Collection } from '$lib/types'
 import {
     getCollectionFromDbById,
     getCollectionsFromDbByArtistId,
-} from '../utils/collection.utils'
+} from '$lib/db/utils'
 
 export class CollectionController {
     static async FindCollectionById(id: string): Promise<Collection | null> {
