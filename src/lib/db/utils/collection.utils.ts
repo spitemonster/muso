@@ -15,6 +15,74 @@ import * as schema from '$lib/db/schema'
 
 import { eq, count, sql } from 'drizzle-orm'
 
+export async function getCollectionsByArtist(
+    artist: Artist
+): Promise<Collection[]> {
+    try {
+        const result: CollectionArtist[] =
+            (await db.query.collectionArtists.findMany({
+                where: eq(schema.collectionArtists.artistId, artist!.id),
+                with: {
+                    collection: true,
+                },
+            })) as CollectionArtist[]
+
+        if (!result) {
+            throw new Error('no artist found with given id')
+        }
+
+        return result.map((ca) => ca!.collection)
+    } catch (err) {
+        console.error(err)
+        return []
+    }
+}
+
+export async function getCollectionsByTag(tag: Tag): Promise<Collection[]> {
+    try {
+        const result: CollectionTag[] = (await db.query.collectionTags.findMany(
+            {
+                where: eq(schema.collectionTags.tagId, tag!.id),
+                with: {
+                    collection: true,
+                },
+            }
+        )) as CollectionTag[]
+
+        if (!result) {
+            throw new Error('no artist found with given id')
+        }
+
+        return result.map((ca) => ca!.collection)
+    } catch (err) {
+        console.error(err)
+        return []
+    }
+}
+
+export async function getCollectionsByTrack(
+    track: Track
+): Promise<Collection[]> {
+    try {
+        const result: TrackCollection[] =
+            (await db.query.trackCollections.findMany({
+                where: eq(schema.trackCollections.trackId, track!.id),
+                with: {
+                    collection: true,
+                },
+            })) as TrackCollection[]
+
+        if (!result) {
+            throw new Error('no artist found with given id')
+        }
+
+        return result.map((ca) => ca!.collection)
+    } catch (err) {
+        console.error(err)
+        return []
+    }
+}
+
 export async function getCollectionFromDbById(
     id: string
 ): Promise<Collection | null> {

@@ -14,15 +14,11 @@ export {
     getCollectionFromDbById,
     getCollectionsFromDbByArtistId,
     getRandomCollections,
+    getCollectionsByArtist,
+    getCollectionsByTag,
 } from './collection.utils'
 
-export {
-    getArtistFromDbById,
-    getArtistsFromDbByUserId,
-    getArtistsFromDbByUserEmail,
-    getRandomArtists,
-    getArtistsByTagId,
-} from './artist.utils'
+export { getRandomArtists } from './artist.utils'
 
 export {
     getTagFromDbById,

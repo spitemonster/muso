@@ -1,5 +1,5 @@
 import { db } from '$lib/db'
-import { tags, artistTags } from '$lib/db/schema'
+import * as schema from '$lib/db/schema'
 import type { Tag, ArtistTag, Collection, Artist, Track } from '$lib/types'
 import { eq, and, sql } from 'drizzle-orm'
 import { generateId } from '$lib/utils'
@@ -8,7 +8,7 @@ export async function createTagDbRecord(name: string): Promise<Tag | null> {
     const slug = name.replaceAll(' ', '-')
 
     const res = await db
-        .insert(tags)
+        .insert(schema.tags)
         .values({
             id: await generateId(),
             name,
@@ -32,7 +32,7 @@ export async function getTagFromDbById(id: string): Promise<Tag | null> {
         }
 
         const res = await db.query.tags.findFirst({
-            where: eq(tags.id, id),
+            where: eq(schema.tags.id, id),
             with: {
                 collectionTags: {
                     with: {
@@ -77,8 +77,10 @@ export async function getTagFromDbBySlug(slug: string): Promise<Tag | null> {
     try {
         if (slug == '') throw new Error('No tag slug given.')
 
+        console.log(slug)
+
         const tag = await db.query.tags.findFirst({
-            where: eq(tags.slug, slug),
+            where: eq(schema.tags.slug, slug),
         })
 
         if (!tag) return null
@@ -95,7 +97,7 @@ export async function createArtistTagDbRecord(
     tagId: string
 ): Promise<ArtistTag | null> {
     const res = await db
-        .insert(artistTags)
+        .insert(schema.artistTags)
         .values({
             id: await generateId(),
             artistId,
@@ -115,8 +117,8 @@ export async function createArtistTagDbRecord(
 export async function getArtistTagFromDb(artistId: string, tagId: string) {
     const artistTag = await db.query.artistTags.findFirst({
         where: and(
-            eq(artistTags.artistId, artistId),
-            eq(artistTags.tagId, tagId)
+            eq(schema.artistTags.artistId, artistId),
+            eq(schema.artistTags.tagId, tagId)
         ),
     })
 
@@ -144,11 +146,11 @@ export async function getRandomTags(count: number): Promise<Tag[]> {
 export async function getArtistTags(artistId: string) {
     const query = db
         .select({
-            tag: tags,
+            tag: schema.tags,
         })
-        .from(artistTags)
-        .where(eq(artistTags.artistId, artistId))
-        .leftJoin(tags, eq(tags.id, artistTags.tagId))
+        .from(schema.artistTags)
+        .where(eq(schema.artistTags.artistId, artistId))
+        .leftJoin(schema.tags, eq(schema.tags.id, schema.artistTags.tagId))
 
     const result = await query.execute()
 
