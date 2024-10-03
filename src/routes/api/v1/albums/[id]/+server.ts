@@ -1,11 +1,11 @@
 import type { RequestHandler } from './$types'
 import { json } from '@sveltejs/kit'
-import { AlbumController } from '$lib/db/controllers'
+import { CollectionController } from '$lib/db/controllers'
 
 export const GET: RequestHandler = async ({ params }) => {
     const { id } = params
 
-    const album = await AlbumController.FindAlbumById(id)
+    const collection = await CollectionController.FindCollectionById(id)
 
-    return json(album)
+    return json(collection)
 }

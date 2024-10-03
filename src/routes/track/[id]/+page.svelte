@@ -8,13 +8,13 @@
 		throw Error();
 	}
 
-	const { artists, album } = track
+	const { artists, collection } = track
 
 	if (!artists || artists.length < 1) {
 		throw Error();
 	}
 
-	if (!album) {
+	if (!collection) {
 		throw Error();
 	}
 </script>
@@ -26,6 +26,6 @@
 			<a href={`/artist/${artist.id}`}>{artist.name}</a>
 		{/each}
 	</h2>
-	<h3>from <a href={`/album/${album.id}`}>{album.title}</a></h3>
+	<h3>from <a href={`/collection/${collection.id}`}>{collection.title}</a></h3>
 	<TrackPlayer track={track} />
 </div>

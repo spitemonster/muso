@@ -3,30 +3,30 @@ import { text, timestamp, pgTable, primaryKey } from 'drizzle-orm/pg-core'
 
 import * as schema from '.'
 
-export const albumTags = pgTable(
-    'album_tags',
+export const collectionTags = pgTable(
+    'collection_tags',
     {
         id: text('id').notNull().unique(),
-        albumId: text('album_id')
+        collectionId: text('collection_id')
             .notNull()
-            .references(() => schema.albums.id),
+            .references(() => schema.collections.id),
         tagId: text('tag_id')
             .notNull()
             .references(() => schema.tags.id),
         createdAt: timestamp('created_at').defaultNow(),
     },
     (t) => ({
-        pk: primaryKey({ columns: [t.albumId, t.tagId] }),
+        pk: primaryKey({ columns: [t.collectionId, t.tagId] }),
     })
 )
 
-export const albumTagsRelations = relations(albumTags, ({ one }) => ({
-    album: one(schema.albums, {
-        fields: [albumTags.albumId],
-        references: [schema.albums.id],
+export const collectionTagsRelations = relations(collectionTags, ({ one }) => ({
+    collection: one(schema.collections, {
+        fields: [collectionTags.collectionId],
+        references: [schema.collections.id],
     }),
     tag: one(schema.tags, {
-        fields: [albumTags.tagId],
+        fields: [collectionTags.tagId],
         references: [schema.tags.id],
     }),
 }))

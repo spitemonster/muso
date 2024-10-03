@@ -2,6 +2,10 @@
 
 an in-progress open source music distribution service, internet radio, streaming app and social music discovery platform.
 
+## status
+
+in development. currently focusing on a fully featured api before re-addressing auth, then artist management; thereby, ui.
+
 ## philosophy
 
 i am an (easily bored/distracted) overachiever and 🖕 epic games/tencent.

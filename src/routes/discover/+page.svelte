@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { TagGrid, AlbumCardGrid, ArtistCardGrid } from '$lib/components';
+	import { TagGrid, CollectionCardGrid, ArtistCardGrid } from '$lib/components';
 
 	export let data
-// const { artists, albums, tags } = data;
+// const { artists, collections, tags } = data;
 
 // if (!artists) {
 // 	throw Error();
@@ -33,11 +33,11 @@
 		</ArtistCardGrid>
 	{/await}
 	
-	{#await data.albums}
-		<p>loading albums</p>
-	{:then albums}
-		<AlbumCardGrid className="mt-lg" albums={albums}>
-			<h3 class="mb-base">Some albums to pique your interest:</h3>
-		</AlbumCardGrid>
+	{#await data.collections}
+		<p>loading collections</p>
+	{:then collections}
+		<CollectionCardGrid className="mt-lg" collections={collections}>
+			<h3 class="mb-base">Some collections to pique your interest:</h3>
+		</CollectionCardGrid>
 	{/await}
 </section>

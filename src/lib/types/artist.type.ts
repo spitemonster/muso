@@ -1,4 +1,11 @@
-import type { Tag, Album, Track, TrackArtist, ArtistTag, AlbumArtist } from '.'
+import type {
+    Tag,
+    Collection,
+    Track,
+    TrackArtist,
+    ArtistTag,
+    CollectionArtist,
+} from '.'
 
 export interface Artist {
     id: string
@@ -10,8 +17,8 @@ export interface Artist {
     biography?: string
     profileImageUrl?: string
     createdAt: Date
-    albums?: Album[]
-    albumArtists?: AlbumArtist[]
+    collections?: Collection[]
+    collectionArtists?: CollectionArtist[]
     tags?: Tag[]
     tracks?: Track[]
     trackArtists?: TrackArtist[]

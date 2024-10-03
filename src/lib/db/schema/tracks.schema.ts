@@ -10,7 +10,7 @@ export const tracks = pgTable(
         title: text('title'),
         slug: text('slug').notNull(),
         duration: integer('duration'),
-        albumId: text('album_id'),
+        collectionId: text('collection_id'),
         createdAt: timestamp('created_at').defaultNow(),
     },
     (table) => {
@@ -21,9 +21,9 @@ export const tracks = pgTable(
 )
 
 export const tracksRelations = relations(tracks, ({ one, many }) => ({
-    album: one(schema.albums, {
-        fields: [tracks.albumId],
-        references: [schema.albums.id],
+    collection: one(schema.collections, {
+        fields: [tracks.collectionId],
+        references: [schema.collections.id],
     }),
     trackArtists: many(schema.trackArtists),
     trackTags: many(schema.trackTags),

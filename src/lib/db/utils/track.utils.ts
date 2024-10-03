@@ -12,12 +12,12 @@ export async function getTrackFromDbById(id: string): Promise<Track | null> {
                     artist: true,
                 },
             },
-            album: true,
+            collection: true,
         },
     })
 
     if (!res) {
-        throw new Error(`No album found with id ${id}.`)
+        throw new Error(`No collection found with id ${id}.`)
     }
 
     const artists: Artist[] = res.trackArtists.map(
@@ -49,16 +49,16 @@ export async function getTracksFromDbByArtistId(
     // return tracksByArtist as Track[]
 }
 
-export async function getTracksFromDbByAlbumId(
-    albumId: string
+export async function getTracksFromDbByCollectionId(
+    collectionId: string
 ): Promise<Track[] | null> {
-    const tracksOnAlbum = await db.query.tracks.findMany({
-        where: eq(schema.tracks.albumId, albumId),
+    const tracksOnCollection = await db.query.tracks.findMany({
+        where: eq(schema.tracks.collectionId, collectionId),
     })
 
-    if (!tracksOnAlbum) {
+    if (!tracksOnCollection) {
         return null
     }
 
-    return tracksOnAlbum as Track[]
+    return tracksOnCollection as Track[]
 }

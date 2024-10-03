@@ -3,5 +3,5 @@ import { fail, json } from '@sveltejs/kit'
 
 export const GET: RequestHandler = async () => {
     fail(400)
-    return json('You must include an album ID.')
+    return json('You must include an collection ID.')
 }

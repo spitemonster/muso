@@ -1,7 +1,7 @@
 import type { Track } from '$lib/types'
 import {
     getTrackFromDbById,
-    getTracksFromDbByAlbumId,
+    getTracksFromDbByCollectionId,
     getTracksFromDbByArtistId,
 } from '../utils/track.utils'
 
@@ -16,7 +16,9 @@ export class TrackController {
         return await getTracksFromDbByArtistId(artistId)
     }
 
-    static async FindTracksByAlbumId(albumId: string): Promise<Track[] | null> {
-        return await getTracksFromDbByAlbumId(albumId)
+    static async FindTracksByCollectionId(
+        collectionId: string
+    ): Promise<Track[] | null> {
+        return await getTracksFromDbByCollectionId(collectionId)
     }
 }

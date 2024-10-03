@@ -7,14 +7,14 @@ export {
 export {
     getTrackFromDbById,
     getTracksFromDbByArtistId,
-    getTracksFromDbByAlbumId,
+    getTracksFromDbByCollectionId,
 } from './track.utils'
 
 export {
-    getAlbumFromDbById,
-    getAlbumsFromDbByArtistId,
-    getRandomAlbums,
-} from './album.utils'
+    getCollectionFromDbById,
+    getCollectionsFromDbByArtistId,
+    getRandomCollections,
+} from './collection.utils'
 
 export {
     getArtistFromDbById,

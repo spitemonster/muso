@@ -1,6 +1,6 @@
 export { UserController } from './user.controller'
 export { TrackController } from './track.controller'
-export { AlbumController } from './album.controller'
+export { CollectionController } from './collection.controller'
 export { ArtistController } from './artist.controller'
 export { ArtistTagController } from './artistTag.controller'
 export { TagController } from './tag.controller'

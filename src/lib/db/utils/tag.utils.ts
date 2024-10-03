@@ -1,6 +1,6 @@
 import { db } from '$lib/db'
 import { tags, artistTags } from '$lib/db/schema'
-import type { Tag, ArtistTag, Album, Artist, Track } from '$lib/types'
+import type { Tag, ArtistTag, Collection, Artist, Track } from '$lib/types'
 import { eq, and, sql } from 'drizzle-orm'
 import { generateId } from '$lib/utils'
 
@@ -34,9 +34,9 @@ export async function getTagFromDbById(id: string): Promise<Tag | null> {
         const res = await db.query.tags.findFirst({
             where: eq(tags.id, id),
             with: {
-                albumTags: {
+                collectionTags: {
                     with: {
-                        album: true,
+                        collection: true,
                     },
                 },
                 artistTags: {
@@ -56,12 +56,14 @@ export async function getTagFromDbById(id: string): Promise<Tag | null> {
 
         const tag: Tag = { ...res } as Tag
 
-        tag.albums = res.albumTags.map((at) => at.album as Album)
+        tag.collections = res.collectionTags.map(
+            (at) => at.collection as Collection
+        )
         tag.artists = res.artistTags.map((at) => at.artist as Artist)
         tag.tracks = res.trackTags.map((st) => st.track as Track)
 
         delete tag.artistTags
-        delete tag.albumTags
+        delete tag.collectionTags
         delete tag.trackTags
 
         return tag

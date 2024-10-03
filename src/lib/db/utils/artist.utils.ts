@@ -1,7 +1,7 @@
 import { db } from '$lib/db'
 import * as schema from '$lib/db/schema'
 import { eq, sql } from 'drizzle-orm'
-import type { Artist, Tag, Track, Album } from '$lib/types'
+import type { Artist, Tag, Track, Collection } from '$lib/types'
 
 export async function createArtistDbRecord(
     adminId: string,
@@ -39,7 +39,7 @@ export async function getArtistFromDbById(
         const inc = {
             artistTags: {},
             trackArtists: {},
-            albumArtists: {},
+            collectionArtists: {},
         }
 
         if (include.includes('tags')) {
@@ -62,10 +62,10 @@ export async function getArtistFromDbById(
             inc.trackArtists = false
         }
 
-        if (include.includes('albums')) {
-            inc.albumArtists = {
+        if (include.includes('collections')) {
+            inc.collectionArtists = {
                 with: {
-                    album: true,
+                    collection: true,
                 },
             }
         }
@@ -107,13 +107,15 @@ export async function getArtistFromDbById(
 
         delete artist.artistTags
 
-        if (include.includes('albums')) {
-            artist.albums = artist.albumArtists?.map((aa) => aa.album as Album)
+        if (include.includes('collections')) {
+            artist.collections = artist.collectionArtists?.map(
+                (aa) => aa.collection as Collection
+            )
         } else {
-            delete artist.albums
+            delete artist.collections
         }
 
-        delete artist.albumArtists
+        delete artist.collectionArtists
 
         return artist
     } catch (err) {

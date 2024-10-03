@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { TagGrid, AlbumCardGrid } from '$lib/components';
+	import { TagGrid, CollectionCardGrid } from '$lib/components';
 	export let data;
 
 	const { artist } = data;
@@ -23,10 +23,10 @@
 			{/if}
 		</figcaption>
 	</figure>
-	{#if artist.albums && artist.albums.length > 0}
-		<AlbumCardGrid albums={artist.albums} className="mt-lg">
-			<h2 class="mb-base">Albums by { artist.name }</h2>
-		</AlbumCardGrid>
+	{#if artist.collections && artist.collections.length > 0}
+		<CollectionCardGrid collections={artist.collections} className="mt-lg">
+			<h2 class="mb-base">Collections by { artist.name }</h2>
+		</CollectionCardGrid>
 	{/if}
 
 	{#if artist.tags && artist.tags.length > 0}

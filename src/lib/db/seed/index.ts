@@ -10,13 +10,13 @@ import { generateTagData } from './tags.seed'
 import { generateId } from '$lib/utils'
 
 import type {
-    Album,
+    Collection,
     Track,
-    AlbumArtist,
+    CollectionArtist,
     TrackArtist,
     Tag,
     ArtistTag,
-    AlbumTag,
+    CollectionTag,
     TrackTag,
 } from '$lib/types'
 import { faker } from '@faker-js/faker'
@@ -53,20 +53,22 @@ const main = async () => {
             await generateTagData(tagCount)
 
         const artistTagData: (typeof schema.artistTags.$inferInsert)[] = []
-        const albumTagData: (typeof schema.albumTags.$inferInsert)[] = []
+        const collectionTagData: (typeof schema.collectionTags.$inferInsert)[] =
+            []
         const trackTagData: (typeof schema.trackTags.$inferInsert)[] = []
 
-        const albumData: (typeof schema.albums.$inferInsert)[] = []
-        const albumArtistData: (typeof schema.albumArtists.$inferInsert)[] = []
+        const collectionData: (typeof schema.collections.$inferInsert)[] = []
+        const collectionArtistData: (typeof schema.collectionArtists.$inferInsert)[] =
+            []
         const trackData: (typeof schema.tracks.$inferInsert)[] = []
         const trackArtistData: (typeof schema.trackArtists.$inferInsert)[] = []
 
         // for every artist generate
         //    a random number (1-6) of artistTag records
-        //    a random number (1-8) of album records
-        //    for every album generate
-        //        an albumArtist record
-        //        a random number (1-6) of albumTag records
+        //    a random number (1-8) of collection records
+        //    for every collection generate
+        //        an collectionArtist record
+        //        a random number (1-6) of collectionTag records
         //        a random number (2-13) of tracks
         //        for every track generate
         //            a trackArtist record
@@ -95,35 +97,37 @@ const main = async () => {
                 artistTagData.push(artistTag)
             }
 
-            // generate albums
-            const albumCount = Math.ceil(Math.random() * 4)
-            const artistAlbums: Album[] = new Array<Album>(albumCount)
-            for await (let album of artistAlbums) {
-                const albumTitle = faker.word.words(
+            // generate collections
+            const collectionCount = Math.ceil(Math.random() * 4)
+            const artistCollections: Collection[] = new Array<Collection>(
+                collectionCount
+            )
+            for await (let collection of artistCollections) {
+                const collectionTitle = faker.word.words(
                     Math.ceil(Math.random() * 4)
                 )
-                const albumSlug = albumTitle.replaceAll(' ', '-')
+                const collectionSlug = collectionTitle.replaceAll(' ', '-')
 
-                album = {
+                collection = {
                     id: await generateId(),
-                    title: albumTitle,
-                    slug: albumSlug,
+                    title: collectionTitle,
+                    slug: collectionSlug,
                     coverUrl: `https://picsum.photos/200.webp?${Math.floor(Math.random() * 99)}`,
                     duration: 0,
                     tracks: [],
                     artists: [],
                 }
 
-                const albumArtist: AlbumArtist = {
+                const collectionArtist: CollectionArtist = {
                     id: await generateId(),
                     artistId: artist.id,
-                    albumId: album.id,
+                    collectionId: collection.id,
                 }
 
                 // generate tracks
                 const trackCount = Math.floor(Math.random() * 8) + 2
-                const albumTracks: Track[] = new Array<Track>(trackCount)
-                for await (let track of albumTracks) {
+                const collectionTracks: Track[] = new Array<Track>(trackCount)
+                for await (let track of collectionTracks) {
                     const trackTitle = faker.word.words(
                         Math.ceil(Math.random() * 4)
                     )
@@ -133,7 +137,7 @@ const main = async () => {
                         id: await generateId(),
                         title: trackTitle,
                         slug: trackSlug,
-                        albumId: album.id,
+                        collectionId: collection.id,
                         duration: faker.number.int({ min: 11, max: 1200 }),
                         artists: [],
                     }
@@ -144,7 +148,7 @@ const main = async () => {
                         trackId: track.id,
                     }
 
-                    album.duration += track.duration
+                    collection.duration += track.duration
                     trackData.push(track)
                     trackArtistData.push(trackArtist)
 
@@ -171,42 +175,44 @@ const main = async () => {
                     }
                 }
 
-                const albumTagCount = Math.ceil(Math.random() * 7)
-                const albumTags = new Array<AlbumTag>(albumTagCount)
-                const assignedAlbumTagIds = new Set<string>()
+                const collectionTagCount = Math.ceil(Math.random() * 7)
+                const collectionTags = new Array<CollectionTag>(
+                    collectionTagCount
+                )
+                const assignedCollectionTagIds = new Set<string>()
 
-                for await (let albumTag of albumTags) {
+                for await (let collectionTag of collectionTags) {
                     let tag: Tag
 
                     do {
                         tag = faker.helpers.arrayElement(tagData) as Tag
-                    } while (assignedAlbumTagIds.has(tag.id))
+                    } while (assignedCollectionTagIds.has(tag.id))
 
-                    assignedAlbumTagIds.add(tag.id)
+                    assignedCollectionTagIds.add(tag.id)
 
-                    albumTag = {
+                    collectionTag = {
                         id: await generateId(),
-                        albumId: album.id,
+                        collectionId: collection.id,
                         tagId: tag.id,
                     }
 
-                    albumTagData.push(albumTag)
+                    collectionTagData.push(collectionTag)
                 }
 
-                albumData.push(album)
-                albumArtistData.push(albumArtist)
+                collectionData.push(collection)
+                collectionArtistData.push(collectionArtist)
             }
         }
 
         await db.insert(schema.users).values(userData)
         await db.insert(schema.artists).values(artistData)
-        await db.insert(schema.albums).values(albumData)
-        await db.insert(schema.albumArtists).values(albumArtistData)
+        await db.insert(schema.collections).values(collectionData)
+        await db.insert(schema.collectionArtists).values(collectionArtistData)
         await db.insert(schema.tracks).values(trackData)
         await db.insert(schema.trackArtists).values(trackArtistData)
         await db.insert(schema.tags).values(tagData)
         await db.insert(schema.artistTags).values(artistTagData)
-        await db.insert(schema.albumTags).values(albumTagData)
+        await db.insert(schema.collectionTags).values(collectionTagData)
         await db.insert(schema.trackTags).values(trackTagData)
 
         client.end()

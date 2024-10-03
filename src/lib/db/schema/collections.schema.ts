@@ -10,8 +10,8 @@ import {
 
 import * as schema from '.'
 
-export const albums = pgTable(
-    'albums',
+export const collections = pgTable(
+    'collections',
     {
         id: text('id').notNull().unique().primaryKey(),
         title: text('title'),
@@ -22,15 +22,15 @@ export const albums = pgTable(
     },
     (table) => {
         return {
-            slugIdx: index('album_slug_idx').on(table.slug),
+            slugIdx: index('collection_slug_idx').on(table.slug),
         }
     }
 )
 
-export const albumsRelations = relations(albums, ({ many }) => ({
+export const collectionsRelations = relations(collections, ({ many }) => ({
     tracks: many(schema.tracks),
-    albumArtists: many(schema.albumArtists),
-    albumTags: many(schema.albumTags),
+    collectionArtists: many(schema.collectionArtists),
+    collectionTags: many(schema.collectionTags),
 }))
 
-export const albumsTableInfo = getTableConfig(albums)
+export const collectionsTableInfo = getTableConfig(collections)

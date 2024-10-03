@@ -12,9 +12,9 @@ export { default as MusicPlayer } from './shared/MusicPlayer.svelte'
 
 export { default as TrackList } from './track/TrackList.svelte'
 
-export { default as AlbumCover } from './album/AlbumCover.svelte'
-export { default as AlbumCard } from './album/AlbumCard.svelte'
-export { default as AlbumCardGrid } from './album/AlbumCardGrid.svelte'
+export { default as CollectionCover } from './collection/CollectionCover.svelte'
+export { default as CollectionCard } from './collection/CollectionCard.svelte'
+export { default as CollectionCardGrid } from './collection/CollectionCardGrid.svelte'
 
 export { default as Header } from './global/Header.svelte'
 export { default as Footer } from './global/Footer.svelte'

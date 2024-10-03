@@ -20,11 +20,11 @@
 		</ul>
 	{/if}
 	
-	{#if tag.albums != null && tag.albums.length > 0}
-		<h2>Albums tagged with <i>{tag.name}</i></h2>
+	{#if tag.collections != null && tag.collections.length > 0}
+		<h2>Collections tagged with <i>{tag.name}</i></h2>
 		<ul class="list-numeric">
-			{#each tag.albums as album }
-				<li class="block"><a href="/album/{album.id}">{album.title}</a></li>
+			{#each tag.collections as collection }
+				<li class="block"><a href="/collection/{collection.id}">{collection.title}</a></li>
 			{/each}
 		</ul>
 	{/if}

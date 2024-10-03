@@ -1,10 +1,16 @@
 export { users, usersRelations } from './users.schema'
 export { artists, artistsRelations } from './artists.schema'
-export { albums, albumsRelations } from './albums.schema'
+export { collections, collectionsRelations } from './collections.schema'
 export { tracks, tracksRelations } from './tracks.schema'
 export { tags, tagsRelations } from './tags.schema'
 export { artistTags, artistTagsRelations } from './artistTags.schema'
-export { albumArtists, albumArtistsRelations } from './albumArtists.schema'
+export {
+    collectionArtists,
+    collectionArtistsRelations,
+} from './collectionArtists.schema'
 export { trackArtists, trackArtistsRelations } from './trackArtists.schema'
-export { albumTags, albumTagsRelations } from './albumTags.schema'
+export {
+    collectionTags,
+    collectionTagsRelations,
+} from './collectionTags.schema'
 export { trackTags, trackTagsRelations } from './trackTags.schema'

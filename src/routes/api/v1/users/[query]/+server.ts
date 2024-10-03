@@ -4,7 +4,7 @@ import { UserController } from '$lib/db/controllers'
 
 import { isEmail } from '$lib/utils'
 
-// get all albums for a given artist id
+// get all collections for a given artist id
 export const GET: RequestHandler = async ({ params }) => {
     const { query } = params
 

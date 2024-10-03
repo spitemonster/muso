@@ -1,11 +1,11 @@
-import type { Artist, Album } from '$lib/types'
+import type { Artist, Collection } from '$lib/types'
 export interface Track {
     id: string
     title: string
     slug: string
     duration: number
-    album?: Album
-    albumId?: string
+    collection?: Collection
+    collectionId?: string
     artists?: Artist[]
     trackArtists?: TrackArtist[]
 }

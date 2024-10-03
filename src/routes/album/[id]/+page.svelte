@@ -1,25 +1,25 @@
 <script lang="ts">
-	import { MusicPlayer, AlbumCover, TrackList, TagGrid } from '$lib/components/';
+	import { MusicPlayer, CollectionCover, TrackList, TagGrid } from '$lib/components/';
 
 	export let data;
 
-	const { album } = data;
+	const { collection } = data;
 
-	if (!album) {
-		throw Error(`Problem displaying album page. No album.`)
+	if (!collection) {
+		throw Error(`Problem displaying collection page. No collection.`)
 	}
 
-	const { artists, tracks, tags } = album;
+	const { artists, tracks, tags } = collection;
 
 	if (!artists || !tracks) {
-		throw Error(`Problem displaying album page for ${album.id}. Artists: ${album.artists}. Tracks: ${album.tracks}`)
+		throw Error(`Problem displaying collection page for ${collection.id}. Artists: ${collection.artists}. Tracks: ${collection.tracks}`)
 	}
 </script>
 
 <section class="container">
 	<div class="grid grid-cols-1 md:grid-cols-2">
 		<div class="order-2 md:order-1">
-			<h1>{album.title}</h1>
+			<h1>{collection.title}</h1>
 			<h2>by
 				{#each artists as artist}
 					<a class="text-blue" href="/artist/{artist?.id}">{artist?.name}</a>
@@ -27,12 +27,12 @@
 			</h2>
 			<MusicPlayer track={tracks[0]} />
 			<TrackList tracks={tracks} />
-			{#if album.tags != null && album.tags.length > 0}
-				<TagGrid tags={album.tags} className="mt-lg" />
+			{#if collection.tags != null && collection.tags.length > 0}
+				<TagGrid tags={collection.tags} className="mt-lg" />
 			{/if}
 		</div>
 		<div class="order-1 md:order-2">
-			<AlbumCover album={album} />
+			<CollectionCover collection={collection} />
 		</div>
 	</div>
 </section>

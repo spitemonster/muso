@@ -1,4 +1,4 @@
-import type { Artist, Album, Tag } from '.'
+import type { Artist, Collection, Tag } from '.'
 
 interface UserProperties {
     id: string
@@ -7,7 +7,7 @@ interface UserProperties {
     type: 'user' | 'artist'
     password?: string
     artists?: Artist[]
-    albums?: Album[]
+    collections?: Collection[]
     tags?: Tag[]
 }
 
