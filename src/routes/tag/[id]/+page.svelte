@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { CollectionCardGrid, ArtistCardGrid } from '$lib/components';
 
 	export let data;
 
@@ -11,30 +12,23 @@
 
 <div class="container">
 	<h1>Tag: <i>{tag.name}</i></h1>
-	{#if tag.artists != null && tag.artists.length > 0}
-		<h2>Artists Tagged with <i>{tag.name}</i></h2>
-		<ul>
-			{#each tag.artists as artist }
-				<li><a href="/artist/{artist.id}">{artist.name}</a></li>
-			{/each}
-		</ul>
-	{/if}
+	{#await data.artists}
+		Loading artists...
+	{:then artists} 
+		<ArtistCardGrid artists={artists}>
+			<h2>Artists Tagged with <i>{tag.name}</i></h2>	
+		</ArtistCardGrid>
+	{:catch}
+		Error loading artists......
+	{/await}
 	
-	{#if tag.collections != null && tag.collections.length > 0}
-		<h2>Collections tagged with <i>{tag.name}</i></h2>
-		<ul class="list-numeric">
-			{#each tag.collections as collection }
-				<li class="block"><a href="/collection/{collection.id}">{collection.title}</a></li>
-			{/each}
-		</ul>
-	{/if}
-
-	{#if tag.tracks != null && tag.tracks.length > 0}
-		<h2>Tracks tagged with <i>{tag.name}</i></h2>
-		<ul class="list-numeric">
-			{#each tag.tracks as track }
-				<li class="block">{track.title}</li>
-			{/each}
-		</ul>
-	{/if}
+	{#await data.collections }
+		Loading collections.....
+	{:then collections} 
+		<CollectionCardGrid collections={collections}>
+			<h2>Collections tagged with <i>{tag.name}</i></h2>
+		</CollectionCardGrid>
+	{:catch}
+		Error loading collections......
+	{/await}
 </div>

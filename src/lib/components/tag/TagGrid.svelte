@@ -10,12 +10,11 @@
 
 <div class={`tag-grid ${className}`}>
 	<slot></slot>
-	<ul class="flex gap-base flex-wrap">
+	<ul class="flex gap-2 flex-wrap">
 		{#each tags as tag}
 			<li>
 				<TagView tag={tag} />
 			</li>
-	
 		{/each}
 	</ul>
 </div>
