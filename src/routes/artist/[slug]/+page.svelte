@@ -23,13 +23,17 @@
 			{/if}
 		</figcaption>
 	</figure>
-	{#if artist.collections && artist.collections.length > 0}
-		<CollectionCardGrid collections={artist.collections} className="mt-lg">
+	{#await data.collections}
+		Fetching collections...
+	{:then collections}
+		<CollectionCardGrid collections={collections} className="mt-lg">
 			<h2 class="mb-base">Collections by { artist.name }</h2>
 		</CollectionCardGrid>
-	{/if}
-
+	{:catch}
+		Error fetching collections;
+	{/await}
+<!-- 
 	{#if artist.tags && artist.tags.length > 0}
 		<TagGrid tags={artist.tags} className="mt-lg"></TagGrid>
-	{/if}
+	{/if} -->
 </div>
