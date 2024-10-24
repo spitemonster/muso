@@ -19,7 +19,6 @@ import type {
     CollectionTag,
     TrackTag,
     TrackCollection,
-    ArtistAdmin,
 } from '$lib/types'
 import { faker } from '@faker-js/faker'
 
@@ -48,11 +47,14 @@ const main = async () => {
             )) as (typeof schema.users.$inferInsert)[]
         const userIds: string[] = userData.map((u) => u.id)
 
-        const artistData: (typeof schema.artists.$inferInsert)[] =
-            await generateArtistData(artistCount, userIds)
+        const artistData = (await generateArtistData(
+            artistCount,
+            userIds
+        )) as (typeof schema.artists.$inferInsert)[]
 
-        const tagData: (typeof schema.tags.$inferInsert)[] =
-            await generateTagData(tagCount)
+        const tagData = (await generateTagData(
+            tagCount
+        )) as (typeof schema.tags.$inferInsert)[]
 
         const artistTagData: (typeof schema.artistTags.$inferInsert)[] = []
         const collectionTagData: (typeof schema.collectionTags.$inferInsert)[] =
@@ -87,7 +89,7 @@ const main = async () => {
 
             const artistAdmin = {
                 id: await generateId(),
-                artistId: artist.id,
+                artistId: artist!.id,
                 userId: admin.id,
             }
 
@@ -98,14 +100,14 @@ const main = async () => {
 
                 do {
                     tag = faker.helpers.arrayElement(tagData) as Tag
-                } while (assignedArtistTagIds.has(tag.id))
+                } while (assignedArtistTagIds.has(tag!.id))
 
-                assignedArtistTagIds.add(tag.id)
+                assignedArtistTagIds.add(tag!.id)
 
                 artistTag = {
                     id: await generateId(),
-                    artistId: artist.id,
-                    tagId: tag.id,
+                    artistId: artist!.id,
+                    tagId: tag!.id,
                 }
 
                 artistTagData.push(artistTag)
@@ -134,7 +136,7 @@ const main = async () => {
 
                 const collectionArtist: CollectionArtist = {
                     id: await generateId(),
-                    artistId: artist.id,
+                    artistId: artist!.id,
                     collectionId: collection.id,
                 }
 
@@ -157,7 +159,7 @@ const main = async () => {
 
                     const trackArtist: TrackArtist = {
                         id: await generateId(),
-                        artistId: artist.id,
+                        artistId: artist!.id,
                         trackId: track.id,
                     }
 
@@ -206,14 +208,14 @@ const main = async () => {
 
                     do {
                         tag = faker.helpers.arrayElement(tagData) as Tag
-                    } while (assignedCollectionTagIds.has(tag.id))
+                    } while (assignedCollectionTagIds.has(tag!.id))
 
-                    assignedCollectionTagIds.add(tag.id)
+                    assignedCollectionTagIds.add(tag!.id)
 
                     collectionTag = {
                         id: await generateId(),
                         collectionId: collection.id,
-                        tagId: tag.id,
+                        tagId: tag!.id,
                     }
 
                     collectionTagData.push(collectionTag)

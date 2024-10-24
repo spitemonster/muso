@@ -1,4 +1,4 @@
-import type { Artist, Tag, ArtistTag, User } from '$lib/types'
+import type { Artist, User } from '$lib/types'
 import { eq, sql } from 'drizzle-orm'
 // import {
 
@@ -44,16 +44,44 @@ export class ArtistController {
     }
 
     static async FindArtistsAdminedByUser(user: User): Promise<Artist[]> {
-        // TODO: setup ArtistAdmin schema
-        return []
+        const result = await db.query.artistAdmins.findMany({
+            where: eq(schema.artistAdmins.userId, user!.id),
+            with: {
+                artist: true,
+            },
+        })
+
+        if (!result) return []
+
+        return result.map((aa) => aa.artist) as Artist[]
     }
 
-    // static async FindArtistsAdminedByUserId(userId: string): Promise<Artist[]> {
-    //     return await getArtistsFromDbByUserId(userId)
-    // }
-
     static async FindArtistsByUserEmail(userEmail: string): Promise<Artist[]> {
-        return await getArtistsFromDbByUserEmail(userEmail)
+        const result = await db
+            .select({
+                id: schema.artists.id,
+                name: schema.artists.name,
+                slug: schema.artists.slug,
+                url: schema.artists.url,
+                location: schema.artists.location,
+                biography: schema.artists.biography,
+                profileImageUrl: schema.artists.profileImageUrl,
+                createdAt: schema.artists.createdAt,
+            })
+            .from(schema.artists)
+            .innerJoin(
+                schema.artistAdmins,
+                eq(schema.artists.id, schema.artistAdmins.artistId)
+            )
+            .innerJoin(
+                schema.users,
+                eq(schema.users.id, schema.artistAdmins.userId)
+            )
+            .where(eq(schema.users.email, userEmail))
+
+        if (!result) return []
+
+        return result as Artist[]
     }
 
     static async FindArtistsWithTagById(tagId: string): Promise<Artist[]> {
@@ -66,7 +94,7 @@ export class ArtistController {
 
         if (!artistTags) return []
 
-        return artistTags.map((at: ArtistTag) => at!.artist)
+        return artistTags.map((at) => at!.artist) as Artist[]
     }
 
     static async FindArtistsWithTag(tag: User): Promise<Artist[]> {

@@ -56,6 +56,10 @@ export async function getTagFromDbById(id: string): Promise<Tag | null> {
 
         const tag: Tag = { ...res } as Tag
 
+        if (tag == null) {
+            throw new Error(`no tag with id ${id} found`)
+        }
+
         tag.collections = res.collectionTags.map(
             (at) => at.collection as Collection
         )

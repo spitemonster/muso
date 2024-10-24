@@ -4,6 +4,12 @@ import { CollectionController } from '$lib/db/controllers'
 
 // get all collections for a given artist id
 export const GET: RequestHandler = async ({ params }) => {
-    const { id } = params
-    return json(await CollectionController.FindCollectionsByArtistId(id))
+    const { artistSlug, collectionSlug } = params
+
+    const collection = await CollectionController.FindCollectionByArtistAndSlug(
+        artistSlug,
+        collectionSlug
+    )
+
+    return json(collection)
 }

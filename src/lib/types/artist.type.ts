@@ -5,11 +5,11 @@ import type {
     TrackArtist,
     ArtistTag,
     CollectionArtist,
+    ArtistAdmin,
 } from '.'
 
 interface ArtistProperties {
     id: string
-    adminId: string
     name: string
     slug: string
     url: string
@@ -23,6 +23,7 @@ interface ArtistProperties {
     tracks?: Track[]
     trackArtists?: TrackArtist[]
     artistTags?: ArtistTag[]
+    artistAdmins?: ArtistAdmin[]
 }
 
 export type Artist = ArtistProperties | undefined | null

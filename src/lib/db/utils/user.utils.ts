@@ -56,6 +56,12 @@ export async function getUserFromDbByEmail(email: string): Promise<User> {
 
         const user = await db.query.users.findFirst({
             where: eq(users.email, email),
+            columns: {
+                id: true,
+                name: true,
+                email: true,
+                type: true,
+            },
         })
 
         if (!user) return null
