@@ -1,0 +1,5 @@
+.DS_Store
+.env
+uploads
+.claude
+node_modules
