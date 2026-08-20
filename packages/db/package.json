@@ -3,6 +3,26 @@
     "description": "muso db client",
     "private": true,
     "version": "0.0.1",
-    "dependencies": {},
-    "type": "module"
+    "dependencies": {
+        "bcrypt": "^6.0.0",
+        "drizzle-orm": "^0.45.2",
+        "pg": "^8.23.0"
+    },
+    "scripts": {
+        "studio": "DOTENV_CONFIG_PATH=../../.env drizzle-kit studio --config drizzle.config.ts",
+        "generate": "DOTENV_CONFIG_PATH=../../.env drizzle-kit generate --config drizzle.config.ts",
+        "drizzle:migrate": "DOTENV_CONFIG_PATH=../../.env drizzle-kit push --config drizzle.config.ts",
+        "drizzle:seed": "tsx --env-file='../../.env' ./seed",
+        "drizzle:drop": "tsx --env-file='../../.env' ./utils/clearDb.util.ts",
+        "drizzle:refresh": "pnpm run drizzle:drop && pnpm run drizzle:migrate && pnpm run drizzle:seed"
+    },
+    "type": "module",
+    "devDependencies": {
+        "@faker-js/faker": "^10.6.0",
+        "@types/bcrypt": "^6.0.0",
+        "@types/node": "^26.2.0",
+        "@types/pg": "^8.23.1",
+        "drizzle-kit": "^0.31.10",
+        "tsx": "^4.23.12"
+    }
 }
