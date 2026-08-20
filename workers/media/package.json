@@ -1,0 +1,8 @@
+{
+    "name": "@muso/workers-media",
+    "description": "muso media worker",
+    "private": true,
+    "version": "0.0.1",
+    "dependencies": {},
+    "type": "module"
+}

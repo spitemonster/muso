@@ -1,0 +1,8 @@
+{
+    "name": "@muso/db",
+    "description": "muso db client",
+    "private": true,
+    "version": "0.0.1",
+    "dependencies": {},
+    "type": "module"
+}

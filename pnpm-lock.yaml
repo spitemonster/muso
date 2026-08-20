@@ -197,3 +197,26 @@ snapshots:
   pnpm@11.22.0: {}
 
 ---
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .: {}
+
+  apps/admin: {}
+
+  apps/api:
+    dependencies:
+      '@muso/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+
+  apps/web: {}
+
+  packages/db: {}
+
+  workers/media: {}
