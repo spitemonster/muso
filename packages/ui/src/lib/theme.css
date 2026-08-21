@@ -1,0 +1,79 @@
+@import 'tailwindcss';
+
+@theme {
+	--color-*: initial;
+	--color-transparent: var(--palette-transparent);
+	--color-foreground: var(--palette-black);
+	--color-background: var(--palette-white);
+	--color-inactive: var(--palette-gray-dark);
+	--color-accent: var(--palette-green);
+	--color-accent-light: var(--palette-green-light);
+	--color-danger: var(--palette-red);
+	--color-danger-light: var(--palette-red-light);
+	--color-warning: var(--palette-orange);
+	--color-warning-light: var(--palette-orange-light);
+	--color-inactive: var(--palette-gray-dark);
+	--color-neutral: var(--palette-gray-light);
+
+	--text-*: initial;
+	--text-base: clamp(1.125rem, 1.05rem + 0.25vw, 1.5rem);
+	--text-xs: calc(var(--text-base) * pow(var(--type-scale), -2));
+	--text-sm: calc(var(--text-base) * pow(var(--type-scale), -1));
+	--text-lg: calc(var(--text-base) * pow(var(--type-scale), 1));
+	--text-xl: calc(var(--text-base) * pow(var(--type-scale), 2));
+	--text-2xl: calc(var(--text-base) * pow(var(--type-scale), 3));
+	--text-3xl: calc(var(--text-base) * pow(var(--type-scale), 4));
+	--text-display-sm: calc(var(--text-base) * pow(var(--type-scale), 5));
+	--text-display-md: calc(var(--text-base) * pow(var(--type-scale), 6));
+	--text-display-lg: clamp(
+		calc(var(--text-base) * 3),
+		1rem + calc(10vw / 3),
+		calc(var(--text-base) * 4)
+	);
+
+	--spacing-clamp-width: 50ch;
+	--spacing-content-max-width: 60rem;
+	--spacing-input-height: 2.5rem;
+}
+
+@layer base {
+	:root {
+		--type-scale: 1.333;
+
+		--palette-transparent: transparent;
+		--palette-black: #071013;
+		--palette-white: #e6e1db;
+		--palette-gray-dark: #303637;
+		--palette-gray-medium: #e8e8e8;
+		--palette-gray-light: #e9e8e8;
+		--palette-blue: #373f58;
+		--palette-blue-light: #5899e2;
+		--palette-green: #214f37;
+		--palette-green-light: #56b35f;
+		--palette-red: #a52422;
+		--palette-red-light: #f42c04;
+		--palette-orange: #d74e09;
+		--palette-orange-light: #ff8600;
+		--palette-blue: #5899e2;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	p,
+	li,
+	dd,
+	dt,
+	blockquote,
+	figcaption,
+	button,
+	a,
+	td,
+	th {
+		text-box-trim: trim-both;
+		text-box-edge: cap alphabetic;
+	}
+}
