@@ -1,4 +1,5 @@
 import { Hono } from 'hono'
+import type { HonoRequest } from 'hono'
 import { prettyJSON } from 'hono/pretty-json'
 import { serve } from '@hono/node-server'
 import { createYoga } from 'graphql-yoga'
@@ -9,7 +10,12 @@ const { schema } = buildSchema(db, {
 	mutations: false
 });
 
-const yoga = createYoga({
+type GraphQLContext = {
+	req: HonoRequest
+	db: typeof db
+}
+
+const yoga = createYoga<GraphQLContext>({
 	schema,
 	graphqlEndpoint: '/graphql'
 })
@@ -18,13 +24,9 @@ const app = new Hono()
 app.get('/', (ctx) => ctx.text('API'))
 
 app.all('/graphql', async (c) => {
-	const response = await yoga.handle(c.req.raw, {
-		req: c.req,
-		db,
-	})
+	const response = await yoga.handle(c.req.raw, { req: c.req, db })
 	return response
 })
-
 
 app.use(prettyJSON())
 
