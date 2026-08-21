@@ -9,6 +9,6 @@
   "packageManager": "pnpm@11.22.0",
   "type": "module",
   "devDependencies": {
-    "typescript": "^7.0.2"
+    "tsx": "^4.23.12"
   }
 }
