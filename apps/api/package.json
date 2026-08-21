@@ -4,7 +4,19 @@
     "private": true,
     "version": "0.0.1",
     "dependencies": {
-        "@muso/db": "workspace:*"
+        "@hono/node-server": "^2.1.1",
+        "@muso/db": "workspace:*",
+        "drizzle-graphql": "^0.8.5",
+        "graphql": "^16.14.2",
+        "graphql-yoga": "^5.22.0",
+        "hono": "^4.13.3"
     },
-    "type": "module"
+    "scripts": {
+        "dev": "tsx watch --env-file=../../.env app.ts"
+    },
+    "type": "module",
+    "devDependencies": {
+        "@types/node": "^26.2.0",
+        "typescript": "^7.0.2"
+    }
 }

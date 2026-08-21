@@ -2,13 +2,19 @@
   "name": "muso",
   "version": "0.0.1",
   "private": true,
-  "scripts": {},
+  "scripts": {
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@11.22.0",
   "type": "module",
   "devDependencies": {
-    "typescript": "^7.0.2"
+    "prettier": "^3.9.6",
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "typescript": "^7.0.2",
+    "tsx": "^4.23.12"
   }
 }

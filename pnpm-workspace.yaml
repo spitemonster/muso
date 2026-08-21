@@ -3,5 +3,8 @@ packages:
   - 'packages/*'
   - 'workers/*'
 allowBuilds:
+  '@apollo/protobufjs': false
   bcrypt: false
+  core-js-pure: false
   esbuild: false
+  fsevents: false
