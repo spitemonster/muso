@@ -1,0 +1,21 @@
+{
+	"name": "@muso/ui",
+	"description": "shared Tailwind theme and Svelte components for muso apps",
+	"private": true,
+	"version": "0.0.1",
+	"type": "module",
+	"exports": {
+		".": "./src/lib/index.ts",
+		"./theme.css": "./src/lib/theme.css"
+	},
+	"peerDependencies": {
+		"svelte": "^5.56.10"
+	},
+	"dependencies": {
+		"tailwind-variants": "^3.3.1"
+	},
+	"devDependencies": {
+		"svelte": "^5.56.10",
+		"tailwindcss": "^4.3.3"
+	}
+}
