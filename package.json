@@ -9,6 +9,8 @@
   "packageManager": "pnpm@11.22.0",
   "type": "module",
   "devDependencies": {
+    "prettier": "^3.9.6",
+    "prettier-plugin-tailwindcss": "^0.8.1",
     "tsx": "^4.23.12"
   }
 }
