@@ -1,0 +1,4 @@
+node_modules
+pnpm-lock.yaml
+uploads
+packages/db/drizzle
