@@ -1,3 +1,12 @@
 {
-	"css.lint.unknownAtRules": "ignore"
+	"css.lint.unknownAtRules": "ignore",
+	"editor.detectIndentation": false,
+	"editor.tabSize": 4,
+	"editor.insertSpaces": false,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"[svelte]": {
+		"editor.defaultFormatter": "svelte.svelte-vscode"
+	},
+	"editor.formatOnPaste": true,
+	"editor.formatOnSave": true
 }
