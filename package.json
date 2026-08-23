@@ -4,7 +4,9 @@
 	"private": true,
 	"scripts": {
 		"format": "prettier --write .",
-		"format:check": "prettier --check ."
+		"format:check": "prettier --check .",
+		"codegen": "graphql-codegen --config codegen.ts",
+		"codegen:watch": "graphql-codegen --config codegen.ts --watch"
 	},
 	"keywords": [],
 	"author": "",
@@ -12,6 +14,8 @@
 	"packageManager": "pnpm@11.22.0",
 	"type": "module",
 	"devDependencies": {
+		"@graphql-codegen/cli": "^7.2.0",
+		"@graphql-codegen/client-preset": "^6.1.3",
 		"prettier": "^3.9.6",
 		"prettier-plugin-tailwindcss": "^0.8.1",
 		"tsx": "^4.23.12",
