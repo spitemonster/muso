@@ -4,6 +4,11 @@
 
 	import Header from '../ui/global/Header.svelte'
 	import Footer from '../ui/global/Footer.svelte'
+	import type { Snippet } from 'svelte'
+
+	interface Props {
+		children?: Snippet
+	}
 
 	let { children } = $props()
 </script>
