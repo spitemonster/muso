@@ -3,31 +3,31 @@ import { text, timestamp, pgTable, primaryKey, uuid } from 'drizzle-orm/pg-core'
 
 import * as schema from '.'
 
-export const artistAdmins = pgTable(
-	'artist_admins',
+export const trackAdmins = pgTable(
+	'track_admins',
 	{
-		artistId: uuid('artist_id')
+		trackId: uuid('track_id')
 			.notNull()
-			.references(() => schema.artists.id),
+			.references(() => schema.tracks.id),
 		userId: uuid('user_id')
 			.notNull()
 			.references(() => schema.users.id),
 		createdAt: timestamp('created_at').defaultNow(),
 	},
 	(t) => ({
-		pk: primaryKey({ columns: [t.artistId, t.userId] }),
+		pk: primaryKey({ columns: [t.trackId, t.userId] }),
 	}),
 )
 
-export const artistAdminsRelations = relations(artistAdmins, ({ one }) => ({
+export const trackAdminsRelations = relations(trackAdmins, ({ one }) => ({
 	user: one(schema.users, {
 		relationName: 'user',
-		fields: [artistAdmins.userId],
+		fields: [trackAdmins.userId],
 		references: [schema.users.id],
 	}),
-	artist: one(schema.artists, {
-		relationName: 'artist',
-		fields: [artistAdmins.artistId],
-		references: [schema.artists.id],
+	track: one(schema.tracks, {
+		relationName: 'track',
+		fields: [trackAdmins.trackId],
+		references: [schema.tracks.id],
 	}),
 }))
