@@ -4,7 +4,7 @@
 		<menu class="flex content-center justify-end gap-5">
 			<li>About</li>
 			<li>Sign Up</li>
-			<li>Log In</li>
+			<li><a href="/login">Log In</a></li>
 		</menu>
 	</nav>
 </header>
