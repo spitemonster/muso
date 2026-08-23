@@ -28,19 +28,16 @@ function junctionField(fieldName: string, targetType: GraphQLObjectType, loaderK
 }
 
 // one entry per flattened relation direction: [type to graft onto, field name, related type, loader to use]
+// note: collections <-> tracks is NOT here - tracks.collectionId is a plain FK now,
+// so drizzle-graphql already generates `Collection.tracks` / `Track.collection` on its own
 const junctionRelations: [string, string, GraphQLObjectType, keyof Loaders][] = [
-	['CollectionsSelectItem', 'tracks', entities.types.TracksSelectItem, 'tracksByCollectionId'],
+	['CollectionsSelectItem', 'artists', entities.types.ArtistsSelectItem, 'artistsByCollectionId'],
 	['CollectionsSelectItem', 'tags', entities.types.TagsSelectItem, 'tagsByCollectionId'],
-	[
-		'TracksSelectItem',
-		'collections',
-		entities.types.CollectionsSelectItem,
-		'collectionsByTrackId',
-	],
-	['TracksSelectItem', 'artists', entities.types.ArtistsSelectItem, 'artistsByTrackId'],
-	['TracksSelectItem', 'tags', entities.types.TagsSelectItem, 'tagsByTrackId'],
+	['ArtistsSelectItem', 'collections', entities.types.CollectionsSelectItem, 'collectionsByArtistId'],
 	['ArtistsSelectItem', 'tracks', entities.types.TracksSelectItem, 'tracksByArtistId'],
 	['ArtistsSelectItem', 'tags', entities.types.TagsSelectItem, 'tagsByArtistId'],
+	['TracksSelectItem', 'artists', entities.types.ArtistsSelectItem, 'artistsByTrackId'],
+	['TracksSelectItem', 'tags', entities.types.TagsSelectItem, 'tagsByTrackId'],
 ]
 
 export const schema: GraphQLSchema = junctionRelations.reduce(

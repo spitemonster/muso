@@ -1,5 +1,5 @@
 import {
-	trackCollections,
+	collectionArtists,
 	trackArtists,
 	trackTags,
 	collectionTags,
@@ -14,18 +14,20 @@ import { createJunctionLoader } from './createJunctionLoader'
 
 export function createLoaders() {
 	return {
-		// collections <-> tracks (via trackCollections)
-		tracksByCollectionId: createJunctionLoader({
-			junctionTable: trackCollections,
-			sourceFk: trackCollections.collectionId,
-			targetFk: trackCollections.trackId,
-			targetTable: tracks,
-			targetPk: tracks.id,
+		// collections <-> artists (via collectionArtists)
+		// (tracks -> collection is a plain FK now, not a junction - drizzle-graphql
+		// generates `Track.collection` / `Collection.tracks` natively, no loader needed)
+		artistsByCollectionId: createJunctionLoader({
+			junctionTable: collectionArtists,
+			sourceFk: collectionArtists.collectionId,
+			targetFk: collectionArtists.artistId,
+			targetTable: artists,
+			targetPk: artists.id,
 		}),
-		collectionsByTrackId: createJunctionLoader({
-			junctionTable: trackCollections,
-			sourceFk: trackCollections.trackId,
-			targetFk: trackCollections.collectionId,
+		collectionsByArtistId: createJunctionLoader({
+			junctionTable: collectionArtists,
+			sourceFk: collectionArtists.artistId,
+			targetFk: collectionArtists.collectionId,
 			targetTable: collections,
 			targetPk: collections.id,
 		}),
