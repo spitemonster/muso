@@ -3,28 +3,27 @@ import type { HonoRequest } from 'hono'
 import { prettyJSON } from 'hono/pretty-json'
 import { serve } from '@hono/node-server'
 import { createYoga } from 'graphql-yoga'
-import { buildSchema } from 'drizzle-graphql'
+import { schema } from './schema'
 import { db } from '@muso/db/db'
 
-const { schema } = buildSchema(db, {
-	mutations: false
-});
+import { createLoaders, type Loaders } from './loaders'
 
 type GraphQLContext = {
 	req: HonoRequest
 	db: typeof db
+	loaders: Loaders
 }
 
 const yoga = createYoga<GraphQLContext>({
 	schema,
-	graphqlEndpoint: '/graphql'
+	graphqlEndpoint: '/graphql',
 })
 
 const app = new Hono()
 app.get('/', (ctx) => ctx.text('API'))
 
 app.all('/graphql', async (c) => {
-	const response = await yoga.handle(c.req.raw, { req: c.req, db })
+	const response = await yoga.handle(c.req.raw, { req: c.req, db, loaders: createLoaders() })
 	return response
 })
 
