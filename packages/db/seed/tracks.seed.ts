@@ -3,106 +3,53 @@ import { faker } from '@faker-js/faker'
 import * as schema from '../schema'
 
 export async function generateTrackData(
-    trackCount: number,
-    collectionData: (typeof schema.tracks.$inferInsert)[]
-) {
-    const generatedTrackData = []
+	artists: (typeof schema.artists.$inferInsert)[],
+	collections: (typeof schema.collections.$inferInsert)[],
+	collectionArtists: (typeof schema.collectionArtists.$inferInsert)[],
+): Promise<{
+	trackData: (typeof schema.tracks.$inferInsert)[]
+	trackArtistData: (typeof schema.trackArtists.$inferInsert)[]
+}> {
+	const trackData: (typeof schema.tracks.$inferInsert)[] = []
+	const trackArtistData: (typeof schema.trackArtists.$inferInsert)[] = []
 
-    for (let i = 0; i < trackCount; i++) {
-        const id = crypto.randomUUID()
+	collections.forEach((collection) => {
+		const collectionArtistIds = collectionArtists
+			.filter((collectionArtist) => collectionArtist.collectionId === collection.id)
+			.map((collectionArtist) => collectionArtist.artistId)
 
-        const collection = faker.helpers.arrayElement(collectionData)
+		const ownerId = collection.ownerId
+		const trackCount = faker.number.int({ min: 3, max: 15 })
 
-        generatedTrackData.push({
-            id,
-            title: faker.word.words(Math.round(Math.random() * 4) + 1),
-            slug: '', // just to shut up the error since this is not currently being used
-            duration: faker.number.int({ min: 15, max: 900 }),
-            collectionId: collection.id,
-            artists: [],
-        })
-    }
+		for (let t = 0; t < trackCount; t++) {
+			const trackId = crypto.randomUUID()
+			const title = faker.word.words(Math.round(Math.random() * 4) + 1)
+			const slug = title.replaceAll(' ', '-')
 
-    return generatedTrackData
+			trackData.push({
+				id: trackId,
+				title,
+				slug,
+				collectionId: collection.id,
+				ownerId,
+			})
+
+			// tracks default to the collection's credited artist(s)...
+			collectionArtistIds.forEach((artistId) => {
+				trackArtistData.push({ trackId, artistId })
+			})
+
+			// ...occasionally with an additional featured artist not otherwise on the collection
+			if (faker.datatype.boolean({ probability: 0.15 })) {
+				const featuredArtistPool = artists.filter(
+					(artist) => !collectionArtistIds.includes(artist.id),
+				)
+				const featuredArtist = faker.helpers.arrayElement(featuredArtistPool)
+
+				trackArtistData.push({ trackId, artistId: featuredArtist.id })
+			}
+		}
+	})
+
+	return { trackData, trackArtistData }
 }
-
-export async function generateTrackArtistData(
-    trackData: (typeof schema.tracks.$inferInsert)[],
-    collectionArtistData: (typeof schema.collectionArtists.$inferInsert)[]
-) {
-    // // for every track
-    // const generatedTrackArtistData: [] = []
-
-    // trackData.forEach(async (track) => {
-    //     const trackId = track.id
-    //     const collectionId = track.collectionId
-
-    //     // get the collection artist data that corresponds to the collection id
-    //     const collectionArtists = collectionArtistData.filter(
-    //         (d) => d.collectionId == collectionId
-    //     )
-
-    //     // if we don't find anything, there is a problem
-    //     if (collectionArtists.length == 0) {
-    //         console.error('problem seeding track artist data')
-    //         return
-    //     }
-
-    //     let multiArtist: number = 0
-
-    //     // if there is more than one artist, randomly determine if we're creating two track artist records or just one
-    //     // as with collections
-    //     if (collectionArtists.length > 1) {
-    //         multiArtist = Math.random() < 0.1 ? 1 : 0
-    //     }
-
-    //     // if multi artist == 1 this loop runs twice, generating two artists for a track
-    //     for (let i = 0; i < multiArtist + 1; i++) {
-    //         const id = crypto.randomUUID()
-    //         const artistId = collectionArtists[i].artistId
-
-    //         const aa: TrackArtist = {
-    //             id,
-    //             artistId,
-    //             trackId,
-    //         }
-
-    //         generatedTrackArtistData.push(aa)
-    //     }
-    // })
-
-    // // for every track
-    // // get the collection to which it belongs
-    // // get its artists via itsCollectionArtists
-    // return generatedTrackArtistData
-}
-
-// export async function generateCollectionArtistData(
-//     collectionData: (typeof schema.collections.$inferInsert)[],
-//     artistData: (typeof schema.artists.$inferInsert)[]
-// ): Promise<CollectionArtist[]> {
-//     const generatedCollectionArtistData: CollectionArtist[] = []
-
-//     collectionData.forEach(async (collection) => {
-//         // this should only return 1 about 10% of the time
-//         const multiArtist: number = Math.random() < 0.1 ? 1 : 0
-
-//         // if multi artist == 1 this loop runs twice, generating two artists for an collection
-//         for (let i = 0; i < multiArtist + 1; i++) {
-//             const id = crypto.randomUUID()
-//             const collectionId = collection.id
-//             const artist = faker.helpers.arrayElement(artistData)
-//             const artistId = artist.id
-
-//             const aa: CollectionArtist = {
-//                 id,
-//                 collectionId,
-//                 artistId,
-//             }
-
-//             generatedCollectionArtistData.push(aa)
-//         }
-//     })
-
-//     return generatedCollectionArtistData
-// }
