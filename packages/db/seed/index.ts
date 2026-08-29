@@ -1,66 +1,101 @@
-import { drizzle } from 'drizzle-orm/node-postgres'
-import pg from 'pg'
-import * as schema from '../schema'
+import { db } from '../db';
+import * as schema from '../schema';
+import { client } from '../db';
+import { getTableName } from 'drizzle-orm';
+import type { PgTableWithColumns } from 'drizzle-orm/pg-core';
+import { generateUserData } from './users.seed';
+import { generateArtistData } from './artists.seed';
+import { generateTagData, generateArtistTagData, generateCollectionTagData, generateTrackTagData } from './tags.seed';
+import { generateCollectionData } from './collections.seed';
+import { generateTrackData } from './tracks.seed';
 
-import { generateUserData, TEST_ADMIN_EMAIL } from './users.seed'
-import { generateArtistData } from './artists.seed'
-import { generateTagData } from './tags.seed'
-import { generateCollectionData } from './collections.seed'
-import { generateTrackData } from './tracks.seed'
+const userCount = 500;
+const artistCount = 500;
+const tagCount = 500;
 
-const userCount = 130
-const artistCount = 200
-const tagCount = 200
+async function batchInsert<T extends Record<string, unknown>>(
+	table: Parameters<typeof db.insert>[0],
+	rows: T[],
+	batchSize = 500
+) {
+	for (let i = 0; i < rows.length; i += batchSize) {
+		await db.insert(table).values(rows.slice(i, i + batchSize));
+	}
+}
 
 const main = async () => {
 	try {
 		const userData: (typeof schema.users.$inferInsert)[] = (await generateUserData(
 			userCount,
-		)) as (typeof schema.users.$inferInsert)[]
-		const userIds: string[] = userData.map((u) => u.id)
+		)) as (typeof schema.users.$inferInsert)[];
 
-		const artistData = (await generateArtistData(
+		console.log("========== CREATED USER DATA ==========");
+
+		const { artistData, artistAdminData } = (await generateArtistData(
 			artistCount,
-			userIds,
-		)) as (typeof schema.artists.$inferInsert)[]
+			userData
+		));
 
-		const { collectionData, collectionArtistData } = await generateCollectionData(600, artistData)
+		console.log('========== CREATED ARTIST DATA ==========');
 
-		const { trackData, trackArtistData } = await generateTrackData(
-			artistData,
+		const { collectionData, collectionArtistData, collectionAdminData } = await generateCollectionData(artistData);
+
+		console.log('========== CREATED COLLECTION DATA ==========');
+
+		const { trackData, trackArtistData, trackAdminData } = await generateTrackData(
 			collectionData,
+			artistData,
 			collectionArtistData,
-		)
+		);
 
-		const tagData = (await generateTagData(tagCount)) as (typeof schema.tags.$inferInsert)[]
+		console.log('========== CREATED TRACK DATA ==========');
 
-		// artist/collection/track tags and admins aren't generated yet -
-		// TODO: wire these up once tag assignment / admin ownership rules are settled
+		const tagData = await generateTagData(tagCount);
+		const artistTagData = await generateArtistTagData(artistData, tagData);
+		const collectionTagData = await generateCollectionTagData(collectionData, tagData);
+		const trackTagData = await generateTrackTagData(trackData, tagData);
 
-		const client = new pg.Client({
-			host: process.env.POSTGRES_HOST,
-			port: Number(process.env.POSTGRES_PORT),
-			user: process.env.POSTGRES_USER,
-			database: process.env.POSTGRES_DB,
-			password: process.env.POSTGRES_PASSWORD,
-		})
+		console.log('========== CREATED TAG DATA ==========');
 
-		client.connect()
+		console.log('building insert map...');
 
-		const db = drizzle(client, { schema })
+		const insertMap = new Map<PgTableWithColumns<any>, Record<string, unknown>[]>([
+			[schema.users, userData],
+			[schema.artists, artistData],
+			[schema.artistAdmins, artistAdminData],
+			[schema.collections, collectionData],
+			[schema.collectionArtists, collectionArtistData],
+			[schema.collectionAdmins, collectionAdminData],
+			[schema.tracks, trackData],
+			[schema.trackArtists, trackArtistData],
+			[schema.trackAdmins, trackAdminData],
+			[schema.tags, tagData],
+			[schema.artistTags, artistTagData],
+			[schema.collectionTags, collectionTagData],
+			[schema.trackTags, trackTagData],
+		]);
 
-		await db.insert(schema.users).values(userData)
-		await db.insert(schema.artists).values(artistData)
-		await db.insert(schema.collections).values(collectionData)
-		await db.insert(schema.collectionArtists).values(collectionArtistData)
-		await db.insert(schema.tracks).values(trackData)
-		await db.insert(schema.trackArtists).values(trackArtistData)
-		await db.insert(schema.tags).values(tagData)
+		console.log('beginning db insert...');
 
-		client.end()
+		for (const [table, data] of insertMap) {
+			console.log(`     inserting ${getTableName(table)} data...`);
+			const start = performance.now();
+			await batchInsert(table, data);
+			const end = performance.now();
+
+			const duration = end - start;
+			console.log(`		...finished. time: ${duration.toFixed(4)} ms`);
+		}
+
+		console.log('db insert completed.');
+
+		console.log('========== FINISHED ==========');
 	} catch (err) {
-		console.error(err)
+		console.error(err);
+		return;
 	}
-}
 
-main()
+	client.end();
+};
+
+main();

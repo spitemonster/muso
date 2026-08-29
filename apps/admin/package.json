@@ -1,5 +1,5 @@
 {
-	"name": "admin",
+	"name": "@muso/admin",
 	"private": true,
 	"version": "0.0.1",
 	"type": "module",
@@ -16,6 +16,8 @@
 		"@sveltejs/kit": "^2.63.0",
 		"@sveltejs/vite-plugin-svelte": "^7.1.2",
 		"@tailwindcss/vite": "^4.3.3",
+		"@types/jsonwebtoken": "^9.0.10",
+		"graphql": "^16.14.2",
 		"svelte": "^5.56.1",
 		"svelte-check": "^4.6.0",
 		"tailwindcss": "^4.3.3",
@@ -24,6 +26,7 @@
 	},
 	"dependencies": {
 		"@muso/ui": "workspace:*",
+		"jsonwebtoken": "^9.0.3",
 		"tailwind-variants": "^3.3.1"
 	}
 }

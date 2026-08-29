@@ -11,6 +11,7 @@ node_modules
 .svelte-kit
 build
 storybook-static
+src/lib/gql
 
 # OS
 .DS_Store

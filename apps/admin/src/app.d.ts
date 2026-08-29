@@ -1,13 +1,18 @@
-// See https://svelte.dev/docs/kit/types#app.d.ts
+import type { User } from '$lib/types';
+
+declare module 'jsonwebtoken';
+
 // for information about these interfaces
 declare global {
 	namespace App {
 		// interface Error {}
-		// interface Locals {}
-		// interface PageData {}
+		interface Locals {
+			user: User;
+			// artists: A
+		}
 		// interface PageState {}
 		// interface Platform {}
 	}
 }
 
-export {};
+export { };
