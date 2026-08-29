@@ -1,27 +1,30 @@
 <script lang="ts">
-	import Container from '../global/Container.svelte'
-	import { TextInput } from '@muso/ui'
+	import { enhance, applyAction } from '$app/forms'
+	import type { SubmitFunction } from '@sveltejs/kit'
+	import { TextInput, PasswordInput, Button } from '@muso/ui'
+
+	let loginFormError: boolean = $state(false)
+	let loginErrorMessage: string = $state('')
+
+	const onLoginFormSubmit: SubmitFunction = () => {
+		loginFormError = false
+		loginErrorMessage = ''
+
+		return async ({ result }) => {
+			if (result.type === 'failure') {
+				loginFormError = true
+				loginErrorMessage = result.data?.message ?? 'Login failed.'
+			}
+			await applyAction(result)
+		}
+	}
 </script>
 
-<form action="" class="grid grid-cols-2 gap-4 max-w-content-max-width">
-	<TextInput
-		label="First Name"
-		name="first-name"
-		type="text"
-		autocomplete="given-name"
-		outerClass="col-span-2 sm:col-span-1"
-		placeholder="David"
-		required
-	/>
-	<TextInput
-		label="Last Name"
-		name="last-name"
-		type="text"
-		autocomplete="family-name"
-		outerClass="col-span-2 sm:col-span-1"
-		placeholder="Duchovny"
-		required
-	/>
+<form
+	method="POST"
+	use:enhance={onLoginFormSubmit}
+	class="grid grid-cols-2 gap-4 max-w-content-max-width"
+>
 	<TextInput
 		label="Email"
 		name="email"
@@ -31,13 +34,13 @@
 		outerClass="col-span-2 sm:col-span-1"
 		required
 	/>
-	<TextInput
-		label="Phone"
-		name="phone"
-		type="tel"
-		autocomplete="tel"
-		placeholder="1234567890"
-		outerClass="col-span-2 sm:col-span-1"
-		required
-	/>
+	<PasswordInput label="Password" name="password" />
+	<div class="col-span-2 flex align-center justify-center">
+		{#if loginFormError}
+			<p>{loginErrorMessage}</p>
+		{/if}
+	</div>
+	<div class="col-span-2 flex align-center justify-end">
+		<Button style="solid" type="submit" class="">Login</Button>
+	</div>
 </form>
