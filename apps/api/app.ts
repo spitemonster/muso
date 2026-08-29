@@ -7,6 +7,9 @@ import { db } from '@muso/db/db';
 import { schema } from './schema';
 import { createLoaders, type Loaders } from './loaders';
 
+import { auth } from './routes/auth';
+
+
 type GraphQLContext = {
 	req: HonoRequest;
 	db: typeof db;
@@ -20,6 +23,8 @@ const yoga = createYoga<GraphQLContext>({
 
 const app = new Hono();
 app.get('/', (ctx) => ctx.text('API'));
+
+app.route('/auth', auth);
 
 app.all('/graphql', async (c) => {
 	// fresh loaders every request
