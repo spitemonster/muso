@@ -1,12 +1,12 @@
 <script lang="ts">
-	import type { Snippet } from 'svelte';
-	import type { HTMLButtonAttributes } from 'svelte/elements';
+	import type { Snippet } from 'svelte'
+	import type { HTMLButtonAttributes } from 'svelte/elements'
 	import { tv } from 'tailwind-variants'
 
 	type Props = HTMLButtonAttributes & {
-		style: "outline" | "solid";
-		children?: Snippet;
-	};
+		style: 'outline' | 'solid'
+		children?: Snippet
+	}
 
 	const calcStyles = tv({
 		base: 'inline-flex items-center justify-center cursor-pointer text-base px-4 py-2 transition-all',
@@ -23,11 +23,9 @@
 		},
 	})
 
-	const { style, children } = $props();
+	const { style, children, class: className = '', ...attr } = $props()
 </script>
 
-<button
-	class={calcStyles({ style })}
->
+<button class={calcStyles({ class: className, style })} {...attr}>
 	{@render children?.()}
 </button>
