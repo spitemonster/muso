@@ -10,12 +10,12 @@
 	const { tag, size = 'md' }: Props = $props()
 
 	const tagCardClass = tv({
-		base: 'inline-block whitespace-nowrap border border-accent rounded-sm text-accent hover:bg-accent hover:text-background transition-all',
+		base: 'inline-block whitespace-nowrap border border-accent  text-accent hover:bg-accent hover:text-background transition-all',
 		variants: {
 			size: {
-				sm: 'text-xs p-1',
-				md: 'text-sm p-2',
-				lg: 'text-base p-3',
+				sm: 'text-xs p-1 rounded-xs',
+				md: 'text-sm p-2 rounded-sm',
+				lg: 'text-base p-3 rounded-sm',
 			},
 		},
 	})
