@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Container from '../../ui/global/Container.svelte'
+	import Container from '../../../../../packages/ui/src/lib/globals/Container.svelte'
 	import LoginForm from '../../ui/composites/LoginForm.svelte'
 </script>
 

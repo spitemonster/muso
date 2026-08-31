@@ -1,12 +1,12 @@
 <script lang="ts">
 	import type { PageData } from './$types'
-	import type { User } from '$lib/types'
+	import { Container, Heading } from '@muso/ui'
 
 	let { data }: { data: PageData } = $props()
 	const { user } = $derived(data)
 </script>
 
-<div>
-	<h1>Dashboard</h1>
-	<h2>{user.name}</h2>
-</div>
+<Container align="center">
+	<Heading level="h1" size="xl" class="mb-5 font-bold">Dashboard</Heading>
+	<Heading level="h2" size="md">Welcome, {user.name}. Good to see you again.</Heading>
+</Container>

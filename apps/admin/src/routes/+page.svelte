@@ -1,9 +1,8 @@
 <script lang="ts">
-	import Container from '../ui/global/Container.svelte'
-	import { Button } from '@muso/ui'
+	import { Button, Container } from '@muso/ui'
 </script>
 
-<Container class="text-base" wide>
+<Container align="center" class="text-base" wide>
 	<h1 class="text-3xl font-mono mbe-5">Muso admin</h1>
 	<p class="mbe-3">
 		A <i>truly</i> independent music distribution, streaming and sharing platform.
