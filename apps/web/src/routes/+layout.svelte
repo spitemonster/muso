@@ -2,10 +2,20 @@
 	import '../app.css'
 	import favicon from '$lib/assets/favicon.svg'
 
-	import Header from '$lib/globals/Header.svelte'
-	import Footer from '$lib/globals/Footer.svelte'
+	import Header from '$lib/ui/globals/Header.svelte'
+	import Footer from '$lib/ui/globals/Footer.svelte'
+	import Player from '$lib/ui/components/Player/Player.svelte'
 
-	let { children } = $props()
+	import type { Snippet } from 'svelte'
+
+	import type { LayoutData } from './$types'
+
+	interface Props {
+		children?: Snippet
+		data: LayoutData
+	}
+
+	let { children, data }: Props = $props()
 </script>
 
 <svelte:head>
@@ -13,5 +23,8 @@
 </svelte:head>
 
 <Header></Header>
-{@render children()}
+<main class="grow">
+	{@render children?.()}
+</main>
+<Player />
 <Footer></Footer>
