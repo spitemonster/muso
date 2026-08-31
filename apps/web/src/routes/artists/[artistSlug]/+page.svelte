@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { CollectionList } from '$lib/ui/components'
-	import TagList from '$lib/ui/components/tags/TagList/TagList.svelte'
+	import { CollectionList, TagList } from '@muso/ui'
 	import type { PageData } from './$types'
 	import { Container, Heading } from '@muso/ui'
 

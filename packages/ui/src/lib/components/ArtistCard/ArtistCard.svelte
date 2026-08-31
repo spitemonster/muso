@@ -1,21 +1,24 @@
 <script lang="ts">
-	interface Artist {
-		name: string
-		location: string
-		biography: string
-	}
+	import type { Artist } from '../../types'
 
 	interface Props {
 		artist: Artist
 	}
 
-	const { artist } = $props()
-
-	const { name, location, biography } = $derived(artist)
+	const { artist }: Props = $props()
 </script>
 
-<div class="artist-card">
-	<p>{name}</p>
-	<p>{location}</p>
-	<p>{biography}</p>
-</div>
+<a href={`/artists/${artist.slug}`}>
+	<figure class="bg-neutral p-3 flex items-center gap-3 rounded-md">
+		<img
+			src={artist.profileImageUrl}
+			alt={artist.name}
+			class="rounded-full col-span-1"
+			height="100"
+			width="100"
+		/>
+		<figcaption class="col-span-3">
+			<p>{artist.name}</p>
+		</figcaption>
+	</figure>
+</a>

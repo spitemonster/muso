@@ -1,7 +1,6 @@
 <script lang="ts">
-	import type { Artist } from '$lib/types'
+	import type { Artist } from '../../types'
 	import ArtistCard from '../ArtistCard/ArtistCard.svelte'
-	import { tv } from 'tailwind-variants'
 
 	interface Props {
 		artists: Artist[]

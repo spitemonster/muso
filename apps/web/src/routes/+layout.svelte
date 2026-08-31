@@ -2,8 +2,7 @@
 	import '../app.css'
 	import favicon from '$lib/assets/favicon.svg'
 
-	import Header from '$lib/ui/globals/Header.svelte'
-	import Footer from '$lib/ui/globals/Footer.svelte'
+	import { Header, Footer } from '@muso/ui'
 	import Player from '$lib/ui/components/Player/Player.svelte'
 
 	import type { Snippet } from 'svelte'
@@ -22,9 +21,11 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-<Header></Header>
+<Header brand="Muso">
+	<li><a href="/discover">Discover</a></li>
+</Header>
 <main class="grow">
 	{@render children?.()}
 </main>
 <Player />
-<Footer></Footer>
+<Footer brand="Muso" />

@@ -2,8 +2,7 @@
 	import '../app.css'
 	import favicon from '$lib/assets/favicon.svg'
 
-	import Header from '../ui/global/Header.svelte'
-	import Footer from '../ui/global/Footer.svelte'
+	import { Header, Footer } from '@muso/ui'
 	import type { Snippet } from 'svelte'
 
 	import type { LayoutData } from './$types'
@@ -22,8 +21,12 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-<Header {user}></Header>
+<Header brand="Muso Admin" {user}></Header>
 <main class="grow">
 	{@render children?.()}
 </main>
-<Footer></Footer>
+<Footer brand="Muso Admin">
+	<li>Privacy Policy</li>
+	<li>Contact</li>
+	<li>Copyright {new Date().getFullYear()}</li>
+</Footer>

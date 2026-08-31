@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { Container, Heading } from '@muso/ui'
 	import type { PageData } from './$types'
-	import { ArtistList, CollectionList, TrackCardList } from '$lib/ui/components'
+	import { ArtistList, CollectionList } from '@muso/ui'
+	import { TrackCardList } from '$lib/ui/components'
 
 	interface Props {
 		data: PageData

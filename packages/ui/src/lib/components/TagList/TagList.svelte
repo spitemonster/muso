@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Tag } from '$lib/types'
+	import type { Tag } from '../../types'
 	import TagCard from '../TagCard/TagCard.svelte'
 
 	interface Props {
@@ -8,7 +8,7 @@
 		[key: string]: unknown
 	}
 
-	const { tags, class: className, ...attrs }: Props = $props()
+	const { tags, class: className = '', ...attrs }: Props = $props()
 </script>
 
 <section class="tag-list">

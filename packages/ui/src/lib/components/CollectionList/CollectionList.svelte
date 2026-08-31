@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { tv } from 'tailwind-variants'
-	import type { Collection, ColumnCount } from '$lib/types'
-	import { CollectionCard } from '$lib/ui/components'
+	import type { Collection, ColumnCount } from '../../types'
+	import CollectionCard from '../CollectionCard/CollectionCard.svelte'
 
 	interface Props {
 		collections: Collection[]
@@ -41,7 +41,7 @@
 	const imgSize = $derived(calcImgSize(lgColumns))
 
 	const collectionListClasses = tv({
-		base: 'grid gap-3',
+		base: 'grid',
 		variants: {
 			smColumns: {
 				1: 'grid-cols-1',

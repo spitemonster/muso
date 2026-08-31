@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types'
-	import PageTemplate from '$lib/ui/globals/PageTemplate.svelte'
+	import { PageTemplate } from '@muso/ui'
 
 	interface Props {
 		data: PageData

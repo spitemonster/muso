@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Tag } from '$lib/types'
+	import type { Tag } from '../../types'
 
 	interface Props {
 		tag: Tag
