@@ -1,15 +1,13 @@
-import type { PgTable } from 'drizzle-orm/pg-core';
-import { tracks, artists, collections, tags } from '@muso/db/schema';
-
 export type RandomFieldConfig = {
 	fieldName: string;
-	table: PgTable;
+	tableName: 'tracks' | 'artists' | 'collections' | 'tags';
 	targetTypeKey: string;
+	with?: Record<string, true>;
 };
 
 export const randomFields: RandomFieldConfig[] = [
-	{ fieldName: 'randomTracks', table: tracks, targetTypeKey: 'TracksSelectItem' },
-	{ fieldName: 'randomArtists', table: artists, targetTypeKey: 'ArtistsSelectItem' },
-	{ fieldName: 'randomCollections', table: collections, targetTypeKey: 'CollectionsSelectItem' },
-	{ fieldName: 'randomTags', table: tags, targetTypeKey: 'TagsSelectItem' },
+	{ fieldName: 'randomTracks', tableName: 'tracks', targetTypeKey: 'TracksSelectItem', with: { primaryArtist: true, collection: true } },
+	{ fieldName: 'randomArtists', tableName: 'artists', targetTypeKey: 'ArtistsSelectItem' },
+	{ fieldName: 'randomCollections', tableName: 'collections', targetTypeKey: 'CollectionsSelectItem', with: { primaryArtist: true } },
+	{ fieldName: 'randomTags', tableName: 'tags', targetTypeKey: 'TagsSelectItem' },
 ];

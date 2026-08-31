@@ -47,7 +47,7 @@ function junctionField(fieldName: string, targetType: GraphQLObjectType, loaderK
 	};
 }
 
-function randomField(table: PgTable, targetType: GraphQLObjectType) {
+function randomField(tableName: keyof typeof db.query, targetType: GraphQLObjectType, withRelations?: Record<string, true>) {
 	return {
 		type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(targetType))),
 		args: {
@@ -55,10 +55,18 @@ function randomField(table: PgTable, targetType: GraphQLObjectType) {
 		},
 		resolve: (_source: unknown, args: { count?: number; }) => {
 			const count = Math.max(0, Math.min(args.count ?? DEFAULT_RANDOM_COUNT, MAX_RANDOM_COUNT));
-			return db.select().from(table).orderBy(sql`random()`).limit(count);
+			const queryBase = db.query[tableName] as unknown as {
+				findMany: (config: { orderBy?: unknown; limit?: number; with?: Record<string, true>; }) => Promise<unknown[]>;
+			};
+			return queryBase.findMany({
+				orderBy: sql`random()`,
+				limit: count,
+				with: withRelations,
+			});
 		},
 	};
 }
+
 
 const entityTypes = entities.types as Record<string, GraphQLObjectType>;
 
@@ -71,9 +79,9 @@ const schemaWithRelations: GraphQLSchema = relations.reduce(
 );
 
 export const schema: GraphQLSchema = randomFields.reduce(
-	(currentSchema, { fieldName, table, targetTypeKey }) =>
+	(currentSchema, { fieldName, tableName, targetTypeKey, with: withRelations }) =>
 		appendObjectFields(currentSchema, 'Query', {
-			[fieldName]: randomField(table, entityTypes[targetTypeKey]),
+			[fieldName]: randomField(tableName, entityTypes[targetTypeKey], withRelations),
 		}),
 	schemaWithRelations,
 );
