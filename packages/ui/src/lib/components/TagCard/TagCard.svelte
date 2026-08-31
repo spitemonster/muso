@@ -10,18 +10,18 @@
 	const { tag, size = 'md' }: Props = $props()
 
 	const tagCardClass = tv({
-		base: 'whitespace-nowrap p-2 border border-accent rounded-sm text-accent hover:bg-accent hover:text-background transition-all',
+		base: 'inline-block whitespace-nowrap border border-accent rounded-sm text-accent hover:bg-accent hover:text-background transition-all',
 		variants: {
 			size: {
-				sm: 'text-xs',
-				md: 'text-sm',
-				lg: 'text-base',
+				sm: 'text-xs p-1',
+				md: 'text-sm p-2',
+				lg: 'text-base p-3',
 			},
 		},
 	})
 </script>
 
-<a href={`/tags/${tag.slug}`}>
+<a href={`/tags/${tag.slug}`} class="contents">
 	<figure class={tagCardClass({ size })}>
 		<figcaption>
 			{tag.name}
