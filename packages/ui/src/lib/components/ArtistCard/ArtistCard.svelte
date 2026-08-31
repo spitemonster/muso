@@ -14,7 +14,7 @@
 			<img
 				src={artist.profileImageUrl}
 				alt={artist.name}
-				class="w-16 h-16 rounded-full col-span-1"
+				class="w-16 h-16 rounded-full col-span-1 bg-slate-gray"
 				height="64"
 				width="64"
 			/>

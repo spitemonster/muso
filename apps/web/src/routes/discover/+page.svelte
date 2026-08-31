@@ -26,7 +26,7 @@
 	{#if tags}
 		<section>
 			<Heading level="h2" size="lg" class="mb-5">Tags</Heading>
-			<TagList class="gap-3" {tags} />
+			<TagList {tags} />
 		</section>
 	{/if}
 	{#if artists}
