@@ -41,7 +41,7 @@
 	const imgSize = $derived(calcImgSize(lgColumns))
 
 	const collectionListClasses = tv({
-		base: 'grid',
+		base: 'grid gap-3',
 		variants: {
 			smColumns: {
 				1: 'grid-cols-1',

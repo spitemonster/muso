@@ -38,7 +38,7 @@
 	{#if collections}
 		<section>
 			<Heading level="h2" size="lg" class="mb-5">Collections</Heading>
-			<CollectionList class="gap-3" {collections} />
+			<CollectionList {collections} />
 		</section>
 	{/if}
 	{#if tracks}
