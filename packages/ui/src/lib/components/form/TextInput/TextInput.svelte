@@ -44,7 +44,7 @@
 			case 'email':
 				return "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"
 			case 'tel':
-				return '^+[1-9]d{1,14}$'
+				return '^\\+?[1-9]\\d{1,14}$'
 			default:
 				return undefined
 		}
