@@ -4,6 +4,7 @@ const schema = 'http://localhost:8888/graphql';
 
 const config: CodegenConfig = {
 	schema,
+	allowPartialOutputs: true,
 	generates: {
 		'apps/web/src/lib/gql/': {
 			documents: ['apps/web/src/**/*.ts'],
@@ -15,5 +16,6 @@ const config: CodegenConfig = {
 		},
 	},
 };
+
 
 export default config;

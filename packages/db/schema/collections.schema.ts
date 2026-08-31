@@ -15,6 +15,7 @@ export const collections = pgTable(
 		coverUrl: text('cover_url'),
 		ownerId: uuid('owner_id').notNull(),
 		description: text('description'),
+		primaryArtistId: uuid('primary_artist_id').notNull().references(() => schema.artists.id),
 		createdAt: timestamp('created_at').defaultNow(),
 		updatedAt: timestamp('updated_at').defaultNow(),
 	},
@@ -25,7 +26,12 @@ export const collections = pgTable(
 	},
 );
 
-export const collectionsRelations = relations(collections, ({ many }) => ({
+export const collectionsRelations = relations(collections, ({ one, many }) => ({
+	primaryArtist: one(schema.artists, {
+		relationName: 'primaryArtist',
+		fields: [collections.primaryArtistId],
+		references: [schema.artists.id]
+	}),
 	tracks: many(schema.tracks),
 	collectionArtists: many(schema.collectionArtists),
 	collectionTags: many(schema.collectionTags),

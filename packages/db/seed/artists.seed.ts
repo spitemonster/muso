@@ -1,6 +1,8 @@
 import { faker } from '@faker-js/faker';
 import * as schema from '../schema';
 
+import { TEST_ADMIN_EMAIL } from './users.seed';
+
 const assignedArtistNames = new Set<string>();
 
 const createArtistName = () => {
@@ -22,12 +24,16 @@ export async function generateArtistData(
 	const artistData: (typeof schema.artists.$inferInsert)[] = [];
 	const artistAdminData: (typeof schema.artistAdmins.$inferInsert)[] = [];
 
-
 	for (let i = 0; i < artistCount; i++) {
 		const id = crypto.randomUUID();
 		const name = createArtistName();
 		const slug = name.replaceAll(' ', '-');
-		const user = faker.helpers.arrayElement(users);
+		let user: (typeof schema.users.$inferInsert) = faker.helpers.arrayElement(users);
+
+		// bolt the first five artists on to the test admin
+		if (i < 5) {
+			user = users.find(u => u.email === TEST_ADMIN_EMAIL) as (typeof schema.users.$inferInsert);
+		}
 
 		const artist = {
 			id,
@@ -41,7 +47,7 @@ export async function generateArtistData(
 					max: 30,
 				},
 			}),
-			profileImageUrl: `https://picsum.photos/200.webp?${Math.floor(Math.random() * 99)}`,
+			profileImageUrl: ``,
 			location: `${faker.location.city()}, ${faker.location.country()}`,
 		};
 

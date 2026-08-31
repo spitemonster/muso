@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { tv } from 'tailwind-variants'
 	import { getDefaultInputStyles } from '../helpers'
-	import InputWrapper from '../InputWrapper/InputWrapper.svelte'
+	import { default as InputWrapper } from '../InputWrapper/InputWrapper.svelte'
 
 	import { type FieldProps } from '../fieldProps'
 	interface Props extends FieldProps {
@@ -44,7 +44,7 @@
 			case 'email':
 				return "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"
 			case 'tel':
-				return '^+[1-9]d{1,14}$'
+				return '^\\+?[1-9]\\d{1,14}$'
 			default:
 				return undefined
 		}
