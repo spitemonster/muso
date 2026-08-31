@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types'
-	import PageTemplate from '$lib/globals/PageTemplate.svelte'
+	import PageTemplate from '$lib/ui/globals/PageTemplate.svelte'
 
 	interface Props {
 		data: PageData
