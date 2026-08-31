@@ -35,11 +35,11 @@
 		required
 	/>
 	<PasswordInput label="Password" name="password" />
-	<div class="col-span-2 flex align-center justify-center">
-		{#if loginFormError}
+	{#if loginFormError}
+		<div class="col-span-2 flex align-center justify-center border-2 border-danger p-5">
 			<p>{loginErrorMessage}</p>
-		{/if}
-	</div>
+		</div>
+	{/if}
 	<div class="col-span-2 flex align-center justify-end">
 		<Button style="solid" type="submit" class="">Login</Button>
 	</div>

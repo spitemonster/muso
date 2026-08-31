@@ -34,7 +34,7 @@ export const actions: Actions = {
 
 		if (error || !user) {
 			loginResponse.error = true;
-			loginResponse.message = `There was an error: ${message}`;
+			loginResponse.message = message;
 			return fail(400, loginResponse);
 		}
 
