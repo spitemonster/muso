@@ -1,3 +1,5 @@
+import { print } from 'graphql';
+import type { TypedQueryDocumentNode } from 'graphql';
 import { API_URL } from '$env/static/private';
 
 interface GraphQLResponse<T> {
@@ -5,12 +7,15 @@ interface GraphQLResponse<T> {
 	errors?: Array<{ message: string; }>;
 }
 
-export async function gqlRequest<TData, TVariables = Record<string, any>>(query: string, variables?: TVariables,) {
+export async function gqlRequest<TData, TVariables = Record<string, any>>(
+	query: TypedQueryDocumentNode,
+	variables?: TVariables
+) {
 	const response = await fetch(`${API_URL}/graphql`, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({
-			query,
+			query: print(query),
 			variables
 		})
 	});

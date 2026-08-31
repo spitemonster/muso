@@ -11,10 +11,10 @@
 
 {#if tracks}
 	<div class="tracklist">
-		<ol class="list-decimal flex flex-col ps-6">
-			{#each tracks as track}
-				<li class="pbe-5 mbe-5 border-b-2 border-accent">
-					<TracklistItem {track} />
+		<ol class="flex flex-col">
+			{#each tracks as track, index}
+				<li>
+					<TracklistItem {track} trackNum={index + 1} />
 				</li>
 			{/each}
 		</ol>

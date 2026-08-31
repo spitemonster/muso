@@ -7,6 +7,7 @@ export interface Release extends RecordBase {
 	slug: string;
 	tags?: Tag[];
 	primaryArtist?: Artist;
+	artists?: Artist[];
 }
 
 export interface Track extends Release {

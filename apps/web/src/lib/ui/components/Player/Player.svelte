@@ -42,9 +42,35 @@
 	}
 </script>
 
-<div class="fixed bottom-12 right-12 bg-neutral p-3 w-96">
+<div class="fixed bottom-12 right-12 bg-neutral p-3 w-96 drop-shadow-sm">
 	<div class="my-3 text-center">
-		<p>{playerState.currentTrack?.title ?? '-'}</p>
+		{#if !playerState.currentTrack}
+			<p>-</p>
+		{:else}
+			<p class="mb-3">{playerState.currentTrack.title}</p>
+			{#if playerState.currentTrack?.artists && playerState.currentTrack?.artists.length > 1}
+				<p class="mb-5">
+					by
+					{#each playerState.currentTrack?.artists as artist, index}
+						<a class="text-accent" href={`/artists/${artist.slug}`}>
+							{artist.name}
+						</a>
+						{#if index === playerState.currentTrack?.artists.length - 1}
+							,
+						{/if}
+					{/each}
+				</p>
+			{:else if playerState.currentTrack.primaryArtist}
+				<p class="mb-5">
+					by
+					<a
+						class="text-accent"
+						href={`/artists/${playerState.currentTrack.primaryArtist.slug}`}
+						>{playerState.currentTrack.primaryArtist.name}</a
+					>
+				</p>
+			{/if}
+		{/if}
 	</div>
 	<div class="grid grid-cols-7 place-content-center-safe">
 		<div class="col-span-3">

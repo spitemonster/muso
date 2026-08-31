@@ -34,11 +34,12 @@
 			<p class="mb-2">{collection.title}</p>
 			{#if collection.artists}
 				{#if collection.artists.length === 1}
-					<p>{collection.artists[0].name}</p>
+					<p>by <span class="italic">{collection.artists[0].name}</span></p>
 				{:else}
 					<p>
+						by
 						{#each collection.artists as artist}
-							<span>{artist.name} </span>
+							<span class="italic">{artist.name}</span>
 						{/each}
 					</p>
 				{/if}

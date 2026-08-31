@@ -16,7 +16,7 @@
 		base: '',
 		variants: {
 			size: {
-				base: 'text-base',
+				base: 'text-base font-mono',
 				lg: 'text-lg',
 				xl: 'text-xl',
 				'2xl': 'text-2xl',

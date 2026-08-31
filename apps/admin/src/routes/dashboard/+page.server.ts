@@ -1,6 +1,7 @@
 import type { PageServerLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
 
+import { AdminDashboardQuery } from './dashboard.query';
 import { gqlRequest } from '$lib/server/gqlRequest';
 
 export const load: PageServerLoad = async ({ locals }) => {
@@ -10,16 +11,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 		redirect(302, '/login');
 	}
 
-	const query = `
-		query GetUserData($id: String!) {
-			users(where: { id: { eq: $id } }) {
-				id
-				name
-			}
-		}
-	`;
-
-	const res = await gqlRequest(query, { id: user.id });
+	const res = await gqlRequest(AdminDashboardQuery, { id: user.id });
 
 	return {
 		user

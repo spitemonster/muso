@@ -1,30 +1,11 @@
 import { gqlRequest } from '$lib/server/gqlRequest.js';
 import type { Artist } from '$lib/types';
+import { ArtistBySlugCollectionsWithTracksQuery } from '$lib/queries/artistBySlugCollectionsWithTracks.query.js';
 
 export async function load({ params }) {
 	const { artistSlug, collectionSlug } = params;
 
-	const query = `
-		query getCollectionData($artistSlug: String!) {
-			artists(where: { slug: { eq: $artistSlug }}) {
-				collections {
-					id
-					title
-					slug
-					coverUrl
-					description
-					tracks {
-						id
-						title
-						trackUrl
-						duration
-					}
-				}
-			}
-		}
-	`;
-
-	const result = await gqlRequest(query, { artistSlug });
+	const result = await gqlRequest(ArtistBySlugCollectionsWithTracksQuery, { slug: artistSlug });
 	const { artists }: { artists: Artist[]; } = result;
 	const artist = artists[0];
 
