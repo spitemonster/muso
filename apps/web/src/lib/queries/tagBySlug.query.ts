@@ -33,6 +33,7 @@ export const TagBySlugQuery = graphql(`
 				slug
 				title
 				duration
+				trackUrl
 				primaryArtist {
 					id
 					name

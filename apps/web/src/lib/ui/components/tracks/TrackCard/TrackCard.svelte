@@ -14,17 +14,28 @@
 	const isCurrent = $derived(playerState.currentTrack?.id === track.id)
 
 	const trackCardClasses = tv({
-		base: 'track-card p-3 h-full rounded-md leading-tight',
 		variants: {
 			active: {
-				true: 'bg-accent text-background',
-				false: 'bg-neutral text-foreground',
+				true: {
+					default: 'bg-accent text-background',
+					artistLink: 'text-background focus:text-foreground hover:text-foreground',
+				},
+				false: {
+					default: 'bg-neutral text-foreground',
+					artistLink: 'text-accent focus:text-foreground hover:text-foreground',
+				},
 			},
 		},
+		slots: {
+			default: 'track-card p-3 h-full rounded-md leading-tight',
+			artistLink: 'italic',
+		},
 	})
+
+	const { default: defaultClass, artistLink } = $derived(trackCardClasses({ class: className }))
 </script>
 
-<div class={trackCardClasses({ class: className, active: isCurrent })}>
+<div class={defaultClass({ active: isCurrent })}>
 	<div class="grid grid-cols-[48px_minmax(0,1fr)_min-content] gap-3 items-center">
 		{#if track.primaryArtist?.profileImageUrl}
 			<img
@@ -42,10 +53,15 @@
 			></div>
 		{/if}
 		<div>
-			<p class="font-bold mb-3 w-full overflow-hidden text-ellipsis whitespace-nowrap block">
+			<p class="font-bold mb-2 w-full overflow-hidden text-ellipsis whitespace-nowrap block">
 				{track.title}
 			</p>
-			<p>{track.primaryArtist?.name}</p>
+			<p>
+				by <a
+					class={artistLink({ active: isCurrent })}
+					href={`/artists/${track.primaryArtist?.slug}`}>{track.primaryArtist?.name}</a
+				>
+			</p>
 		</div>
 		<PlayButton {track} />
 	</div>

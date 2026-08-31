@@ -53,7 +53,22 @@
 	})
 </script>
 
-<div class={playerClass({ active: !!playerState.currentTrack })}>
+<div
+	class={playerClass({ active: !!playerState.currentTrack })}
+	role="region"
+	aria-label="Player"
+	inert={!playerState.currentTrack}
+>
+	<div class="sr-only" aria-live="polite" aria-atomic="true">
+		{#if playerState.currentTrack}
+			Now playing: {playerState.currentTrack.title}
+			{#if playerState.currentTrack.artists && playerState.currentTrack.artists.length > 1}
+				by {playerState.currentTrack.artists.map((artist) => artist.name).join(', ')}
+			{:else if playerState.currentTrack.primaryArtist}
+				by {playerState.currentTrack.primaryArtist.name}
+			{/if}
+		{/if}
+	</div>
 	<div class="my-3 text-center">
 		{#if !playerState.currentTrack}
 			<p>-</p>
@@ -120,6 +135,8 @@
 			min="0"
 			max={playerState.duration}
 			value={playerState.currentTime}
+			aria-label="Seek"
+			aria-valuetext={`${secToMin(playerState.currentTime)} of ${secToMin(playerState.duration)}`}
 		/>
 		<div class="flex items-center text-sm">
 			<span>

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { tv } from 'tailwind-variants'
 	import { getDefaultInputStyles } from '../helpers'
-	import InputWrapper from '../InputWrapper/InputWrapper.svelte'
+	import { default as InputWrapper } from '../InputWrapper/InputWrapper.svelte'
 
 	import { type FieldProps } from '../fieldProps'
 	interface Props extends FieldProps {
