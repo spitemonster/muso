@@ -2,6 +2,7 @@
 	import { player, player as playerState } from '$lib/state/player.svelte'
 	import { secToMin } from '$lib/helpers/secToMin'
 	import { IconPlay, IconPause, IconNext } from '@muso/ui'
+	import { tv } from 'tailwind-variants'
 
 	let audioPlayer: HTMLAudioElement
 	let loadedTrackId: string | undefined
@@ -40,9 +41,19 @@
 			playerState.play()
 		}
 	}
+
+	const playerClass = tv({
+		base: 'fixed bottom-12 right-12 bg-neutral p-3 w-96 drop-shadow-sm transition-all',
+		variants: {
+			active: {
+				true: 'right-12',
+				false: '-right-full',
+			},
+		},
+	})
 </script>
 
-<div class="fixed bottom-12 right-12 bg-neutral p-3 w-96 drop-shadow-sm">
+<div class={playerClass({ active: !!playerState.currentTrack })}>
 	<div class="my-3 text-center">
 		{#if !playerState.currentTrack}
 			<p>-</p>

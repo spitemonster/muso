@@ -21,8 +21,15 @@
 	import { Container, Heading } from '@muso/ui'
 </script>
 
-<Container wide class="grid cols-1 gap-16">
-	<Heading level="h1" size="xl" class="mb-7">Discover</Heading>
+<Container wide class="grid cols-1 gap-12">
+	<section>
+		<Heading level="h1" size="xl" class="mb-5">Discover</Heading>
+		<p class="max-w-content-max-width">
+			Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti iste ratione soluta
+			facere quae exercitationem itaque reprehenderit corrupti similique nihil natus obcaecati
+			nesciunt, molestiae nulla quod tempore. Id, eligendi laborum!
+		</p>
+	</section>
 	{#if tags}
 		<section>
 			<Heading level="h2" size="lg" class="mb-5">Tags</Heading>

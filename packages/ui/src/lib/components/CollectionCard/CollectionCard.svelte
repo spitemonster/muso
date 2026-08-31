@@ -10,7 +10,9 @@
 </script>
 
 <a href={`/artists/${collection.primaryArtist?.slug}/collections/${collection.slug}`}>
-	<figure class="relative leading-tight rounded-md overflow-clip group bg-slate-gray text-slate-gray">
+	<figure
+		class="relative leading-tight rounded-md overflow-clip group bg-slate-gray text-slate-gray"
+	>
 		{#if collection.coverUrl}
 			<img
 				src={collection.coverUrl}

@@ -3,9 +3,9 @@ import { graphql } from '$lib/gql';
 export const DiscoverPageQuery = graphql(`
 		query DiscoverPage(
 			$tagCount: Int = 24,
-			$artistCount: Int = 9,
-			$collectionCount: Int = 16,
-			$trackCount: Int = 24
+			$artistCount: Int = 12,
+			$collectionCount: Int = 12,
+			$trackCount: Int = 12
 		) {
 			randomTags(count: $tagCount) {
 				name

@@ -16,29 +16,33 @@
 	{#if collection}
 		<div class="grid grid-cols-1 md:grid-cols-5 md:gap-7">
 			<div class="col-span-3 grid gap-5">
-				<Heading level="h1" size="xl" class="font-bold leading-tight"
-					>{collection.title}</Heading
-				>
-				{#if collection.artists && collection.artists.length > 0}
-					<p class="text-lg mb-5">
-						by
-						{#each collection.artists as artist, index}
-							<a class="text-accent" href={`/artists/${artist.slug}`}>
-								{artist.name}
-							</a>
-							{#if index === collection.artists.length - 1}
-								,
-							{/if}
-						{/each}
-					</p>
-				{:else if collection.primaryArtist}
-					<p class="text-lg mb-5">
-						by
-						<a class="text-accent" href={`/artists/${collection.primaryArtist.slug}`}
-							>{collection.primaryArtist.name}</a
-						>
-					</p>
-				{/if}
+				<div>
+					<Heading level="h1" size="xl" class="font-bold leading-tight mb-5"
+						>{collection.title}</Heading
+					>
+					{#if collection.artists && collection.artists.length > 1}
+						<p class="text-lg">
+							by
+							{#each collection.artists as artist, index}
+								<a class="text-accent" href={`/artists/${artist.slug}`}>
+									{artist.name}
+								</a>
+								{#if index === collection.artists.length - 1}
+									,
+								{/if}
+							{/each}
+						</p>
+					{:else if collection.primaryArtist}
+						<p class="text-lg">
+							by
+							<a
+								class="text-accent"
+								href={`/artists/${collection.primaryArtist.slug}`}
+								>{collection.primaryArtist.name}</a
+							>
+						</p>
+					{/if}
+				</div>
 				<p class="leading-tight mb-7">{collection.description}</p>
 				<Tracklist tracks={collection.tracks ?? []} />
 			</div>

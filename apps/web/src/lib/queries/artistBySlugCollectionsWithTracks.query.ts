@@ -14,6 +14,11 @@ export const ArtistBySlugCollectionsWithTracksQuery = graphql(`
 					name
 					slug
 				}
+				artists {
+					id
+					name
+					slug
+				}
 				tracks {
 					id
 					title
