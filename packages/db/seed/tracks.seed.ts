@@ -7,6 +7,10 @@ const EP_TRACK_CONFIG = { min: 1, max: 7 };
 const ALBUM_TRACK_CONFIG = { min: 6, max: 15 };
 const COMPILATION_TRACK_CONFIG = { min: 10, max: 30 };
 
+const trackUrls: string[] = [
+	'https://ia600507.us.archive.org/18/items/ClaudeDebussyClairDeLuneFromTwilight/Claude%20Debussy%20-%20Clair%20de%20lune%20%28From%20Twilight%29.mp3',
+];
+
 // track count range differs slightly per collection type
 const trackCount = (collection: typeof schema.collections.$inferInsert) => {
 	switch (collection.type) {
@@ -58,6 +62,8 @@ export async function generateTrackData(
 				slug,
 				collectionId: collection.id,
 				ownerId: artist.ownerId,
+				primaryArtistId: artist.id,
+				trackUrl: faker.helpers.arrayElement(trackUrls)
 			};
 
 			trackData.push(track);
