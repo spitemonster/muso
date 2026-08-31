@@ -8,7 +8,8 @@
 		"codegen": "graphql-codegen --config codegen.ts",
 		"codegen:watch": "graphql-codegen --config codegen.ts --watch",
 		"dev:admin": "pnpm --parallel --filter api --filter admin run dev",
-		"dev:web": "pnpm --parallel --filter api --filter web run dev"
+		"dev:web": "pnpm --parallel --filter api --filter web run dev",
+		"dev": "pnpm --parallel --filter api --filter web --filter admin run dev"
 	},
 	"keywords": [],
 	"author": "",
