@@ -10,6 +10,8 @@ node_modules
 .wrangler
 .svelte-kit
 build
+storybook-static
+*/**/src/lib/gql
 
 # OS
 .DS_Store

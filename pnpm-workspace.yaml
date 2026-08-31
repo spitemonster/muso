@@ -4,6 +4,7 @@ packages:
   - 'workers/*'
 allowBuilds:
   '@apollo/protobufjs': false
+  '@parcel/watcher': false
   bcrypt: false
   core-js-pure: false
   esbuild: false

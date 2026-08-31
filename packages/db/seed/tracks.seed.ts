@@ -1,108 +1,88 @@
-import { faker } from '@faker-js/faker'
+import { faker } from '@faker-js/faker';
 
-import * as schema from '../schema'
+import * as schema from '../schema';
+
+const SINGLE_TRACK_CONFIG = { min: 1, max: 5 };
+const EP_TRACK_CONFIG = { min: 1, max: 7 };
+const ALBUM_TRACK_CONFIG = { min: 6, max: 15 };
+const COMPILATION_TRACK_CONFIG = { min: 10, max: 30 };
+
+const trackUrls: string[] = [
+	'https://ia600507.us.archive.org/18/items/ClaudeDebussyClairDeLuneFromTwilight/Claude%20Debussy%20-%20Clair%20de%20lune%20%28From%20Twilight%29.mp3',
+];
+
+// track count range differs slightly per collection type
+const trackCount = (collection: typeof schema.collections.$inferInsert) => {
+	switch (collection.type) {
+		case 'single':
+			return faker.number.int(SINGLE_TRACK_CONFIG);
+		case 'ep':
+			return faker.number.int(EP_TRACK_CONFIG);
+		case 'album':
+			return faker.number.int(ALBUM_TRACK_CONFIG);
+		case 'compilation':
+			return faker.number.int(COMPILATION_TRACK_CONFIG);
+		default:
+			return 9;
+	}
+};
 
 export async function generateTrackData(
-    trackCount: number,
-    collectionData: (typeof schema.tracks.$inferInsert)[]
-) {
-    const generatedTrackData = []
+	collections: (typeof schema.collections.$inferInsert)[],
+	artists: (typeof schema.artists.$inferInsert)[],
+	collectionArtists: (typeof schema.collectionArtists.$inferInsert)[],
+): Promise<{
+	trackData: (typeof schema.tracks.$inferInsert)[];
+	trackArtistData: (typeof schema.trackArtists.$inferInsert)[];
+	trackAdminData: (typeof schema.trackAdmins.$inferInsert)[];
+}> {
+	const trackData: (typeof schema.tracks.$inferInsert)[] = [];
+	const trackArtistData: (typeof schema.trackArtists.$inferInsert)[] = [];
+	const trackAdminData: (typeof schema.trackAdmins.$inferInsert)[] = [];
 
-    for (let i = 0; i < trackCount; i++) {
-        const id = crypto.randomUUID()
+	collections.forEach((collection) => {
+		// get artist by way of collection artist artist id
+		const collectionArtist: typeof schema.collectionArtists.$inferInsert =
+			collectionArtists.find(
+				(ca) => ca.collectionId === collection.id,
+			) as typeof schema.collectionArtists.$inferInsert;
 
-        const collection = faker.helpers.arrayElement(collectionData)
+		const artist: typeof schema.artists.$inferInsert = artists.find(
+			(a) => a.id === collectionArtist.artistId,
+		) as typeof schema.artists.$inferInsert;
 
-        generatedTrackData.push({
-            id,
-            title: faker.word.words(Math.round(Math.random() * 4) + 1),
-            slug: '', // just to shut up the error since this is not currently being used
-            duration: faker.number.int({ min: 15, max: 900 }),
-            collectionId: collection.id,
-            artists: [],
-        })
-    }
+		for (let i = 0; i < trackCount(collection); i++) {
+			const trackId = crypto.randomUUID();
+			const title = faker.word.words(Math.round(Math.random() * 4) + 1);
+			const slug = title.replaceAll(' ', '-');
 
-    return generatedTrackData
+			const track = {
+				id: trackId,
+				title,
+				slug,
+				collectionId: collection.id,
+				ownerId: artist.ownerId,
+				primaryArtistId: artist.id,
+				trackUrl: faker.helpers.arrayElement(trackUrls)
+			};
+
+			trackData.push(track);
+
+			const trackArtist: typeof schema.trackArtists.$inferInsert = {
+				artistId: '',
+				trackId: '',
+			};
+
+			trackArtist.trackId = track.id;
+			trackArtist.artistId = artist.id;
+			trackArtistData.push(trackArtist);
+
+			trackAdminData.push({
+				trackId: track.id,
+				userId: artist.ownerId
+			});
+		}
+	});
+
+	return { trackData, trackArtistData, trackAdminData };
 }
-
-export async function generateTrackArtistData(
-    trackData: (typeof schema.tracks.$inferInsert)[],
-    collectionArtistData: (typeof schema.collectionArtists.$inferInsert)[]
-) {
-    // // for every track
-    // const generatedTrackArtistData: [] = []
-
-    // trackData.forEach(async (track) => {
-    //     const trackId = track.id
-    //     const collectionId = track.collectionId
-
-    //     // get the collection artist data that corresponds to the collection id
-    //     const collectionArtists = collectionArtistData.filter(
-    //         (d) => d.collectionId == collectionId
-    //     )
-
-    //     // if we don't find anything, there is a problem
-    //     if (collectionArtists.length == 0) {
-    //         console.error('problem seeding track artist data')
-    //         return
-    //     }
-
-    //     let multiArtist: number = 0
-
-    //     // if there is more than one artist, randomly determine if we're creating two track artist records or just one
-    //     // as with collections
-    //     if (collectionArtists.length > 1) {
-    //         multiArtist = Math.random() < 0.1 ? 1 : 0
-    //     }
-
-    //     // if multi artist == 1 this loop runs twice, generating two artists for a track
-    //     for (let i = 0; i < multiArtist + 1; i++) {
-    //         const id = crypto.randomUUID()
-    //         const artistId = collectionArtists[i].artistId
-
-    //         const aa: TrackArtist = {
-    //             id,
-    //             artistId,
-    //             trackId,
-    //         }
-
-    //         generatedTrackArtistData.push(aa)
-    //     }
-    // })
-
-    // // for every track
-    // // get the collection to which it belongs
-    // // get its artists via itsCollectionArtists
-    // return generatedTrackArtistData
-}
-
-// export async function generateCollectionArtistData(
-//     collectionData: (typeof schema.collections.$inferInsert)[],
-//     artistData: (typeof schema.artists.$inferInsert)[]
-// ): Promise<CollectionArtist[]> {
-//     const generatedCollectionArtistData: CollectionArtist[] = []
-
-//     collectionData.forEach(async (collection) => {
-//         // this should only return 1 about 10% of the time
-//         const multiArtist: number = Math.random() < 0.1 ? 1 : 0
-
-//         // if multi artist == 1 this loop runs twice, generating two artists for an collection
-//         for (let i = 0; i < multiArtist + 1; i++) {
-//             const id = crypto.randomUUID()
-//             const collectionId = collection.id
-//             const artist = faker.helpers.arrayElement(artistData)
-//             const artistId = artist.id
-
-//             const aa: CollectionArtist = {
-//                 id,
-//                 collectionId,
-//                 artistId,
-//             }
-
-//             generatedCollectionArtistData.push(aa)
-//         }
-//     })
-
-//     return generatedCollectionArtistData
-// }

@@ -1,50 +1,54 @@
-import { Hono } from 'hono'
-import type { HonoRequest } from 'hono'
-import { prettyJSON } from 'hono/pretty-json'
-import { serve } from '@hono/node-server'
-import { createYoga } from 'graphql-yoga'
-import { buildSchema } from 'drizzle-graphql'
-import { db } from '@muso/db/db'
+import { Hono, type HonoRequest } from 'hono';
+import { prettyJSON } from 'hono/pretty-json';
+import { serve } from '@hono/node-server';
+import { createYoga } from 'graphql-yoga';
+import { db } from '@muso/db/db';
 
-const { schema } = buildSchema(db, {
-	mutations: false
-});
+import { schema } from './schema';
+import { createLoaders, type Loaders } from './loaders';
+
+import { auth } from './routes/auth';
+
 
 type GraphQLContext = {
-	req: HonoRequest
-	db: typeof db
-}
+	req: HonoRequest;
+	db: typeof db;
+	loaders: Loaders;
+};
 
 const yoga = createYoga<GraphQLContext>({
 	schema,
-	graphqlEndpoint: '/graphql'
-})
+	graphqlEndpoint: '/graphql',
+});
 
-const app = new Hono()
-app.get('/', (ctx) => ctx.text('API'))
+const app = new Hono();
+app.get('/', (ctx) => ctx.text('API'));
+
+app.route('/auth', auth);
 
 app.all('/graphql', async (c) => {
-	const response = await yoga.handle(c.req.raw, { req: c.req, db })
-	return response
-})
+	// fresh loaders every request
+	const response = await yoga.handle(c.req.raw, { req: c.req, db, loaders: createLoaders() });
+	return response;
+});
 
-app.use(prettyJSON())
+app.use(prettyJSON());
 
-app.notFound((c) => c.json({ message: 'Not Found', ok: false }, 404))
+app.notFound((c) => c.json({ message: 'Not Found', ok: false }, 404));
 
-const server = serve({ fetch: app.fetch, port: 8888 })
+const server = serve({ fetch: app.fetch, port: 8888 });
 
-// graceful shutdown
 process.on('SIGINT', () => {
-	server.close()
-	process.exit(0)
-})
+	server.close();
+	process.exit(0);
+});
+
 process.on('SIGTERM', () => {
 	server.close((err) => {
 		if (err) {
-			console.error(err)
-			process.exit(1)
+			console.error(err);
+			process.exit(1);
 		}
-		process.exit(0)
-	})
-})
+		process.exit(0);
+	});
+});

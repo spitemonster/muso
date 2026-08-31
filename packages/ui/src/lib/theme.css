@@ -13,7 +13,11 @@
 	--color-warning: var(--palette-orange);
 	--color-warning-light: var(--palette-orange-light);
 	--color-inactive: var(--palette-gray-dark);
-	--color-neutral: var(--palette-gray-light);
+	--color-neutral: var(--palette-alabaster-gray);
+	--color-charcoal-blue: var(--palette-charcoal-blue);
+	--color-slate-gray: var(--palette-slate-gray);
+	--color-ash-gray: var(--palette-ash-gray);
+	--color-alabaster-gray: var(--palette-alabaster-gray);
 
 	--text-*: initial;
 	--text-base: clamp(1.125rem, 1.05rem + 0.25vw, 1.5rem);
@@ -33,6 +37,7 @@
 
 	--spacing-clamp-width: 50ch;
 	--spacing-content-max-width: 60rem;
+	--spacing-content-wide-width: 90rem;
 	--spacing-input-height: 2.5rem;
 }
 
@@ -44,8 +49,6 @@
 		--palette-black: #071013;
 		--palette-white: #e6e1db;
 		--palette-gray-dark: #303637;
-		--palette-gray-medium: #e8e8e8;
-		--palette-gray-light: #e9e8e8;
 		--palette-blue: #373f58;
 		--palette-blue-light: #5899e2;
 		--palette-green: #214f37;
@@ -55,6 +58,10 @@
 		--palette-orange: #d74e09;
 		--palette-orange-light: #ff8600;
 		--palette-blue: #5899e2;
+		--palette-charcoal-blue: #2a4148;
+		--palette-slate-gray: #63838a;
+		--palette-ash-gray: #9eb7ba;
+		--palette-alabaster-gray: #e9e8e8;
 	}
 
 	h1,

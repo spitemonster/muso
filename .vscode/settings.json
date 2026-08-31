@@ -1,3 +1,47 @@
 {
-	"css.lint.unknownAtRules": "ignore"
+	"css.lint.unknownAtRules": "ignore",
+	"editor.detectIndentation": false,
+	"editor.tabSize": 4,
+	"editor.insertSpaces": false,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"[svelte]": {
+		"editor.defaultFormatter": "svelte.svelte-vscode"
+	},
+	"editor.formatOnPaste": true,
+	"editor.formatOnSave": true,
+	/**
+	 * JavaScript Essentials Config
+	 */
+	"[javascript]": {
+		"editor.defaultFormatter": "vscode.typescript-language-features"
+	},
+	"js/ts.format.enable": true,
+	"eslint.enable": true,
+	"eslint.codeAction.showDocumentation": {
+		"enable": true
+	},
+	"eslint.codeAction.disableRuleComment": {
+		"enable": true,
+		"location": "sameLine"
+	},
+	"npm-intellisense.importES6": true,
+	"npm-intellisense.importQuotes": "'",
+	"npm-intellisense.importLinebreak": ";\r\n",
+	"npm-intellisense.importDeclarationType": "const",
+	/**
+	 * The following line is for the specific configuration of the
+	 * Path-Intellisense extension over Javascript
+	 */
+	"js/ts.suggest.paths": true,
+	"path-intellisense.showHiddenFiles": true,
+	"formattingToggle.affects": ["editor.formatOnPaste", "editor.formatOnType"],
+	/**
+	 * TypeScript Essentials Config
+	 */
+	"[typescript]": {
+		"editor.defaultFormatter": "vscode.typescript-language-features"
+	},
+	"js/ts.format.enabled": true,
+	"js/ts.format.semicolons": "insert",
+	"js/ts.preferences.quoteStyle": "single"
 }
