@@ -3,7 +3,7 @@
 	import { tv } from 'tailwind-variants'
 	interface Props {
 		children?: Snippet
-		align: 'start' | 'center' | 'end'
+		align?: 'start' | 'center' | 'end'
 		class?: string
 		wide?: boolean
 	}

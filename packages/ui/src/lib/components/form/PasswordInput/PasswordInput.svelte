@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getDefaultInputStyles } from '../helpers'
 	import InputWrapper from '../InputWrapper/InputWrapper.svelte'
-	import { EyeClosed, EyeOpen } from '@muso/ui'
+	import { IconEyeClosed, IconEyeOpen } from '@muso/ui'
 	import { tv } from 'tailwind-variants'
 
 	import { type FieldProps } from '../fieldProps'
@@ -82,11 +82,11 @@
 		onclick={() => (passwordVisible = !passwordVisible)}
 	>
 		<figure class={calcOpenClass()}>
-			<EyeOpen height="24" width="24" />
+			<IconEyeOpen height="24" width="24" />
 			<figcaption class="sr-only">Hide</figcaption>
 		</figure>
 		<figure class={calcClosedClass()}>
-			<EyeClosed height="24" width="24" />
+			<IconEyeClosed height="24" width="24" />
 			<figcaption class="sr-only">Show</figcaption>
 		</figure>
 	</button>
