@@ -1,11 +1,16 @@
 import type { AnyPgColumn, PgTable } from 'drizzle-orm/pg-core';
+import type { db } from '@muso/db/db';
 import * as schema from '@muso/db/schema';
+
+type QueryTableName = keyof typeof db.query;
 
 type BaseRelation = {
 	loaderKey: string;
 	onType: string;
 	fieldName: string;
 	targetTypeKey: string;
+	targetTableName: QueryTableName;
+	with?: Record<string, true>;
 };
 
 export type JunctionRelation = BaseRelation & {
@@ -20,10 +25,19 @@ export type JunctionRelation = BaseRelation & {
 export type ForeignKeyRelation = BaseRelation & {
 	kind: 'foreignKey';
 	targetTable: PgTable;
+	targetPk: AnyPgColumn;
 	foreignKey: AnyPgColumn;
+	foreignKeyField: string;
 };
 
 export type RelationConfig = JunctionRelation | ForeignKeyRelation;
+
+// one-relations to eager-load per target table so that fields like
+// TracksSelectItem.primaryArtist resolve correctly when a track/collection
+// is reached through one of these loaders instead of drizzle-graphql's own
+// generated query resolvers (see randomFields.ts for the same requirement).
+const tracksWith = { primaryArtist: true, collection: true } as const;
+const collectionsWith = { primaryArtist: true } as const;
 
 export const relations: RelationConfig[] = [
 	{
@@ -37,6 +51,7 @@ export const relations: RelationConfig[] = [
 		targetFk: schema.collectionArtists.artistId,
 		targetTable: schema.artists,
 		targetPk: schema.artists.id,
+		targetTableName: 'artists',
 	},
 	{
 		kind: 'junction',
@@ -49,6 +64,8 @@ export const relations: RelationConfig[] = [
 		targetFk: schema.collectionArtists.collectionId,
 		targetTable: schema.collections,
 		targetPk: schema.collections.id,
+		targetTableName: 'collections',
+		with: collectionsWith,
 	},
 	{
 		kind: 'junction',
@@ -61,6 +78,7 @@ export const relations: RelationConfig[] = [
 		targetFk: schema.trackArtists.artistId,
 		targetTable: schema.artists,
 		targetPk: schema.artists.id,
+		targetTableName: 'artists',
 	},
 	{
 		kind: 'junction',
@@ -73,6 +91,8 @@ export const relations: RelationConfig[] = [
 		targetFk: schema.trackArtists.trackId,
 		targetTable: schema.tracks,
 		targetPk: schema.tracks.id,
+		targetTableName: 'tracks',
+		with: tracksWith,
 	},
 	{
 		kind: 'junction',
@@ -85,6 +105,7 @@ export const relations: RelationConfig[] = [
 		targetFk: schema.trackTags.tagId,
 		targetTable: schema.tags,
 		targetPk: schema.tags.id,
+		targetTableName: 'tags',
 	},
 	{
 		kind: 'junction',
@@ -97,6 +118,7 @@ export const relations: RelationConfig[] = [
 		targetFk: schema.collectionTags.tagId,
 		targetTable: schema.tags,
 		targetPk: schema.tags.id,
+		targetTableName: 'tags',
 	},
 	{
 		kind: 'junction',
@@ -109,6 +131,7 @@ export const relations: RelationConfig[] = [
 		targetFk: schema.artistTags.tagId,
 		targetTable: schema.tags,
 		targetPk: schema.tags.id,
+		targetTableName: 'tags',
 	},
 	{
 		kind: 'junction',
@@ -121,6 +144,8 @@ export const relations: RelationConfig[] = [
 		targetFk: schema.trackTags.trackId,
 		targetTable: schema.tracks,
 		targetPk: schema.tracks.id,
+		targetTableName: 'tracks',
+		with: tracksWith,
 	},
 	{
 		kind: 'junction',
@@ -133,6 +158,8 @@ export const relations: RelationConfig[] = [
 		targetFk: schema.collectionTags.collectionId,
 		targetTable: schema.collections,
 		targetPk: schema.collections.id,
+		targetTableName: 'collections',
+		with: collectionsWith,
 	},
 	{
 		kind: 'junction',
@@ -145,6 +172,7 @@ export const relations: RelationConfig[] = [
 		targetFk: schema.artistTags.artistId,
 		targetTable: schema.artists,
 		targetPk: schema.artists.id,
+		targetTableName: 'artists',
 	},
 	{
 		kind: 'foreignKey',
@@ -153,7 +181,11 @@ export const relations: RelationConfig[] = [
 		fieldName: 'tracks',
 		targetTypeKey: 'TracksSelectItem',
 		targetTable: schema.tracks,
+		targetPk: schema.tracks.id,
+		targetTableName: 'tracks',
 		foreignKey: schema.tracks.collectionId,
+		foreignKeyField: 'collectionId',
+		with: tracksWith,
 	},
 	{
 		kind: 'junction',
@@ -165,6 +197,7 @@ export const relations: RelationConfig[] = [
 		sourceFk: schema.artistAdmins.userId,
 		targetFk: schema.artistAdmins.artistId,
 		targetTable: schema.artists,
-		targetPk: schema.artists.id
-	}
+		targetPk: schema.artists.id,
+		targetTableName: 'artists',
+	},
 ];
