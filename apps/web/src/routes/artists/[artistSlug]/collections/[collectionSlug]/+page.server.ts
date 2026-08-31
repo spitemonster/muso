@@ -14,6 +14,7 @@ export async function load({ params }) {
 					coverUrl
 					description
 					tracks {
+						id
 						title
 						trackUrl
 						duration

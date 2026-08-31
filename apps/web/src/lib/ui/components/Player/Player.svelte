@@ -47,7 +47,9 @@
 		<p>{playerState.currentTrack?.title ?? '-'}</p>
 	</div>
 	<div class="grid grid-cols-7 place-content-center-safe">
-		<div class="col-span-3"></div>
+		<div class="col-span-3">
+			<!-- spacer, more buttons to come -->
+		</div>
 		<button class="cursor-pointer col-span-1 flex items-center justify-center" onclick={play}>
 			{#if playerState.isPlaying}
 				<span class="sr-only">Pause</span>

@@ -10,7 +10,9 @@ export async function load({ params }) {
 				id
 				name
 				collections {
+					id
 					title
+					slug
 				}
 				tags {
 					name

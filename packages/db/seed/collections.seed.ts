@@ -46,7 +46,7 @@ export async function generateCollectionData(
 				slug,
 				type,
 				primaryArtistId: artist.id,
-				coverUrl: `https://picsum.photos/600.webp?${Math.floor(Math.random() * 99)}`,
+				coverUrl: ``,
 				description: faker.lorem.paragraph(),
 				ownerId: artist.ownerId,
 			};

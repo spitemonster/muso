@@ -12,7 +12,7 @@
 </script>
 
 <section class="tag-list">
-	<ul class={`${className} flex flex-wrap`} {...attrs}>
+	<ul class={`${className} flex flex-wrap gap-3`} {...attrs}>
 		{#each tags as tag}
 			<li>
 				<TagCard {tag} />

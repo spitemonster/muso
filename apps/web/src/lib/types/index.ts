@@ -29,6 +29,8 @@ export interface Artist extends Entity {
 	slug: string;
 	collections?: Collection[];
 	profileImageUrl?: string;
+	biography?: string;
+	tags?: Tag[];
 }
 
 export interface Tag extends Entity {

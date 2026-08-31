@@ -47,7 +47,7 @@ export async function generateArtistData(
 					max: 30,
 				},
 			}),
-			profileImageUrl: `https://picsum.photos/200.webp?${Math.floor(Math.random() * 99)}`,
+			profileImageUrl: ``,
 			location: `${faker.location.city()}, ${faker.location.country()}`,
 		};
 
