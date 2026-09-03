@@ -19,3 +19,4 @@
 
 <Story name="Solid" args={{ style: 'solid' }}>Solid Button</Story>
 <Story name="Outline" args={{ style: 'outline' }}>Outline Button</Story>
+<Story name="Disabled" args={{ disabled: true }}>Disabled Button</Story>

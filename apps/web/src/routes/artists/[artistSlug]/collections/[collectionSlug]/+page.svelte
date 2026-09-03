@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Tracklist from '$lib/ui/components/tracks/Tracklist/Tracklist.svelte'
 	import type { PageData } from './$types'
-	import { Container, Heading } from '@muso/ui'
+	import { Container, Heading, TagList } from '@muso/ui'
 
 	interface Props {
 		data: PageData
@@ -14,8 +14,8 @@
 
 <Container>
 	{#if collection}
-		<div class="grid grid-cols-1 md:grid-cols-5 md:gap-7">
-			<div class="col-span-3 grid gap-5">
+		<div class="grid grid-cols-1 md:grid-cols-5 md:gap-7 gap-y-7">
+			<div class="col-span-3 grid gap-5 order-2 md:order-1">
 				<div>
 					<Heading level="h1" size="xl" class="font-bold leading-tight mb-5"
 						>{collection.title}</Heading
@@ -45,8 +45,11 @@
 				</div>
 				<p class="leading-tight mb-7">{collection.description}</p>
 				<Tracklist tracks={collection.tracks ?? []} />
+				{#if collection.tags && collection.tags.length > 0}
+					<TagList tags={collection.tags} />
+				{/if}
 			</div>
-			<div class="col-span-2">
+			<div class="col-span-2 order-1 md:order-2">
 				{#if collection.coverUrl}
 					<figure>
 						<img src={collection.coverUrl} alt={collection.title} />
