@@ -33,7 +33,7 @@
 	{#if tags}
 		<section>
 			<Heading level="h2" size="lg" class="mb-5">Tags</Heading>
-			<TagList {tags} />
+			<TagList {tags} size={'md'} />
 		</section>
 	{/if}
 	{#if artists}
