@@ -17,13 +17,14 @@ export const users = pgTable(
 		createdAt: timestamp('created_at').defaultNow(),
 		updatedAt: timestamp('updated_at'),
 	},
-	(table) => {
-		return {
-			emailIdx: index('email_idx').on(table.email),
-		};
-	}
+	(table) => [
+		index('email_idx').on(table.email)
+	]
 );
 
 export const usersRelations = relations(users, ({ many }) => ({
 	artistAdmins: many(schema.artistAdmins),
+	trackAdmins: many(schema.trackAdmins),
+	collectionAdmins: many(schema.collectionAdmins),
 }));
+

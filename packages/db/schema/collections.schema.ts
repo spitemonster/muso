@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm';
-import { text, timestamp, pgTable, getTableConfig, index, uuid, pgEnum } from 'drizzle-orm/pg-core';
+import { text, timestamp, pgTable, getTableConfig, index, uuid } from 'drizzle-orm/pg-core';
 
 import * as schema from '.';
 
@@ -19,11 +19,9 @@ export const collections = pgTable(
 		createdAt: timestamp('created_at').defaultNow(),
 		updatedAt: timestamp('updated_at').defaultNow(),
 	},
-	(table) => {
-		return {
-			slugIdx: index('collection_slug_idx').on(table.slug),
-		};
-	},
+	(table) => [
+		index('collection_slug_idx').on(table.slug)
+	],
 );
 
 export const collectionsRelations = relations(collections, ({ one, many }) => ({

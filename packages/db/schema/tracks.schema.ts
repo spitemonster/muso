@@ -10,6 +10,7 @@ export const tracks = pgTable(
 		title: text('title').notNull(),
 		slug: text('slug').notNull(),
 		duration: integer('duration'),
+		trackUrl: text('track_url').notNull(),
 		collectionId: uuid('collection_id')
 			.notNull()
 			.references(() => schema.collections.id),
@@ -19,11 +20,9 @@ export const tracks = pgTable(
 		createdAt: timestamp('created_at').defaultNow(),
 		updatedAt: timestamp('updated_at').defaultNow(),
 	},
-	(table) => {
-		return {
-			slugIdx: index('track_slug_idx').on(table.slug),
-		};
-	},
+	(table) => [
+		index('track_slug_idx').on(table.slug)
+	],
 );
 
 export const tracksRelations = relations(tracks, ({ one, many }) => ({

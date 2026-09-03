@@ -1,7 +1,7 @@
-import { relations } from 'drizzle-orm'
-import { text, timestamp, pgTable, primaryKey, uuid } from 'drizzle-orm/pg-core'
+import { relations } from 'drizzle-orm';
+import { text, timestamp, pgTable, primaryKey, uuid } from 'drizzle-orm/pg-core';
 
-import * as schema from '.'
+import * as schema from '.';
 
 export const artistTags = pgTable(
 	'artist_tags',
@@ -13,10 +13,10 @@ export const artistTags = pgTable(
 			.notNull()
 			.references(() => schema.tags.id),
 	},
-	(t) => ({
-		pk: primaryKey({ columns: [t.artistId, t.tagId] }),
-	}),
-)
+	(table) => [
+		primaryKey({ columns: [table.artistId, table.tagId] })
+	]
+);
 
 export const artistTagsRelations = relations(artistTags, ({ one }) => ({
 	artist: one(schema.artists, {
@@ -27,4 +27,4 @@ export const artistTagsRelations = relations(artistTags, ({ one }) => ({
 		fields: [artistTags.tagId],
 		references: [schema.tags.id],
 	}),
-}))
+}));

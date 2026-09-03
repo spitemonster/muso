@@ -1,7 +1,7 @@
-import { relations } from 'drizzle-orm'
-import { text, timestamp, pgTable, primaryKey, uuid } from 'drizzle-orm/pg-core'
+import { relations } from 'drizzle-orm';
+import { pgTable, primaryKey, uuid } from 'drizzle-orm/pg-core';
 
-import * as schema from '.'
+import * as schema from '.';
 
 export const trackArtists = pgTable(
 	'track_artists',
@@ -13,20 +13,18 @@ export const trackArtists = pgTable(
 			.notNull()
 			.references(() => schema.tracks.id),
 	},
-	(t) => ({
-		pk: primaryKey({ columns: [t.artistId, t.trackId] }),
-	}),
-)
+	(table) => [
+		primaryKey({ columns: [table.artistId, table.trackId] })
+	]
+);
 
 export const trackArtistsRelations = relations(trackArtists, ({ one }) => ({
 	track: one(schema.tracks, {
-		relationName: 'track',
 		fields: [trackArtists.trackId],
 		references: [schema.tracks.id],
 	}),
 	artist: one(schema.artists, {
-		relationName: 'artist',
 		fields: [trackArtists.artistId],
 		references: [schema.artists.id],
 	}),
-}))
+}));

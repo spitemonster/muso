@@ -1,7 +1,7 @@
-import { relations } from 'drizzle-orm'
-import { pgTable, primaryKey, uuid } from 'drizzle-orm/pg-core'
+import { relations } from 'drizzle-orm';
+import { pgTable, primaryKey, uuid } from 'drizzle-orm/pg-core';
 
-import * as schema from '.'
+import * as schema from '.';
 
 export const collectionArtists = pgTable(
 	'collection_artists',
@@ -13,20 +13,19 @@ export const collectionArtists = pgTable(
 			.notNull()
 			.references(() => schema.artists.id),
 	},
-	(t) => ({
-		pk: primaryKey({ columns: [t.collectionId, t.artistId] }),
-	}),
-)
+	(table) => [
+		primaryKey({ columns: [table.collectionId, table.artistId] })
+	]
+);
 
 export const collectionArtistsRelations = relations(collectionArtists, ({ one }) => ({
 	collection: one(schema.collections, {
-		relationName: 'collection',
 		fields: [collectionArtists.collectionId],
 		references: [schema.collections.id],
 	}),
 	artist: one(schema.artists, {
-		relationName: 'artist',
 		fields: [collectionArtists.artistId],
 		references: [schema.artists.id],
 	}),
-}))
+}));
+

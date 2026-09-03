@@ -1,7 +1,7 @@
-import { relations } from 'drizzle-orm'
-import { text, timestamp, pgTable, uniqueIndex, uuid } from 'drizzle-orm/pg-core'
+import { relations } from 'drizzle-orm';
+import { text, timestamp, pgTable, uniqueIndex, uuid } from 'drizzle-orm/pg-core';
 
-import * as schema from '.'
+import * as schema from '.';
 
 export const artists = pgTable(
 	'artists',
@@ -17,16 +17,14 @@ export const artists = pgTable(
 		createdAt: timestamp('created_at').defaultNow(),
 		updatedAt: timestamp('updated_at').defaultNow(),
 	},
-	(table) => {
-		return {
-			slugIdx: uniqueIndex('artist_slug_idx').on(table.slug),
-		}
-	},
-)
+	(table) => [
+		uniqueIndex("artist_slug_idx").on(table.slug)
+	]
+);
 
 export const artistsRelations = relations(artists, ({ one, many }) => ({
 	artistTags: many(schema.artistTags),
 	trackArtists: many(schema.trackArtists),
 	collectionArtists: many(schema.collectionArtists),
 	artistAdmins: many(schema.artistAdmins),
-}))
+}));
