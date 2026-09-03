@@ -8,8 +8,11 @@
 	const { artist }: Props = $props()
 </script>
 
-<a href={`/artists/${artist.slug}`}>
-	<figure class="bg-neutral p-3 flex items-center gap-3 rounded-md">
+<a
+	href={`/artists/${artist.slug}`}
+	class="block bg-neutral p-3 rounded-md hover:bg-accent hover:text-background focus:bg-accent focus:text-background transition-all"
+>
+	<figure class="flex items-center gap-3">
 		{#if artist.profileImageUrl}
 			<img
 				src={artist.profileImageUrl}
