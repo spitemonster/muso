@@ -3,6 +3,8 @@ import { text, timestamp, pgTable, integer, index, uuid } from 'drizzle-orm/pg-c
 
 import * as schema from '.';
 
+import { statusEnum } from './enums';
+
 export const tracks = pgTable(
 	'tracks',
 	{
@@ -11,12 +13,12 @@ export const tracks = pgTable(
 		slug: text('slug').notNull(),
 		duration: integer('duration'),
 		trackUrl: text('track_url').notNull(),
+		status: statusEnum('status').notNull().default('draft'),
 		collectionId: uuid('collection_id')
 			.notNull()
 			.references(() => schema.collections.id),
 		ownerId: uuid('owner_id').notNull(),
 		primaryArtistId: uuid('primary_artist_id').notNull().references(() => schema.artists.id),
-		trackUrl: text('track_url').notNull(),
 		createdAt: timestamp('created_at').defaultNow(),
 		updatedAt: timestamp('updated_at').defaultNow(),
 	},
@@ -27,12 +29,10 @@ export const tracks = pgTable(
 
 export const tracksRelations = relations(tracks, ({ one, many }) => ({
 	collection: one(schema.collections, {
-		relationName: 'collection',
 		fields: [tracks.collectionId],
 		references: [schema.collections.id],
 	}),
 	primaryArtist: one(schema.artists, {
-		relationName: 'primaryArtist',
 		fields: [tracks.primaryArtistId],
 		references: [schema.artists.id]
 	}),
@@ -40,3 +40,4 @@ export const tracksRelations = relations(tracks, ({ one, many }) => ({
 	trackTags: many(schema.trackTags),
 	trackAdmins: many(schema.trackAdmins),
 }));
+

@@ -3,7 +3,7 @@ import { text, timestamp, pgTable, getTableConfig, index, uuid } from 'drizzle-o
 
 import * as schema from '.';
 
-export const collectionTypeEnum = pgEnum('collection_type', ['album', 'ep', 'single', 'compilation']);
+import { collectionTypeEnum, statusEnum } from './enums';
 
 export const collections = pgTable(
 	'collections',
@@ -15,6 +15,7 @@ export const collections = pgTable(
 		coverUrl: text('cover_url'),
 		ownerId: uuid('owner_id').notNull(),
 		description: text('description'),
+		status: statusEnum('status').notNull().default('draft'),
 		primaryArtistId: uuid('primary_artist_id').notNull().references(() => schema.artists.id),
 		createdAt: timestamp('created_at').defaultNow(),
 		updatedAt: timestamp('updated_at').defaultNow(),
@@ -26,7 +27,6 @@ export const collections = pgTable(
 
 export const collectionsRelations = relations(collections, ({ one, many }) => ({
 	primaryArtist: one(schema.artists, {
-		relationName: 'primaryArtist',
 		fields: [collections.primaryArtistId],
 		references: [schema.artists.id]
 	}),
