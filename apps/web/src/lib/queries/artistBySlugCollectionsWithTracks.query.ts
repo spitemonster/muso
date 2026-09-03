@@ -36,6 +36,11 @@ export const ArtistBySlugCollectionsWithTracksQuery = graphql(`
 						slug
 					}
 				}
+				tags {
+					id
+					name
+					slug
+				}
 			}
 		}
 	}

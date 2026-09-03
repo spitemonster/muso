@@ -1,22 +1,21 @@
 <script lang="ts" module>
 	import { defineMeta } from '@storybook/addon-svelte-csf'
-	import TagCard from './TagCard.svelte'
-	import type { Tag } from '../../types'
+	import TagList from './TagList.svelte'
 
-	const tag: Tag = {
-		id: 'fake-id',
-		name: 'Tag Card',
-		slug: 'tag-card',
-	}
+	import { fakeTags } from './fakeTags'
 
 	const { Story } = defineMeta({
-		title: 'UI/Components/Tags/TagCard',
-		component: TagCard,
+		title: 'UI/Components/Tags/TagList',
+		component: TagList,
 		argTypes: {
 			size: {
 				control: 'select',
 				options: ['sm', 'md', 'lg'],
 				defaultValue: 'md',
+			},
+			icon: {
+				control: 'boolean',
+				defaultValue: true,
 			},
 		},
 	})
@@ -25,7 +24,8 @@
 <Story
 	name="Default"
 	args={{
-		tag,
+		tags: fakeTags,
 		size: 'md',
+		icon: true,
 	}}
 />
