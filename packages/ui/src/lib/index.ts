@@ -11,8 +11,8 @@ export { default as ArtistCard } from './components/ArtistCard/ArtistCard.svelte
 export { default as ArtistList } from './components/ArtistList/ArtistList.svelte';
 export { default as CollectionCard } from './components/CollectionCard/CollectionCard.svelte';
 export { default as CollectionList } from './components/CollectionList/CollectionList.svelte';
-export { default as TagCard } from './components/TagCard/TagCard.svelte';
-export { default as TagList } from './components/TagCardList/TagCardList.svelte';
+export { default as TagListItem } from './components/TagListItem/TagListItem.svelte';
+export { default as TagList } from './components/TagList/TagList.svelte';
 
 export { default as IconEyeClosed } from './icons/EyeClosed.svelte';
 export { default as IconEyeOpen } from './icons/EyeOpen.svelte';
