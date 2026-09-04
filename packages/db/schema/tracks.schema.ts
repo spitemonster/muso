@@ -3,7 +3,7 @@ import { text, timestamp, pgTable, integer, index, uuid } from 'drizzle-orm/pg-c
 
 import * as schema from '.';
 
-import { statusEnum } from './enums';
+import { releaseStatusEnum } from './enums';
 
 export const tracks = pgTable(
 	'tracks',
@@ -13,7 +13,8 @@ export const tracks = pgTable(
 		slug: text('slug').notNull(),
 		duration: integer('duration'),
 		trackUrl: text('track_url').notNull(),
-		status: statusEnum('status').notNull().default('draft'),
+		status: releaseStatusEnum('status').notNull().default('draft'),
+		releaseDate: timestamp('release_date'),
 		collectionId: uuid('collection_id')
 			.notNull()
 			.references(() => schema.collections.id),
@@ -21,6 +22,7 @@ export const tracks = pgTable(
 		primaryArtistId: uuid('primary_artist_id').notNull().references(() => schema.artists.id),
 		createdAt: timestamp('created_at').defaultNow(),
 		updatedAt: timestamp('updated_at').defaultNow(),
+		publishedAt: timestamp('publishedAt')
 	},
 	(table) => [
 		index('track_slug_idx').on(table.slug)
