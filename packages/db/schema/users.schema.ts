@@ -1,9 +1,9 @@
 import { relations } from 'drizzle-orm';
-import { text, timestamp, pgTable, index, uuid, pgEnum } from 'drizzle-orm/pg-core';
+import { text, timestamp, pgTable, index, uuid } from 'drizzle-orm/pg-core';
 
 import * as schema from '.';
 
-export const userTypeEnum = pgEnum('user_type', ['user', 'admin']);
+import { userTypeEnum } from './enums';
 
 export const users = pgTable(
 	'users',
@@ -15,7 +15,7 @@ export const users = pgTable(
 		type: userTypeEnum('type').notNull(),
 		artistId: uuid('artist_id'),
 		createdAt: timestamp('created_at').defaultNow(),
-		updatedAt: timestamp('updated_at'),
+		updatedAt: timestamp('updated_at').defaultNow(),
 	},
 	(table) => [
 		index('email_idx').on(table.email)
