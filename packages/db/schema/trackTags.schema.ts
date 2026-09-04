@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm';
-import { text, timestamp, pgTable, primaryKey, uuid } from 'drizzle-orm/pg-core';
+import { pgTable, primaryKey, uuid } from 'drizzle-orm/pg-core';
 
 import * as schema from '.';
 
